@@ -1,0 +1,173 @@
+﻿@using BloodDonationSystem.Application.DTOs.Emergency
+@model EmergencyRequestDto
+@{
+    ViewData["Title"] = "Emergency Request Details";
+}
+
+<div class="page-header" style="background:linear-gradient(135deg,#8B0000,var(--deep-red));">
+    <div class="container">
+        <div class="page-header-title">🚨 Emergency Request Details</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a asp-controller="Emergency" asp-action="Index">Emergency</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>Details #@Model.Id</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+                <div class="form-card">
+                    @{
+                        var remaining = Model.ExpiryDate - DateTime.UtcNow;
+                        var isUrgent = remaining.TotalHours < 2;
+                        var isExpired = remaining.TotalHours <= 0;
+                    }
+
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="emg-blood-box" style="width:64px;height:64px;border-radius:16px;font-size:1.3rem;">
+                            @Model.BloodGroupDisplay
+                        </div>
+                        <div class="flex-grow-1">
+                            <div style="font-size:1.3rem;font-weight:800;color:var(--navy-blue);">
+                                @Model.PatientName
+                            </div>
+                            <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">
+                                <i class="fas fa-hospital"></i> @Model.HospitalName
+                            </div>
+                            <div class="d-flex gap-2 mt-2 flex-wrap">
+                                @if (isExpired)
+                                {
+                                    <span class="status-pill sp-expired">EXPIRED</span>
+                                }
+                                else if (isUrgent)
+                                {
+                                    <span class="status-pill sp-rejected">
+                                        <i class="fas fa-bolt"></i> URGENT - @((int)remaining.TotalMinutes)m LEFT
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="status-pill sp-pending">
+                                        @((int)remaining.TotalHours)h @(remaining.Minutes)m left
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border-color:var(--card-border);" />
+
+                    <div class="row g-3 mt-1">
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">UNITS NEEDED</div>
+                                <div style="font-size:1.3rem;font-weight:800;color:var(--deep-red);margin-top:0.25rem;">
+                                    @Model.UnitsNeeded
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">LOCATION</div>
+                                <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                                    @Model.Upazila, @Model.District
+                                </div>
+                                @if (!string.IsNullOrEmpty(Model.HospitalAddress))
+                                {
+                                    <div style="font-size:0.78rem;color:var(--text-muted);">@Model.HospitalAddress</div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">CONTACT</div>
+                                <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                                    @Model.ContactNumber
+                                </div>
+                                <div class="d-flex gap-2 mt-2">
+                                    <a href="tel:@Model.ContactNumber" class="btn-sm-red">
+                                        <i class="fas fa-phone"></i> Call
+                                    </a>
+                                    <a href="https://wa.me/@Model.ContactNumber" target="_blank" class="btn-sm-outline">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">NOTIFICATIONS SENT</div>
+                                <div style="font-size:1.3rem;font-weight:800;color:var(--navy-blue);margin-top:0.25rem;">
+                                    @Model.NotificationsSent donors
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 flex-wrap mt-4">
+                        @if (User.Identity?.IsAuthenticated == true && !isExpired)
+                        {
+                            <form asp-action="Accept" asp-route-id="@Model.Id" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-red">
+                                    <i class="fas fa-check"></i> Accept & Help Now
+                                </button>
+                            </form>
+                        }
+                        else if (!User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn-red">
+                                <i class="fas fa-sign-in-alt"></i> Login to Help
+                            </a>
+                        }
+                        <a asp-controller="Emergency" asp-action="Index" class="btn-sm-outline">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-card">
+                    <div class="info-card-title">
+                        <i class="fas fa-clock"></i> Timeline
+                    </div>
+                    <div style="font-size:0.82rem;line-height:1.8;margin-top:0.75rem;">
+                        <div>
+                            <i class="fas fa-bolt" style="color:var(--deep-red);"></i>
+                            Created: @Model.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")
+                        </div>
+                        <div>
+                            <i class="fas fa-hourglass-end" style="color:var(--warning-orange);"></i>
+                            Expires: @Model.ExpiryDate.ToString("dd MMM yyyy, hh:mm tt")
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.HospitalLatitude.HasValue && Model.HospitalLongitude.HasValue)
+                {
+                    <div class="form-card mt-3">
+                        <div class="info-card-title">
+                            <i class="fas fa-map-marker-alt"></i> Hospital Location
+                        </div>
+                        <div style="height:180px;background:var(--light-gray);border-radius:10px;
+                                        display:flex;align-items:center;justify-content:center;
+                                        color:var(--text-muted);margin-top:0.75rem;">
+                            <i class="fas fa-map fa-2x"></i>
+                        </div>
+                        <a href="https://maps.google.com/?q=@Model.HospitalLatitude,@Model.HospitalLongitude"
+                           target="_blank" class="btn-sm-outline w-100 justify-content-center mt-2">
+                            <i class="fas fa-directions"></i> Get Directions
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

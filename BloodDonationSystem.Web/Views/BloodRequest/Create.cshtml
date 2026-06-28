@@ -1,0 +1,267 @@
+﻿@model BloodDonationSystem.Application.DTOs.BloodRequest.CreateBloodRequestDto
+@{
+    ViewData["Title"] = "Create Blood Request";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🩸 Create Blood Request</div>
+        <div class="page-header-sub">Submit a request to find blood donors</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a asp-controller="BloodRequest" asp-action="Index">Requests</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>Create</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="text-center mb-4">
+                        <div style="font-size:2.5rem;">🩸</div>
+                        <div class="form-card-title">Blood Request Form</div>
+                        <div class="form-card-subtitle">Fill in the details below to find matching donors</div>
+                    </div>
+
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="validation-msg mb-3"></div>
+
+                        <div class="row g-3">
+
+                            <!-- Patient Info -->
+                            <div class="col-12">
+                                <div style="font-size:0.85rem;font-weight:700;color:var(--navy-blue);
+                                    padding:0.6rem 0.9rem;background:var(--light-gray);
+                                    border-radius:8px;margin-bottom:0.5rem;">
+                                    👤 Patient Information
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Patient Name *</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input asp-for="PatientName"
+                                           class="form-control-custom input-with-icon"
+                                           placeholder="Full name of patient" />
+                                </div>
+                                <span asp-validation-for="PatientName" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label-custom">Blood Group *</label>
+                                <select asp-for="BloodGroup" class="form-select-custom">
+                                    <option value="">Select</option>
+                                    <option value="0">A+</option>
+                                    <option value="1">A-</option>
+                                    <option value="2">B+</option>
+                                    <option value="3">B-</option>
+                                    <option value="4">AB+</option>
+                                    <option value="5">AB-</option>
+                                    <option value="6">O+</option>
+                                    <option value="7">O-</option>
+                                </select>
+                                <span asp-validation-for="BloodGroup" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label-custom">Units Needed *</label>
+                                <input asp-for="UnitsNeeded" type="number"
+                                       min="1" max="10"
+                                       class="form-control-custom"
+                                       placeholder="1" />
+                                <span asp-validation-for="UnitsNeeded" class="validation-msg"></span>
+                            </div>
+
+                            <!-- Hospital Info -->
+                            <div class="col-12">
+                                <div style="font-size:0.85rem;font-weight:700;color:var(--navy-blue);
+                                    padding:0.6rem 0.9rem;background:var(--light-gray);
+                                    border-radius:8px;margin-bottom:0.5rem;margin-top:0.5rem;">
+                                    🏥 Hospital Information
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label-custom">Hospital Name *</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-hospital input-icon"></i>
+                                    <input asp-for="HospitalName"
+                                           class="form-control-custom input-with-icon"
+                                           placeholder="Name of hospital or clinic" />
+                                </div>
+                                <span asp-validation-for="HospitalName" class="validation-msg"></span>
+                            </div>
+
+                            @using BloodDonationSystem.Application.DTOs.Location
+                            @{
+                                var districts = ViewBag.Districts as List<DistrictDto> ?? new List<DistrictDto>();
+                            }
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">District *</label>
+                                <select id="districtSelect" name="District" class="form-select-custom" required>
+                                    <option value="">Select District</option>
+                                    @foreach (var d in districts)
+                                    {
+                                        <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Upazila *</label>
+                                <select id="upazilaSelect" name="Upazila" class="form-select-custom" required disabled>
+                                    <option value="">Select District First</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label-custom">Hospital Address</label>
+                                <input asp-for="HospitalAddress"
+                                       class="form-control-custom"
+                                       placeholder="Full address of hospital" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Contact Number</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-phone input-icon"></i>
+                                    <input asp-for="ContactNumber"
+                                           class="form-control-custom input-with-icon"
+                                           placeholder="01XXXXXXXXX" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Required Date</label>
+                                <input asp-for="RequiredDate" type="datetime-local"
+                                       class="form-control-custom" />
+                            </div>
+
+                            <!-- Priority -->
+                            <div class="col-12">
+                                <div style="font-size:0.85rem;font-weight:700;color:var(--navy-blue);
+                                    padding:0.6rem 0.9rem;background:var(--light-gray);
+                                    border-radius:8px;margin-bottom:0.75rem;margin-top:0.5rem;">
+                                    ⚡ Priority & Options
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label-custom">Priority Level</label>
+                                        <select asp-for="Priority" class="form-select-custom">
+                                            <option value="0">Normal</option>
+                                            <option value="1">Urgent</option>
+                                            <option value="2">Emergency</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label-custom">Emergency Request?</label>
+                                        <div class="d-flex align-items-center gap-2 mt-2">
+                                            <input asp-for="IsEmergency" type="checkbox"
+                                                   style="accent-color:var(--deep-red);width:18px;height:18px;" />
+                                            <span style="font-size:0.85rem;color:var(--navy-blue);">
+                                                Mark as emergency (notifies all nearby donors)
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label-custom">Additional Information</label>
+                                <textarea asp-for="AdditionalInfo"
+                                          class="form-control-custom"
+                                          rows="3"
+                                          placeholder="Any additional details about the patient or situation..."></textarea>
+                            </div>
+
+                            <!-- GPS Location -->
+                            <div class="col-12">
+                                <div class="info-card">
+                                    <div class="info-card-title">
+                                        <i class="fas fa-map-marker-alt"></i> Hospital Location (GPS)
+                                    </div>
+                                    <div class="d-flex gap-2 align-items-center flex-wrap">
+                                        <input asp-for="HospitalLatitude"
+                                               id="reqLat"
+                                               class="form-control-custom"
+                                               style="max-width:200px;"
+                                               placeholder="Latitude" readonly />
+                                        <input asp-for="HospitalLongitude"
+                                               id="reqLng"
+                                               class="form-control-custom"
+                                               style="max-width:200px;"
+                                               placeholder="Longitude" readonly />
+                                        <button type="button"
+                                                class="btn-sm-outline"
+                                                onclick="getCurrentLocation('reqLat','reqLng', showLocationSuccess)">
+                                            <i class="fas fa-location-arrow"></i> Detect Location
+                                        </button>
+                                        <span id="locationStatus" style="font-size:0.78rem;color:var(--success-green);"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="d-flex gap-3">
+                                    <a asp-action="Index" class="btn-outline-red">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </a>
+                                    <button type="submit" class="btn-red flex-grow-1 justify-content-center">
+                                        <i class="fas fa-paper-plane"></i> Submit Blood Request
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('districtSelect').addEventListener('change', async function () {
+            const districtId = this.options[this.selectedIndex]?.dataset.id;
+            const upazilaSelect = document.getElementById('upazilaSelect');
+
+            upazilaSelect.innerHTML = '<option value="">Loading...</option>';
+            upazilaSelect.disabled = true;
+
+            if (!districtId) {
+                upazilaSelect.innerHTML = '<option value="">Select District First</option>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                const upazilas = await res.json();
+                upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
+                upazilas.forEach(u => {
+                    const option = document.createElement('option');
+                    option.value = u.name;
+                    option.textContent = u.name;
+                    upazilaSelect.appendChild(option);
+                });
+                upazilaSelect.disabled = false;
+            } catch (e) {
+                upazilaSelect.innerHTML = '<option value="">Failed to load</option>';
+            }
+        });
+
+        function showLocationSuccess() {
+            document.getElementById('locationStatus').textContent = '✅ Location detected!';
+        }
+    </script>
+}

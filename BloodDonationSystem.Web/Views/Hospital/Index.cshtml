@@ -1,0 +1,171 @@
+﻿@using BloodDonationSystem.Application.DTOs.Hospital
+@using BloodDonationSystem.Application.DTOs.Location
+@{
+    ViewData["Title"] = "Hospitals";
+    var hospitals = ViewBag.Hospitals as List<HospitalDto> ?? new();
+    var districts = ViewBag.Districts as List<DistrictDto> ?? new();
+    var upazilas = ViewBag.Upazilas as List<UpazilaDto> ?? new();
+    string selectedDistrict = ViewBag.District as string ?? "";
+    string selectedUpazila = ViewBag.Upazila as string ?? "";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🏥 Hospitals</div>
+        <div class="page-header-sub">Find hospitals and their blood bank information</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+
+        <div class="search-card mb-4">
+            <form method="get" id="hospitalFilterForm" class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label-custom">District</label>
+                    <select id="districtSelect" name="district" class="form-select-custom">
+                        <option value="">All Districts</option>
+                        @foreach (var d in districts)
+                        {
+                            <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label-custom">Upazila</label>
+                    <select id="upazilaSelect" name="upazila" class="form-select-custom">
+                        <option value="">All Upazilas</option>
+                        @foreach (var u in upazilas)
+                        {
+                            <option value="@u.Name">@u.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn-sm-outline w-100 justify-content-center" onclick="findNearby()">
+                        <i class="fas fa-location-arrow"></i> Find Nearby Hospitals
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        @if (hospitals.Any())
+        {
+            <div class="row g-3">
+                @foreach (var hospital in hospitals)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="donor-card h-100">
+                            <div class="donor-card-header">
+                                <div style="width:48px;height:48px;border-radius:12px;
+                                                    background:var(--navy-blue);color:white;
+                                                    display:flex;align-items:center;
+                                                    justify-content:center;font-size:1.2rem;flex-shrink:0;">
+                                    <i class="fas fa-hospital"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="donor-name">@hospital.Name</div>
+                                    <div class="donor-loc">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        @hospital.Upazila, @hospital.District
+                                    </div>
+                                </div>
+                                @if (hospital.HasBloodBank)
+                                {
+                                    <span class="badge-verified"><i class="fas fa-vial"></i> Blood Bank</span>
+                                }
+                            </div>
+                            <div class="donor-card-body">
+                                <div class="donor-pills">
+                                    @if (hospital.IsOpen24Hours)
+                                    {
+                                        <div class="donor-pill" style="color:var(--success-green);">
+                                            <i class="fas fa-clock"></i> Open 24/7
+                                        </div>
+                                    }
+                                    else if (!string.IsNullOrEmpty(hospital.OpenTime))
+                                    {
+                                        <div class="donor-pill">
+                                            <i class="fas fa-clock"></i> @hospital.OpenTime - @hospital.CloseTime
+                                        </div>
+                                    }
+                                </div>
+                                @if (!string.IsNullOrEmpty(hospital.PhoneNumber))
+                                {
+                                    <div style="font-size:0.8rem;color:var(--text-muted);">
+                                        <i class="fas fa-phone"></i> @hospital.PhoneNumber
+                                    </div>
+                                }
+                            </div>
+                            <div class="donor-card-footer">
+                                <a asp-action="Details" asp-route-id="@hospital.Id"
+                                   class="btn-sm-outline flex-grow-1 justify-content-center">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
+                                @if (!string.IsNullOrEmpty(hospital.PhoneNumber))
+                                {
+                                    <a href="tel:@hospital.PhoneNumber" class="btn-sm-red">
+                                        <i class="fas fa-phone"></i>
+                                    </a>
+                                }
+                                <a href="https://maps.google.com/?q=@hospital.Latitude,@hospital.Longitude"
+                                   target="_blank" class="btn-sm-outline">
+                                    <i class="fas fa-directions"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="info-card text-center py-5">
+                <div style="font-size:3rem;margin-bottom:1rem;">🏥</div>
+                <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);">No Hospitals Found</div>
+                <div style="font-size:0.85rem;color:var(--text-muted);">Try selecting a different district.</div>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('districtSelect').value = "@selectedDistrict";
+            document.getElementById('upazilaSelect').value = "@selectedUpazila";
+        });
+
+        document.getElementById('districtSelect').addEventListener('change', async function () {
+            const districtId = this.options[this.selectedIndex]?.dataset.id;
+            const upazilaSelect = document.getElementById('upazilaSelect');
+
+            upazilaSelect.innerHTML = '<option value="">All Upazilas</option>';
+
+            if (districtId) {
+                try {
+                    const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                    const upazilas = await res.json();
+                    upazilas.forEach(u => {
+                        const option = document.createElement('option');
+                        option.value = u.name;
+                        option.textContent = u.name;
+                        upazilaSelect.appendChild(option);
+                    });
+                } catch (e) { }
+            }
+
+            document.getElementById('hospitalFilterForm').submit();
+        });
+
+        document.getElementById('upazilaSelect').addEventListener('change', function () {
+            document.getElementById('hospitalFilterForm').submit();
+        });
+
+        function findNearby() {
+            getCurrentLocation(null, null, (lat, lng) => {
+                window.location.href = `/Hospital/NearbyHospitals?lat=${lat}&lng=${lng}`;
+            });
+        }
+    </script>
+}

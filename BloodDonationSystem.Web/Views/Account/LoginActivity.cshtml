@@ -1,0 +1,80 @@
+﻿@using BloodDonationSystem.Application.DTOs.User
+@model List<LoginActivityDto>
+@{
+    ViewData["Title"] = "Login Activity";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🛡️ Login Activity</div>
+        <div class="page-header-sub">Review your recent account access history</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="form-card-title">Recent Login History</div>
+                    <div class="form-card-subtitle">
+                        Last 10 login attempts on your account
+                    </div>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="d-flex flex-column gap-2">
+                            @foreach (var activity in Model)
+                            {
+                                <div class="info-card d-flex align-items-center
+                                                    justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div style="width:40px;height:40px;
+                                                            border-radius:10px;
+                                                            background:@(activity.IsSuccessful ? "#ECFDF5" : "#FEF2F2");
+                                                            display:flex;align-items:center;
+                                                            justify-content:center;flex-shrink:0;">
+                                            <i class="fas fa-@(activity.IsSuccessful ? "check" : "times")"
+                                               style="color:@(activity.IsSuccessful ? "var(--success-green)" : "var(--deep-red)");">
+                                            </i>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight:600;font-size:0.85rem;
+                                                                color:var(--navy-blue);">
+                                                @(activity.IsSuccessful ? "Successful Login" : "Failed Attempt")
+                                            </div>
+                                            <div style="font-size:0.75rem;color:var(--text-muted);">
+                                                @activity.IpAddress · @(activity.Browser ?? "Unknown device")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="font-size:0.78rem;color:var(--text-muted);
+                                                        text-align:right;">
+                                        @activity.LoginAt.ToString("dd MMM yyyy")<br>
+                                        @activity.LoginAt.ToString("hh:mm tt")
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4" style="color:var(--text-muted);">
+                            No login activity recorded yet.
+                        </div>
+                    }
+
+                    <div class="info-card mt-3" style="background:#FEF2F2;border-color:#FECACA;">
+                        <div style="font-size:0.8rem;color:var(--deep-red);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            If you notice any suspicious activity, please
+                            <a asp-action="ChangePassword" style="color:var(--deep-red);font-weight:700;">
+                                change your password
+                            </a> immediately.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

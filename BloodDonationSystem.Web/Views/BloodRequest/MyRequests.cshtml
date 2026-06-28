@@ -1,0 +1,172 @@
+﻿@using BloodDonationSystem.Application.DTOs.BloodRequest
+@model List<BloodRequestDto>
+@{
+    ViewData["Title"] = "My Requests";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <div class="page-header-title">📋 My Blood Requests</div>
+                <div class="page-header-sub">Manage all your blood donation requests</div>
+            </div>
+            <a asp-action="Create" class="btn-red">
+                <i class="fas fa-plus"></i> New Request
+            </a>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        @if (Model != null && Model.Any())
+        {
+            <!-- SUMMARY CARDS -->
+            <div class="row g-3 mb-4">
+                @{
+                    var statusGroups = new[]
+                    {
+                        new { Label = "Pending", Icon = "clock", Class = "si-orange",
+                        Count = Model.Count(r => r.Status.ToString() == "Pending") },
+                        new { Label = "Accepted", Icon = "check-circle", Class = "si-green",
+                        Count = Model.Count(r => r.Status.ToString() == "Accepted") },
+                        new { Label = "Completed", Icon = "trophy", Class = "si-blue",
+                        Count = Model.Count(r => r.Status.ToString() == "Completed") },
+                        new { Label = "Rejected", Icon = "times-circle", Class = "si-red",
+                        Count = Model.Count(r => r.Status.ToString() == "Rejected") }
+                        };
+                }
+                @foreach (var s in statusGroups)
+                {
+                    <div class="col-6 col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon @s.Class"><i class="fas fa-@s.Icon"></i></div>
+                            <div class="stat-number">@s.Count</div>
+                            <div class="stat-label">@s.Label</div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- REQUESTS TABLE -->
+            <div class="form-card">
+                <div class="table-responsive">
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Blood</th>
+                                <th>Hospital</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var req in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div style="font-weight:600;">@req.PatientName</div>
+                                        @if (req.IsEmergency)
+                                        {
+                                            <span class="status-pill sp-rejected" style="font-size:0.65rem;">
+                                                <i class="fas fa-bolt"></i> Emergency
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="donor-blood-tag" style="position:static;font-size:0.85rem;">
+                                            @req.BloodGroupDisplay
+                                        </span>
+                                        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">
+                                            @req.UnitsNeeded unit(s)
+                                        </div>
+                                    </td>
+                                    <td style="max-width:150px;">
+                                        <div style="font-weight:500;font-size:0.85rem;
+                                                            overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                                            @req.HospitalName
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="font-size:0.82rem;">
+                                            @req.Upazila, @req.District
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var sc = req.Status.ToString() switch
+                                            {
+                                                "Pending" => "sp-pending",
+                                                "Accepted" => "sp-accepted",
+                                                "Rejected" => "sp-rejected",
+                                                "Completed" => "sp-completed",
+                                                _ => "sp-expired"
+                                            };
+                                        }
+                                        <span class="status-pill @sc">@req.StatusDisplay</span>
+                                    </td>
+                                    <td style="font-size:0.78rem;color:var(--text-muted);">
+                                        @req.CreatedAt.ToString("dd MMM yy")
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-1">
+                                            <a asp-action="Details" asp-route-id="@req.Id"
+                                               class="btn-sm-outline" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            @if (req.Status.ToString() == "Pending")
+                                            {
+                                                <form asp-action="Cancel" asp-route-id="@req.Id"
+                                                      method="post"
+                                                      onsubmit="return confirm('Cancel this request?')">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit"
+                                                            class="btn-sm-outline"
+                                                            title="Cancel"
+                                                            style="color:#EF4444;border-color:#FECACA;">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                            @if (req.Status.ToString() == "Accepted")
+                                            {
+                                                <form asp-action="Complete" asp-route-id="@req.Id" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit"
+                                                            class="btn-sm-red"
+                                                            title="Mark Complete">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="info-card text-center py-5">
+                <div style="font-size:3rem;margin-bottom:1rem;">📋</div>
+                <div style="font-size:1.1rem;font-weight:700;
+                                color:var(--navy-blue);margin-bottom:0.5rem;">
+                    No Requests Yet
+                </div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                    You haven't created any blood requests yet.
+                </div>
+                <a asp-action="Create" class="btn-red">
+                    <i class="fas fa-plus"></i> Create First Request
+                </a>
+            </div>
+        }
+    </div>
+</section>

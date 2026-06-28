@@ -1,0 +1,137 @@
+﻿@using BloodDonationSystem.Application.DTOs.Location
+@model BloodDonationSystem.Application.DTOs.Hospital.CreateHospitalDto
+@{
+    ViewData["Title"] = "Add Hospital";
+    Layout = "_Layout.Admin";
+    var districts = ViewBag.Districts as List<DistrictDto> ?? new List<DistrictDto>();
+}
+
+<div class="admin-page-header">
+    <div class="admin-page-title">🏥 Add New Hospital</div>
+    <div class="admin-page-sub">Enter hospital details below</div>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-body">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="validation-msg mb-3"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label-custom">Hospital Name *</label>
+                    <input asp-for="Name" class="form-control-custom" placeholder="Enter hospital name" />
+                    <span asp-validation-for="Name" class="validation-msg"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label-custom">District *</label>
+                    <select id="districtSelect" name="District" class="form-select-custom" required>
+                        <option value="">Select District</option>
+                        @foreach (var d in districts)
+                        {
+                            <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label-custom">Upazila *</label>
+                    <select id="upazilaSelect" name="Upazila" class="form-select-custom" required disabled>
+                        <option value="">Select District First</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label-custom">Address *</label>
+                    <input asp-for="Address" class="form-control-custom" placeholder="Full address" />
+                    <span asp-validation-for="Address" class="validation-msg"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label-custom">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control-custom" placeholder="01XXXXXXXXX" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label-custom">Emergency Number</label>
+                    <input asp-for="EmergencyNumber" class="form-control-custom" placeholder="01XXXXXXXXX" />
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label-custom">Latitude *</label>
+                    <input asp-for="Latitude" id="hospLat" class="form-control-custom" placeholder="23.8103" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-custom">Longitude *</label>
+                    <input asp-for="Longitude" id="hospLng" class="form-control-custom" placeholder="90.4125" />
+                </div>
+
+                <div class="col-12">
+                    <button type="button" class="btn-sm-outline" onclick="getCurrentLocation('hospLat','hospLng')">
+                        <i class="fas fa-location-arrow"></i> Use Current Location
+                    </button>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label-custom">Open Time</label>
+                    <input asp-for="OpenTime" class="form-control-custom" placeholder="08:00 AM" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label-custom">Close Time</label>
+                    <input asp-for="CloseTime" class="form-control-custom" placeholder="10:00 PM" />
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end gap-3">
+                    <label class="d-flex align-items-center gap-2">
+                        <input asp-for="IsOpen24Hours" type="checkbox" />
+                        <span style="font-size:0.85rem;">Open 24/7</span>
+                    </label>
+                    <label class="d-flex align-items-center gap-2">
+                        <input asp-for="HasBloodBank" type="checkbox" />
+                        <span style="font-size:0.85rem;">Has Blood Bank</span>
+                    </label>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn-red">
+                        <i class="fas fa-save"></i> Save Hospital
+                    </button>
+                    <a asp-action="Index" class="btn-outline-red">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('districtSelect').addEventListener('change', async function () {
+            const districtId = this.options[this.selectedIndex]?.dataset.id;
+            const upazilaSelect = document.getElementById('upazilaSelect');
+
+            upazilaSelect.innerHTML = '<option value="">Loading...</option>';
+            upazilaSelect.disabled = true;
+
+            if (!districtId) {
+                upazilaSelect.innerHTML = '<option value="">Select District First</option>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                const upazilas = await res.json();
+
+                upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
+                upazilas.forEach(u => {
+                    const option = document.createElement('option');
+                    option.value = u.name;
+                    option.textContent = u.name;
+                    upazilaSelect.appendChild(option);
+                });
+                upazilaSelect.disabled = false;
+            } catch (e) {
+                upazilaSelect.innerHTML = '<option value="">Failed to load</option>';
+            }
+        });
+    </script>
+}

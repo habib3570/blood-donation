@@ -1,0 +1,366 @@
+﻿@using BloodDonationSystem.Application.DTOs.BloodRequest
+@model BloodRequestDto
+@{
+    ViewData["Title"] = "Request Details";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🩸 Blood Request Details</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a asp-action="Index">Requests</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>Details #@Model.Id</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- LEFT: Details -->
+            <div class="col-lg-8">
+                <div class="form-card">
+
+                    <!-- Header -->
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div class="emg-blood-box"
+                             style="width:64px;height:64px;border-radius:16px;
+                                    background:var(--deep-red);color:white;
+                                    display:flex;align-items:center;justify-content:center;
+                                    font-size:1.3rem;font-weight:800;flex-shrink:0;">
+                            @Model.BloodGroupDisplay
+                        </div>
+                        <div class="flex-grow-1">
+                            <div style="font-size:1.3rem;font-weight:800;color:var(--navy-blue);">
+                                @Model.PatientName
+                            </div>
+                            <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">
+                                <i class="fas fa-hospital"></i> @Model.HospitalName
+                            </div>
+                            <div class="d-flex gap-2 mt-2 flex-wrap">
+                                @{
+                                    var sc = Model.Status.ToString() switch
+                                    {
+                                        "Pending" => "sp-pending",
+                                        "Accepted" => "sp-accepted",
+                                        "Rejected" => "sp-rejected",
+                                        "Completed" => "sp-completed",
+                                        _ => "sp-expired"
+                                    };
+                                }
+                                <span class="status-pill @sc" style="font-size:0.82rem;">
+                                    @Model.StatusDisplay
+                                </span>
+                                @if (Model.IsEmergency)
+                                {
+                                    <span class="status-pill sp-rejected" style="font-size:0.82rem;">
+                                        <i class="fas fa-bolt"></i> EMERGENCY
+                                    </span>
+                                }
+                                <span class="status-pill sp-pending" style="font-size:0.82rem;">
+                                    @Model.Priority.ToString() Priority
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border-color:var(--card-border);" />
+
+                    <!-- Info Grid -->
+                    <div class="row g-3 mt-1">
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;
+                                            color:var(--text-muted);margin-bottom:0.35rem;">
+                                    BLOOD GROUP
+                                </div>
+                                <div style="font-size:1.5rem;font-weight:800;color:var(--deep-red);">
+                                    @Model.BloodGroupDisplay
+                                </div>
+                                <div style="font-size:0.8rem;color:var(--text-muted);">
+                                    @Model.UnitsNeeded unit(s) needed
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;
+                                            color:var(--text-muted);margin-bottom:0.35rem;">
+                                    LOCATION
+                                </div>
+                                <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);">
+                                    @Model.Upazila, @Model.District
+                                </div>
+                                @if (!string.IsNullOrEmpty(Model.HospitalAddress))
+                                {
+                                    <div style="font-size:0.78rem;color:var(--text-muted);">
+                                        @Model.HospitalAddress
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.ContactNumber))
+                        {
+                            <div class="col-sm-6">
+                                <div class="info-card">
+                                    <div style="font-size:0.72rem;font-weight:600;
+                                                    color:var(--text-muted);margin-bottom:0.35rem;">
+                                        CONTACT
+                                    </div>
+                                    <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);">
+                                        @Model.ContactNumber
+                                    </div>
+                                    <div class="d-flex gap-2 mt-2">
+                                        <a href="tel:@Model.ContactNumber" class="btn-sm-red">
+                                            <i class="fas fa-phone"></i> Call
+                                        </a>
+                                        <a href="https://wa.me/@Model.ContactNumber"
+                                           target="_blank" class="btn-sm-outline">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </a>
+                                        <button onclick="copyToClipboard('@Model.ContactNumber')"
+                                                class="btn-sm-outline">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;
+                                            color:var(--text-muted);margin-bottom:0.35rem;">
+                                    TIMELINE
+                                </div>
+                                <div style="font-size:0.82rem;line-height:1.8;">
+                                    <div>
+                                        <i class="fas fa-plus-circle" style="color:var(--deep-red);"></i>
+                                        Created: @Model.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")
+                                    </div>
+                                    @if (Model.AcceptedAt.HasValue)
+                                    {
+                                        <div>
+                                            <i class="fas fa-check-circle"
+                                               style="color:var(--success-green);"></i>
+                                            Accepted: @Model.AcceptedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                        </div>
+                                    }
+                                    @if (Model.CompletedAt.HasValue)
+                                    {
+                                        <div>
+                                            <i class="fas fa-trophy" style="color:#F59E0B;"></i>
+                                            Completed: @Model.CompletedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                        </div>
+                                    }
+                                    @if (Model.ExpiryDate.HasValue)
+                                    {
+                                        <div>
+                                            <i class="fas fa-clock" style="color:var(--text-muted);"></i>
+                                            Expires: @Model.ExpiryDate.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.AdditionalInfo))
+                    {
+                        <div class="mt-3">
+                            <div style="font-size:0.78rem;font-weight:600;
+                                            color:var(--text-muted);margin-bottom:0.5rem;">
+                                ADDITIONAL INFO
+                            </div>
+                            <div class="info-card" style="font-size:0.875rem;line-height:1.7;">
+                                @Model.AdditionalInfo
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Actions -->
+                    <div class="d-flex gap-2 flex-wrap mt-4">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            var userId = User.FindFirst(
+                            System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+                            @if (Model.Status.ToString() == "Pending" &&
+                                                    Model.RequesterId != userId)
+                            {
+                                <form asp-action="Accept" asp-route-id="@Model.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn-red">
+                                        <i class="fas fa-check"></i> Accept & Help
+                                    </button>
+                                </form>
+                            }
+
+                            @if (Model.Status.ToString() == "Accepted" &&
+                                                    Model.RequesterId == userId)
+                            {
+                                <form asp-action="Complete" asp-route-id="@Model.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn-red">
+                                        <i class="fas fa-trophy"></i> Mark as Completed
+                                    </button>
+                                </form>
+                            }
+
+                            @if (Model.Status.ToString() == "Pending" &&
+                                                    Model.RequesterId == userId)
+                            {
+                                <form asp-action="Cancel" asp-route-id="@Model.Id"
+                                      method="post"
+                                      onsubmit="return confirm('Cancel this request?')">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn-outline-red">
+                                        <i class="fas fa-times"></i> Cancel Request
+                                    </button>
+                                </form>
+                            }
+
+                            @if (Model.RequesterId != userId)
+                            {
+                                <button onclick="reportRequest(@Model.Id)"
+                                        class="btn-sm-outline"
+                                        style="margin-left:auto;">
+                                    <i class="fas fa-flag"></i> Report
+                                </button>
+                            }
+                        }
+                        <a asp-action="Index" class="btn-sm-outline">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDEBAR -->
+            <div class="col-lg-4">
+
+                <!-- Requester Info -->
+                <div class="form-card mb-3">
+                    <div class="info-card-title">
+                        <i class="fas fa-user"></i> Requested By
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mt-2">
+                        <div class="donor-avatar" style="width:44px;height:44px;">
+                            @Model.RequesterName[0]
+                        </div>
+                        <div>
+                            <div style="font-weight:700;color:var(--navy-blue);font-size:0.9rem;">
+                                @Model.RequesterName
+                            </div>
+                            <div style="font-size:0.75rem;color:var(--text-muted);">
+                                Request #@Model.Id
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Donor Info -->
+                @if (!string.IsNullOrEmpty(Model.DonorName))
+                {
+                    <div class="form-card mb-3">
+                        <div class="info-card-title">
+                            <i class="fas fa-tint"></i> Donor Assigned
+                        </div>
+                        <div class="d-flex align-items-center gap-3 mt-2">
+                            <div class="donor-avatar"
+                                 style="width:44px;height:44px;
+                                            background:linear-gradient(135deg,var(--success-green),#047857);">
+                                @Model.DonorName[0]
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:var(--navy-blue);font-size:0.9rem;">
+                                    @Model.DonorName
+                                </div>
+                                <span class="avail-badge avail-yes">
+                                    <span class="avail-dot"></span> Donor Assigned
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Map -->
+                <div class="form-card">
+                    <div class="info-card-title">
+                        <i class="fas fa-map-marker-alt"></i> Hospital Location
+                    </div>
+                    <div id="reqMap"
+                         style="height:200px;background:var(--light-gray);
+                                border-radius:10px;display:flex;
+                                align-items:center;justify-content:center;
+                                color:var(--text-muted);font-size:0.85rem;margin-top:0.75rem;">
+                        <i class="fas fa-map fa-2x"></i>
+                    </div>
+                    <a href="https://maps.google.com/?q=@Model.HospitalName+@Model.District+Bangladesh"
+                       target="_blank"
+                       class="btn-sm-outline w-100 justify-content-center mt-2">
+                        <i class="fas fa-directions"></i> Open in Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REPORT MODAL -->
+<div id="reportModal"
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);
+            z-index:9999;align-items:center;justify-content:center;">
+    <div class="form-card" style="max-width:400px;width:90%;margin:1rem;">
+        <div class="form-card-title">🚩 Report Request</div>
+        <div class="form-card-subtitle">Help us keep the platform safe</div>
+        <textarea id="reportReason"
+                  class="form-control-custom mt-3"
+                  rows="3"
+                  placeholder="Describe why this request is suspicious..."></textarea>
+        <div class="d-flex gap-2 mt-3">
+            <button onclick="submitReport()" class="btn-red flex-grow-1 justify-content-center">
+                <i class="fas fa-flag"></i> Submit Report
+            </button>
+            <button onclick="closeReport()" class="btn-outline-red">Cancel</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let currentReportId = null;
+
+        function reportRequest(id) {
+            currentReportId = id;
+            document.getElementById('reportModal').style.display = 'flex';
+        }
+
+        function closeReport() {
+            document.getElementById('reportModal').style.display = 'none';
+        }
+
+        async function submitReport() {
+            const reason = document.getElementById('reportReason').value;
+            if (!reason.trim()) { showToast('Please enter a reason.', 'error'); return; }
+            try {
+                const res = await fetch(`/BloodRequest/Report/${currentReportId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'RequestVerificationToken': getAntiForgeryToken()
+                    },
+                    body: `reason=${encodeURIComponent(reason)}`
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Report submitted. Thank you!', 'success');
+                    closeReport();
+                }
+            } catch(e) { showToast('Failed to submit report.', 'error'); }
+        }
+    </script>
+}

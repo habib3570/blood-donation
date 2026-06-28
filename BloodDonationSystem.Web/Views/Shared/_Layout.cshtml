@@ -1,0 +1,258 @@
+﻿@{
+    string darkModeClass = "";
+    if (ViewBag.DarkMode == true)
+    {
+        darkModeClass = "dark-mode";
+    }
+
+    string isAuthenticated = "false";
+    if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        isAuthenticated = "true";
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BloodDonate BD</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="@darkModeClass" data-authenticated="@isAuthenticated">
+    <!-- EMERGENCY BANNER -->
+    <div class="emergency-banner" id="emergencyBanner">
+        <div class="container">
+            <div class="d-flex align-items-center gap-3">
+                <span class="banner-label">🚨 URGENT</span>
+                <div class="banner-scroll-wrap">
+                    <div class="banner-scroll" id="bannerScroll">
+                        <span class="banner-item">O- needed at Dhaka Medical College</span>
+                        <span class="banner-sep">•</span>
+                        <span class="banner-item">AB+ needed at Square Hospital</span>
+                        <span class="banner-sep">•</span>
+                        <span class="banner-item">B- needed at Chittagong General Hospital</span>
+                    </div>
+                </div>
+                <button class="banner-close" onclick="document.getElementById('emergencyBanner').style.display='none'">×</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-custom">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <a asp-controller="Home" asp-action="Index" class="brand-logo">
+                    🩸 Blood<span>Donate</span> BD
+                </a>
+
+                <div class="nav-links d-none d-lg-flex align-items-center gap-1">
+                    <a asp-controller="Home" asp-action="Index" class="nav-item-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a asp-controller="Donor" asp-action="Search" class="nav-item-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Donor" ? "active" : "")">
+                        <i class="fas fa-search"></i> Find Donor
+                    </a>
+                    <a asp-controller="BloodRequest" asp-action="Index" class="nav-item-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "BloodRequest" ? "active" : "")">
+                        <i class="fas fa-tint"></i> Requests
+                    </a>
+                    <a asp-controller="Hospital" asp-action="Index" class="nav-item-link">
+                        <i class="fas fa-hospital"></i> Hospitals
+                    </a>
+                    <a asp-controller="Leaderboard" asp-action="Index" class="nav-item-link">
+                        <i class="fas fa-trophy"></i> Leaderboard
+                    </a>
+                    <a asp-controller="Home" asp-action="HealthTips" class="nav-item-link">
+                        <i class="fas fa-heart"></i> Health Tips
+                    </a>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <!-- Notification Bell -->
+                        <div class="position-relative">
+                            <a asp-controller="Notification" asp-action="Index" class="nav-icon-btn" id="notifBtn">
+                                <i class="fas fa-bell"></i>
+                            </a>
+                            <span class="notif-dot d-none" id="notifDot"></span>
+                            <!-- Notification Dropdown -->
+                            <div class="notif-dropdown d-none" id="notifDropdown">
+                                <div class="notif-header">
+                                    <span class="fw-700">Notifications</span>
+                                    <button class="mark-all-read" onclick="markAllRead()">Mark all read</button>
+                                </div>
+                                <div class="notif-list" id="notifList">
+                                    <div class="notif-empty">Loading...</div>
+                                </div>
+                                <div class="notif-footer">
+                                    <a asp-controller="Notification" asp-action="Index">View All</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat -->
+                        <a asp-controller="Chat" asp-action="Index" class="nav-icon-btn">
+                            <i class="fas fa-comment-dots"></i>
+                        </a>
+
+                        <!-- SOS -->
+                        <a asp-controller="Emergency" asp-action="SOS" class="btn-sos-nav">
+                            <i class="fas fa-exclamation-triangle"></i> SOS
+                        </a>
+
+                        <!-- User Menu -->
+                        <div class="user-menu-wrap" id="userMenuWrap">
+                            <button class="user-menu-btn" onclick="toggleUserMenu()">
+                                <div class="user-avatar-sm">@User.Identity.Name?[0].ToString().ToUpper()</div>
+                                <span class="d-none d-md-inline user-name-sm">@User.Identity.Name</span>
+                                <i class="fas fa-chevron-down" style="font-size:0.7rem;"></i>
+                            </button>
+                            <div class="user-dropdown d-none" id="userDropdown">
+                                <a asp-controller="Account" asp-action="Profile" class="dropdown-item-custom">
+                                    <i class="fas fa-user"></i> My Profile
+                                </a>
+                                <a asp-controller="Donor" asp-action="DonationHistory" class="dropdown-item-custom">
+                                    <i class="fas fa-history"></i> Donation History
+                                </a>
+                                <a asp-controller="Statistics" asp-action="Index" class="dropdown-item-custom">
+                                    <i class="fas fa-chart-bar"></i> My Statistics
+                                </a>
+                                <a asp-controller="Certificate" asp-action="Index" class="dropdown-item-custom">
+                                    <i class="fas fa-certificate"></i> Certificates
+                                </a>
+                                <a asp-controller="Donor" asp-action="MyFavorites" class="dropdown-item-custom">
+                                    <i class="fas fa-heart"></i> Favorites
+                                </a>
+                                <div class="dropdown-divider-custom"></div>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="AdminDashboard" asp-action="Index" class="dropdown-item-custom text-danger">
+                                        <i class="fas fa-cog"></i> Admin Panel
+                                    </a>
+                                }
+                                <form asp-controller="Account" asp-action="Logout" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="dropdown-item-custom text-danger w-100 text-start">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn-outline-nav">Login</a>
+                        <a asp-controller="Account" asp-action="Register" class="btn-primary-nav">Register</a>
+                    }
+
+                    <!-- Dark Mode -->
+                    <button class="nav-icon-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                        <i class="fas fa-moon" id="darkModeIcon"></i>
+                    </button>
+
+                    <!-- Mobile Menu -->
+                    <button class="nav-icon-btn d-lg-none" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu d-none" id="mobileMenu">
+            <div class="container py-3">
+                <a asp-controller="Home" asp-action="Index" class="mobile-nav-link">🏠 Home</a>
+                <a asp-controller="Donor" asp-action="Search" class="mobile-nav-link">🔍 Find Donor</a>
+                <a asp-controller="BloodRequest" asp-action="Index" class="mobile-nav-link">🩸 Requests</a>
+                <a asp-controller="Hospital" asp-action="Index" class="mobile-nav-link">🏥 Hospitals</a>
+                <a asp-controller="Leaderboard" asp-action="Index" class="mobile-nav-link">🏆 Leaderboard</a>
+                <a asp-controller="Emergency" asp-action="SOS" class="mobile-nav-link text-danger fw-bold">🚨 SOS Emergency</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- TOAST -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="toast-custom toast-success" id="successToast">
+            <i class="fas fa-check-circle"></i> @TempData["Success"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="toast-custom toast-error" id="errorToast">
+            <i class="fas fa-times-circle"></i> @TempData["Error"]
+        </div>
+    }
+
+    <!-- MAIN CONTENT -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-main">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="footer-brand">🩸 Blood<span>Donate</span> BD</div>
+                    <p class="footer-desc">Bangladesh's most trusted blood donation platform. Connecting donors and recipients to save lives every day.</p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#" class="footer-social"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-2">
+                    <div class="footer-heading">Quick Links</div>
+                    <a asp-controller="Donor" asp-action="Search" class="footer-link">Find Donor</a>
+                    <a asp-controller="BloodRequest" asp-action="Create" class="footer-link">Request Blood</a>
+                    <a asp-controller="Hospital" asp-action="Index" class="footer-link">Hospitals</a>
+                    <a asp-controller="BloodBank" asp-action="Index" class="footer-link">Blood Banks</a>
+                    <a asp-controller="Leaderboard" asp-action="Index" class="footer-link">Leaderboard</a>
+                </div>
+                <div class="col-sm-6 col-lg-2">
+                    <div class="footer-heading">Support</div>
+                    <a asp-controller="Home" asp-action="FAQ" class="footer-link">FAQ</a>
+                    <a asp-controller="Home" asp-action="HealthTips" class="footer-link">Health Tips</a>
+                    <a asp-controller="SuccessStory" asp-action="Index" class="footer-link">Success Stories</a>
+                    <a asp-controller="Home" asp-action="About" class="footer-link">About Us</a>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-heading">Emergency Hotline</div>
+                    <div class="footer-hotline">16600</div>
+                    <div class="footer-hotline-label">24/7 Blood Emergency Helpline</div>
+                    <div class="mt-3">
+                        <div class="footer-heading">Download App</div>
+                        <div class="d-flex gap-2 mt-2">
+                            <a href="#" class="app-badge">
+                                <i class="fab fa-google-play"></i> Google Play
+                            </a>
+                            <a href="#" class="app-badge">
+                                <i class="fab fa-apple"></i> App Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider" />
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div class="footer-copy">© 2025 BloodDonate BD. All rights reserved.</div>
+                <div class="footer-copy">Made with ❤️ to save lives in Bangladesh</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/js/signalr-notification.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

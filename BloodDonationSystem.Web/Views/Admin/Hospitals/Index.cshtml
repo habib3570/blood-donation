@@ -1,0 +1,200 @@
+﻿@using BloodDonationSystem.Application.DTOs.Hospital
+@using BloodDonationSystem.Application.DTOs.Location
+@model List<HospitalDto>
+@{
+    ViewData["Title"] = "Manage Hospitals";
+    Layout = "_Layout.Admin";
+    var districts = ViewBag.Districts as List<DistrictDto> ?? new List<DistrictDto>();
+    var upazilas = ViewBag.Upazilas as List<UpazilaDto> ?? new List<UpazilaDto>();
+    var filter = ViewBag.Filter as HospitalFilterDto ?? new HospitalFilterDto();
+}
+
+<div class="admin-page-header">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <div class="admin-page-title">🏥 Manage Hospitals</div>
+            <div class="admin-page-sub">Search, add and edit hospital information</div>
+        </div>
+        <a asp-action="Create" class="btn-red">
+            <i class="fas fa-plus"></i> Add Hospital
+        </a>
+    </div>
+</div>
+
+<!-- SEARCH FILTER -->
+<div class="admin-card mb-3">
+    <div class="admin-card-header">
+        <span><i class="fas fa-search"></i> Search Hospitals</span>
+    </div>
+    <div class="admin-card-body">
+        <form method="get" id="hospitalFilterForm">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label-custom">Hospital Name</label>
+                    <input type="text" name="Name" value="@filter.Name"
+                           class="form-control-custom" placeholder="Search by name..." />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label-custom">District</label>
+                    <select id="districtFilter" name="District" class="form-select-custom">
+                        <option value="">All Districts</option>
+                        @foreach (var d in districts)
+                        {
+                            <option value="@d.Name" data-id="@d.Id"
+                                    selected="@(d.Name == filter.District ? "selected" : null)">
+                                @d.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label-custom">Upazila</label>
+                    <select id="upazilaFilter" name="Upazila" class="form-select-custom">
+                        <option value="">All Upazilas</option>
+                        @foreach (var u in upazilas)
+                        {
+                            <option value="@u.Name" selected="@(u.Name == filter.Upazila ? "selected" : null)">
+                                @u.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label-custom">Blood Bank</label>
+                    <select name="HasBloodBank" class="form-select-custom">
+                        <option value="">All</option>
+                        <option value="true" selected="@(filter.HasBloodBank == true ? "selected" : null)">Yes</option>
+                        <option value="false" selected="@(filter.HasBloodBank == false ? "selected" : null)">No</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn-red w-100 justify-content-center">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(filter.Name) || !string.IsNullOrEmpty(filter.District) ||
+                        !string.IsNullOrEmpty(filter.Upazila) || filter.HasBloodBank.HasValue)
+            {
+                <div class="mt-2">
+                    <a asp-action="Index" class="btn-sm-outline">
+                        <i class="fas fa-times"></i> Clear Filters
+                    </a>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+<!-- RESULTS -->
+<div class="admin-card">
+    <div class="admin-card-header">
+        <span>Results</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">
+            @(Model?.Count ?? 0) hospital(s) found
+        </span>
+    </div>
+    <div class="admin-card-body" style="padding:0;">
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Phone</th>
+                        <th>Blood Bank</th>
+                        <th>Hours</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var h in Model)
+                        {
+                            <tr>
+                                <td style="font-weight:600;">@h.Name</td>
+                                <td style="font-size:0.82rem;">@h.Upazila, @h.District</td>
+                                <td style="font-size:0.82rem;">@(h.PhoneNumber ?? "-")</td>
+                                <td>
+                                    @if (h.HasBloodBank)
+                                    {
+                                        <span class="status-pill sp-completed">Yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-pill sp-expired">No</span>
+                                    }
+                                </td>
+                                <td style="font-size:0.78rem;">
+                                    @(h.IsOpen24Hours ? "24/7" : $"{h.OpenTime}-{h.CloseTime}")
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <a asp-action="Details" asp-route-id="@h.Id" class="btn-sm-outline">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@h.Id" class="btn-sm-outline">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button onclick="deleteHospital(@h.Id)" class="btn-sm-outline" style="color:#EF4444;border-color:#FECACA;">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4" style="color:var(--text-muted);">
+                                No hospitals found matching your search criteria.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('districtFilter').addEventListener('change', async function () {
+            const districtId = this.options[this.selectedIndex]?.dataset.id;
+            const upazilaFilter = document.getElementById('upazilaFilter');
+
+            upazilaFilter.innerHTML = '<option value="">All Upazilas</option>';
+
+            if (!districtId) return;
+
+            try {
+                const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                const upazilas = await res.json();
+
+                upazilas.forEach(u => {
+                    const option = document.createElement('option');
+                    option.value = u.name;
+                    option.textContent = u.name;
+                    upazilaFilter.appendChild(option);
+                });
+            } catch (e) { }
+        });
+
+        async function deleteHospital(id) {
+            if (!confirm('Delete this hospital?')) return;
+            const res = await fetch(`/AdminHospital/Delete/${id}`, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            const data = await res.json();
+            if (data.success) {
+                showToast('Hospital deleted.', 'success');
+                location.reload();
+            } else {
+                showToast(data.message, 'error');
+            }
+        }
+    </script>
+}

@@ -1,0 +1,199 @@
+﻿@model BloodDonationSystem.Application.DTOs.Auth.RegisterDto
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">Join BloodDonate BD 🩸</div>
+        <div class="page-header-sub">Register to become a life saver today</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="form-card">
+                    <div class="text-center mb-4">
+                        <div style="font-size:2.5rem;">🩸</div>
+                        <div class="form-card-title">Create Account</div>
+                        <div class="form-card-subtitle">Fill in your details to get started</div>
+                    </div>
+
+                    <form asp-action="Register" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="validation-msg mb-3"></div>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label-custom">Full Name *</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input asp-for="FullName" class="form-control-custom input-with-icon" placeholder="Your full name" />
+                                </div>
+                                <span asp-validation-for="FullName" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Email Address *</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-envelope input-icon"></i>
+                                    <input asp-for="Email" class="form-control-custom input-with-icon" placeholder="your@email.com" />
+                                </div>
+                                <span asp-validation-for="Email" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Phone Number *</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-phone input-icon"></i>
+                                    <input asp-for="PhoneNumber" class="form-control-custom input-with-icon" placeholder="01XXXXXXXXX" />
+                                </div>
+                                <span asp-validation-for="PhoneNumber" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Password *</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-lock input-icon"></i>
+                                    <input asp-for="Password" type="password" class="form-control-custom input-with-icon" placeholder="Minimum 6 characters" />
+                                </div>
+                                <span asp-validation-for="Password" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Confirm Password *</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-lock input-icon"></i>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control-custom input-with-icon" placeholder="Re-enter password" />
+                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Blood Group *</label>
+                                <select asp-for="BloodGroup" class="form-select-custom">
+                                    <option value="">Select</option>
+                                    <option value="0">A+</option>
+                                    <option value="1">A-</option>
+                                    <option value="2">B+</option>
+                                    <option value="3">B-</option>
+                                    <option value="4">AB+</option>
+                                    <option value="5">AB-</option>
+                                    <option value="6">O+</option>
+                                    <option value="7">O-</option>
+                                </select>
+                                <span asp-validation-for="BloodGroup" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Gender *</label>
+                                <select asp-for="Gender" class="form-select-custom">
+                                    <option value="">Select</option>
+                                    <option value="0">Male</option>
+                                    <option value="1">Female</option>
+                                    <option value="2">Other</option>
+                                </select>
+                                <span asp-validation-for="Gender" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label-custom">Date of Birth *</label>
+                                <input asp-for="DateOfBirth" type="date" class="form-control-custom" />
+                                <span asp-validation-for="DateOfBirth" class="validation-msg"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">District *</label>
+                                <select id="districtSelect" name="District" class="form-select-custom" required>
+                                    <option value="">Select District</option>
+                                    @{
+                                        var districts = ViewBag.Districts as List<BloodDonationSystem.Application.DTOs.Location.DistrictDto> ?? new();
+                                    }
+                                    @foreach (var d in districts)
+                                    {
+                                        <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Upazila *</label>
+                                <select id="upazilaSelect" name="Upazila" class="form-select-custom" required disabled>
+                                    <option value="">Select District First</option>
+                                </select>
+                            </div>
+                                
+                                
+
+                            <div class="col-12">
+                                <label class="form-label-custom">Referral Code (Optional)</label>
+                                <div class="input-group-custom">
+                                    <i class="fas fa-gift input-icon"></i>
+                                    <input asp-for="ReferralCode" class="form-control-custom input-with-icon" placeholder="Enter referral code if you have one" />
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="info-card">
+                                    <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.7;">
+                                        <i class="fas fa-info-circle text-red"></i>
+                                        By registering, you agree to our Terms of Service. Your information will only be shared with
+                                        blood recipients who need your help. Minimum age to donate: 18 years. Minimum weight: 50 kg.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn-red w-100 justify-content-center" style="padding:0.85rem;">
+                                    <i class="fas fa-user-plus"></i> Create Account
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4" style="font-size:0.875rem;color:var(--text-muted);">
+                        Already have an account?
+                        <a asp-action="Login" style="color:var(--deep-red);font-weight:700;text-decoration:none;">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('districtSelect').addEventListener('change', async function () {
+            const districtId = this.options[this.selectedIndex]?.dataset.id;
+            const upazilaSelect = document.getElementById('upazilaSelect');
+
+            upazilaSelect.innerHTML = '<option value="">Loading...</option>';
+            upazilaSelect.disabled = true;
+
+            if (!districtId) {
+                upazilaSelect.innerHTML = '<option value="">Select District First</option>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                const upazilas = await res.json();
+
+                upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
+                upazilas.forEach(u => {
+                    const option = document.createElement('option');
+                    option.value = u.name;
+                    option.textContent = u.name;
+                    upazilaSelect.appendChild(option);
+                });
+                upazilaSelect.disabled = false;
+            } catch (e) {
+                upazilaSelect.innerHTML = '<option value="">Failed to load</option>';
+            }
+        });
+    </script>
+}

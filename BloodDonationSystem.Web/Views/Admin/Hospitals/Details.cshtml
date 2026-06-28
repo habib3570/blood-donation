@@ -1,0 +1,73 @@
+﻿@using BloodDonationSystem.Application.DTOs.Hospital
+@model HospitalDto
+@{
+    ViewData["Title"] = "Hospital Details";
+    Layout = "_Layout.Admin";
+}
+
+<div class="admin-page-header">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+            <div class="admin-page-title">🏥 @Model.Name</div>
+            <div class="admin-page-sub">Hospital information</div>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-sm-outline">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a asp-action="Index" class="btn-sm-outline">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-body">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="info-card">
+                    <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">LOCATION</div>
+                    <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                        @Model.Upazila, @Model.District
+                    </div>
+                    <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.25rem;">
+                        @Model.Address
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">PHONE</div>
+                    <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                        @(Model.PhoneNumber ?? "N/A")
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="info-card">
+                    <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">EMERGENCY</div>
+                    <div style="font-size:0.95rem;font-weight:700;color:var(--deep-red);margin-top:0.25rem;">
+                        @(Model.EmergencyNumber ?? "N/A")
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-card">
+                    <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">HOURS</div>
+                    <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                        @(Model.IsOpen24Hours ? "Open 24/7" : $"{Model.OpenTime} - {Model.CloseTime}")
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-card">
+                    <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">BLOOD BANK</div>
+                    <div style="font-size:0.95rem;font-weight:700;color:@(Model.HasBloodBank ? "var(--success-green)" : "var(--text-muted)");margin-top:0.25rem;">
+                        @(Model.HasBloodBank ? "Yes, Available" : "No")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

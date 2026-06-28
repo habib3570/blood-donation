@@ -1,0 +1,204 @@
+﻿@using BloodDonationSystem.Application.DTOs.Emergency
+@model List<EmergencyRequestDto>
+@{
+    ViewData["Title"] = "Emergency Requests";
+}
+
+<div class="page-header"
+     style="background:linear-gradient(135deg,#8B0000,var(--deep-red));">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <div class="page-header-title">🚨 Emergency Requests</div>
+                <div class="page-header-sub">Active emergency blood requests — respond immediately</div>
+            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-action="SOS" class="btn-red"
+                   style="animation:pulse-sos 2s infinite;">
+                    <i class="fas fa-exclamation-triangle"></i> SOS Emergency
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+
+        @if (Model != null && Model.Any())
+        {
+            <!-- ACTIVE COUNT -->
+            <div class="info-card mb-4"
+                 style="background:linear-gradient(135deg,#FEF2F2,#FEE2E2);
+                            border:2px solid #FECACA;">
+                <div class="d-flex align-items-center gap-3">
+                    <div style="font-size:2rem;">🚨</div>
+                    <div>
+                        <div style="font-size:1.1rem;font-weight:800;color:var(--deep-red);">
+                            @Model.Count Active Emergency Request(s)
+                        </div>
+                        <div style="font-size:0.82rem;color:var(--text-muted);">
+                            Donors nearby are being notified. Please respond if you can help.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column gap-3">
+                @foreach (var emg in Model)
+                {
+                    var remaining = emg.ExpiryDate - DateTime.UtcNow;
+                    var isUrgent = remaining.TotalHours < 2;
+
+                    <div class="emergency-req-card"
+                         style="@(isUrgent ? "border-color:var(--deep-red);border-width:2px;" : "")">
+                        <div class="d-flex align-items-start gap-3">
+
+                            <!-- Blood Badge -->
+                            <div class="emg-blood-box"
+                                 style="width:60px;height:60px;border-radius:14px;font-size:1.1rem;">
+                                @emg.BloodGroupDisplay
+                            </div>
+
+                            <!-- Info -->
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-start justify-content-between gap-2 flex-wrap">
+                                    <div>
+                                        <div style="font-size:1.05rem;font-weight:800;
+                                                            color:var(--navy-blue);margin-bottom:0.25rem;">
+                                            @emg.PatientName
+                                        </div>
+                                        <div style="font-size:0.85rem;font-weight:600;
+                                                            color:var(--navy-blue);">
+                                            <i class="fas fa-hospital"></i> @emg.HospitalName
+                                        </div>
+                                        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            @emg.Upazila, @emg.District
+                                            @if (!string.IsNullOrEmpty(emg.HospitalAddress))
+                                            {
+                                                <span> · @emg.HospitalAddress</span>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <div class="emg-timer"
+                                             style="@(isUrgent ? "font-size:0.85rem;" : "")">
+                                            <i class="fas fa-clock"></i>
+                                            @if (remaining.TotalHours > 1)
+                                            {
+                                                @($"{(int)remaining.TotalHours}h {remaining.Minutes}m left")
+                                            }
+                                            else
+                                            {
+                                                @($"{remaining.Minutes}m left")
+                                            }
+                                        </div>
+                                        @if (isUrgent)
+                                        {
+                                            <div style="font-size:0.7rem;background:#FEF2F2;
+                                                                    color:var(--deep-red);padding:2px 8px;
+                                                                    border-radius:4px;font-weight:700;
+                                                                    margin-top:4px;">
+                                                ⚠️ EXPIRING SOON
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <!-- Details Row -->
+                                <div class="donor-pills mt-2">
+                                    <div class="donor-pill">
+                                        <i class="fas fa-tint"></i>
+                                        @emg.UnitsNeeded unit(s) needed
+                                    </div>
+                                    <div class="donor-pill">
+                                        <i class="fas fa-phone"></i>
+                                        @emg.ContactNumber
+                                    </div>
+                                    <div class="donor-pill">
+                                        <i class="fas fa-bell"></i>
+                                        @emg.NotificationsSent donors notified
+                                    </div>
+                                    <div class="donor-pill">
+                                        <i class="fas fa-clock"></i>
+                                        @emg.CreatedAt.ToString("dd MMM, hh:mm tt")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="emg-footer">
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <form asp-action="Accept"
+                                      asp-route-id="@emg.Id"
+                                      method="post"
+                                      style="flex:2;">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit"
+                                            class="btn-sm-red w-100 justify-content-center"
+                                            style="padding:0.6rem;">
+                                        <i class="fas fa-check"></i> Accept & Help Now
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <a asp-controller="Account" asp-action="Login"
+                                   class="btn-sm-red"
+                                   style="flex:2;justify-content:center;padding:0.6rem;">
+                                    <i class="fas fa-sign-in-alt"></i> Login to Help
+                                </a>
+                            }
+
+                            <a asp-action="Details" asp-route-id="@emg.Id"
+                               class="btn-sm-outline">
+                                <i class="fas fa-eye"></i> Details
+                            </a>
+
+                            <a href="tel:@emg.ContactNumber" class="btn-sm-outline">
+                                <i class="fas fa-phone"></i>
+                            </a>
+
+                            @if (emg.HospitalLatitude.HasValue && emg.HospitalLongitude.HasValue)
+                            {
+                                <a href="https://maps.google.com/?q=@emg.HospitalLatitude,@emg.HospitalLongitude"
+                                   target="_blank" class="btn-sm-outline">
+                                    <i class="fas fa-map"></i>
+                                </a>
+                            }
+
+                            <a href="https://wa.me/@emg.ContactNumber"
+                               target="_blank" class="btn-sm-outline">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="info-card text-center py-5">
+                <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+                <div style="font-size:1.2rem;font-weight:800;
+                                color:var(--navy-blue);margin-bottom:0.5rem;">
+                    No Active Emergencies
+                </div>
+                <div style="font-size:0.875rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                    Great news! There are no active emergency blood requests at the moment.
+                </div>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-action="Create" class="btn-red">
+                        <i class="fas fa-plus"></i> Create Emergency Request
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</section>

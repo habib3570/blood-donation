@@ -1,0 +1,179 @@
+﻿@using BloodDonationSystem.Application.DTOs.User
+@model UserProfileDto
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">👤 My Profile</div>
+        <div class="page-header-sub">View and manage your account information</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- LEFT: Summary -->
+            <div class="col-lg-4">
+                <div class="form-card text-center">
+                    <div class="donor-avatar"
+                         style="width:80px;height:80px;font-size:2rem;margin:0 auto 1rem;">
+                        @Model.FullName[0]
+                    </div>
+                    <div style="font-size:1.2rem;font-weight:800;color:var(--navy-blue);">
+                        @Model.FullName
+                        @if (Model.IsVerified)
+                        {
+                            <i class="fas fa-check-circle"
+                               style="color:var(--success-green);font-size:1rem;"></i>
+                        }
+                    </div>
+                    <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.25rem;">
+                        @Model.Email
+                    </div>
+
+                    <span class="donor-blood-tag"
+                          style="position:static;font-size:1.2rem;
+                                 padding:0.4rem 1.1rem;margin-top:1rem;display:inline-block;">
+                        🩸 @Model.BloodGroupDisplay
+                    </span>
+
+                    <div class="mt-3">
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--navy-blue);
+                                    margin-bottom:0.4rem;display:flex;justify-content:space-between;">
+                            <span>Profile Complete</span>
+                            <span style="color:var(--deep-red);">
+                                @Model.ProfileCompletionPercentage%
+                            </span>
+                        </div>
+                        <div style="background:var(--card-border);border-radius:10px;
+                                    height:8px;overflow:hidden;">
+                            <div style="background:var(--deep-red);border-radius:10px;
+                                        height:100%;width:@Model.ProfileCompletionPercentage%;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <a asp-action="EditProfile" class="btn-red w-100 justify-content-center mt-4">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </a>
+                </div>
+
+                @if (Model.DonorInfo != null)
+                {
+                    <div class="info-card mt-3">
+                        <div class="info-card-title">
+                            <i class="fas fa-tint"></i> Donor Stats
+                        </div>
+                        <div class="row g-2 mt-1">
+                            <div class="col-6">
+                                <div style="text-align:center;background:white;
+                                                border-radius:10px;padding:0.75rem;">
+                                    <div style="font-size:1.3rem;font-weight:800;
+                                                    color:var(--deep-red);">
+                                        @Model.DonorInfo.TotalDonations
+                                    </div>
+                                    <div style="font-size:0.7rem;color:var(--text-muted);">
+                                        Donations
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div style="text-align:center;background:white;
+                                                border-radius:10px;padding:0.75rem;">
+                                    <div style="font-size:1.3rem;font-weight:800;
+                                                    color:var(--navy-blue);">
+                                        @Model.DonorInfo.AverageRating.ToString("0.0") ⭐
+                                    </div>
+                                    <div style="font-size:0.7rem;color:var(--text-muted);">
+                                        Rating
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- RIGHT: Details -->
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="form-card-title">Personal Information</div>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;
+                                            color:var(--text-muted);">
+                                    PHONE
+                                </div>
+                                <div style="font-size:0.95rem;font-weight:700;
+                                            color:var(--navy-blue);margin-top:0.25rem;">
+                                    @(Model.PhoneNumber ?? "Not set")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;
+                                            color:var(--text-muted);">
+                                    AGE
+                                </div>
+                                <div style="font-size:0.95rem;font-weight:700;
+                                            color:var(--navy-blue);margin-top:0.25rem;">
+                                    @Model.Age years
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;
+                                            color:var(--text-muted);">
+                                    LOCATION
+                                </div>
+                                <div style="font-size:0.95rem;font-weight:700;
+                                            color:var(--navy-blue);margin-top:0.25rem;">
+                                    @Model.Upazila, @Model.District
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;
+                                            color:var(--text-muted);">
+                                    MEMBER SINCE
+                                </div>
+                                <div style="font-size:0.95rem;font-weight:700;
+                                            color:var(--navy-blue);margin-top:0.25rem;">
+                                    @Model.CreatedAt.ToString("dd MMMM yyyy")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.DonorInfo == null)
+                    {
+                        <div class="info-card mt-3 text-center"
+                             style="background:linear-gradient(135deg,var(--deep-red-light),white);">
+                            <div style="font-size:1.8rem;margin-bottom:0.5rem;">🩸</div>
+                            <div style="font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                                You're not a donor yet
+                            </div>
+                            <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:1rem;">
+                                Register as a donor and start saving lives today!
+                            </div>
+                            <form asp-controller="Donor" asp-action="BecomeDonor" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-red">
+                                    <i class="fas fa-tint"></i> Become a Donor
+                                </button>
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

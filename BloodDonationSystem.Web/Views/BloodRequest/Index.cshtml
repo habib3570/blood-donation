@@ -1,0 +1,306 @@
+﻿@using BloodDonationSystem.Application.DTOs.BloodRequest
+@using BloodDonationSystem.Application.DTOs.Location
+@model List<BloodRequestDto>
+@{
+    ViewData["Title"] = "Blood Requests";
+    var districts = ViewBag.Districts as List<DistrictDto> ?? new List<DistrictDto>();
+    var upazilas = ViewBag.Upazilas as List<UpazilaDto> ?? new List<UpazilaDto>();
+
+    string selectedBloodGroup = Context.Request.Query["bloodGroup"].ToString();
+    string selectedDistrict = ViewBag.SelectedDistrict as string ?? "";
+    string selectedUpazila = ViewBag.SelectedUpazila as string ?? "";
+    string selectedPriority = Context.Request.Query["priority"].ToString();
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <div class="page-header-title">🩸 Blood Requests</div>
+                <div class="page-header-sub">Active blood donation requests in your area</div>
+            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="BloodRequest" asp-action="Create" class="btn-red">
+                    <i class="fas fa-plus"></i> New Request
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+
+        <!-- FILTERS BAR -->
+        <div class="search-card mb-4">
+            <form method="get" id="requestFilterForm" class="row g-2 align-items-end">
+                <div class="col-sm-3">
+                    <label class="form-label-custom">Blood Group</label>
+                    <select name="bloodGroup" id="bgFilterSelect" class="form-select-custom">
+                        <option value="">All Groups</option>
+                        <option value="0">A+</option>
+                        <option value="1">A-</option>
+                        <option value="2">B+</option>
+                        <option value="3">B-</option>
+                        <option value="4">AB+</option>
+                        <option value="5">AB-</option>
+                        <option value="6">O+</option>
+                        <option value="7">O-</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label-custom">District</label>
+                    <select id="districtSelect" name="district" class="form-select-custom">
+                        <option value="">All Districts</option>
+                        @foreach (var d in districts)
+                        {
+                            <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label-custom">Upazila</label>
+                    <select id="upazilaSelect" name="upazila" class="form-select-custom">
+                        <option value="">All Upazilas</option>
+                        @foreach (var u in upazilas)
+                        {
+                            <option value="@u.Name">@u.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <label class="form-label-custom">Priority</label>
+                    <select name="priority" id="priorityFilterSelect" class="form-select-custom">
+                        <option value="">All</option>
+                        <option value="2">Emergency</option>
+                        <option value="1">Urgent</option>
+                        <option value="0">Normal</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <!-- STATS ROW -->
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon si-orange">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-number">@Model.Count(r => r.Status.ToString() == "Pending")</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon si-green">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="stat-number">@Model.Count(r => r.Status.ToString() == "Accepted")</div>
+                        <div class="stat-label">Accepted</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon si-red">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-number">@Model.Count(r => r.IsEmergency)</div>
+                        <div class="stat-label">Emergency</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon si-blue">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div class="stat-number">@Model.Count</div>
+                        <div class="stat-label">Total Active</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REQUEST CARDS -->
+            <div class="row g-3">
+                @foreach (var req in Model)
+                {
+                    <div class="col-md-6 col-xl-4">
+                        <div class="@(req.IsEmergency ? "emergency-req-card" : "donor-card")">
+                            <div class="donor-card-header">
+                                <div class="emg-blood-box"
+                                     style="width:48px;height:48px;border-radius:12px;
+                                                    background:var(--deep-red);color:white;
+                                                    display:flex;align-items:center;justify-content:center;
+                                                    font-size:0.9rem;font-weight:800;flex-shrink:0;">
+                                    @req.BloodGroupDisplay
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="donor-name">@req.PatientName</div>
+                                    <div class="donor-loc">
+                                        <i class="fas fa-hospital"></i> @req.HospitalName
+                                    </div>
+                                    <div class="donor-loc">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        @req.Upazila, @req.District
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column align-items-end gap-1">
+                                    @{
+                                        var statusClass = req.Status.ToString() switch
+                                        {
+                                            "Pending" => "sp-pending",
+                                            "Accepted" => "sp-accepted",
+                                            "Rejected" => "sp-rejected",
+                                            "Completed" => "sp-completed",
+                                            _ => "sp-expired"
+                                        };
+                                    }
+                                    <span class="status-pill @statusClass">@req.StatusDisplay</span>
+                                    @if (req.IsEmergency)
+                                    {
+                                        <span class="status-pill sp-rejected">
+                                            <i class="fas fa-bolt"></i> EMERGENCY
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="donor-card-body">
+                                <div class="donor-pills mb-2">
+                                    <div class="donor-pill">
+                                        <i class="fas fa-tint"></i> @req.UnitsNeeded unit(s)
+                                    </div>
+                                    @if (req.RequiredDate.HasValue)
+                                    {
+                                        <div class="donor-pill">
+                                            <i class="fas fa-calendar"></i>
+                                            @req.RequiredDate.Value.ToString("dd MMM")
+                                        </div>
+                                    }
+                                    @if (req.ExpiryDate.HasValue)
+                                    {
+                                        var remaining = req.ExpiryDate.Value - DateTime.UtcNow;
+                                        if (remaining.TotalHours > 0)
+                                        {
+                                            <div class="donor-pill" style="color:var(--deep-red);">
+                                                <i class="fas fa-clock"></i>
+                                                @((int)remaining.TotalHours)h left
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                                <div style="font-size:0.78rem;color:var(--text-muted);">
+                                    <i class="fas fa-user"></i> Requested by @req.RequesterName ·
+                                    @req.CreatedAt.ToString("dd MMM, hh:mm tt")
+                                </div>
+                            </div>
+
+                            <div class="donor-card-footer">
+                                <a asp-action="Details" asp-route-id="@req.Id"
+                                   class="btn-sm-outline flex-grow-1 justify-content-center">
+                                    <i class="fas fa-eye"></i> Details
+                                </a>
+
+                                @if (User.Identity?.IsAuthenticated == true &&
+                                                        req.Status.ToString() == "Pending" &&
+                                                        req.RequesterId != User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)
+                                {
+                                    <form asp-action="Accept" asp-route-id="@req.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-sm-red">
+                                            <i class="fas fa-check"></i> Accept
+                                        </button>
+                                    </form>
+                                }
+
+                                @if (!string.IsNullOrEmpty(req.ContactNumber))
+                                {
+                                    <a href="tel:@req.ContactNumber" class="btn-sm-outline">
+                                        <i class="fas fa-phone"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="info-card text-center py-5">
+                <div style="font-size:3rem;margin-bottom:1rem;">🩸</div>
+                <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                    No Active Requests
+                </div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                    There are no active blood requests matching your filters.
+                </div>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-controller="BloodRequest" asp-action="Create" class="btn-red">
+                        <i class="fas fa-plus"></i> Create Blood Request
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // ── Server থেকে আসা query value দিয়ে dropdown সেট করা ──
+        window.addEventListener('DOMContentLoaded', function () {
+            const bgSelect = document.getElementById('bgFilterSelect');
+            if (bgSelect) bgSelect.value = "@selectedBloodGroup";
+
+            const districtSelect = document.getElementById('districtSelect');
+            if (districtSelect) districtSelect.value = "@selectedDistrict";
+
+            const upazilaSelect = document.getElementById('upazilaSelect');
+            if (upazilaSelect) upazilaSelect.value = "@selectedUpazila";
+
+            const prioritySelect = document.getElementById('priorityFilterSelect');
+            if (prioritySelect) prioritySelect.value = "@selectedPriority";
+        });
+
+        // ── Blood Group / Priority পরিবর্তনে সাথে সাথে সাবমিট ──
+        document.getElementById('bgFilterSelect').addEventListener('change', function () {
+            document.getElementById('requestFilterForm').submit();
+        });
+
+        document.getElementById('priorityFilterSelect').addEventListener('change', function () {
+            document.getElementById('requestFilterForm').submit();
+        });
+
+        // ── District পরিবর্তনে Upazila cascade লোড করে সাবমিট ──
+        document.getElementById('districtSelect').addEventListener('change', async function () {
+            const districtId = this.options[this.selectedIndex]?.dataset.id;
+            const upazilaSelect = document.getElementById('upazilaSelect');
+
+            upazilaSelect.innerHTML = '<option value="">All Upazilas</option>';
+
+            if (districtId) {
+                try {
+                    const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                    const upazilas = await res.json();
+                    upazilas.forEach(u => {
+                        const option = document.createElement('option');
+                        option.value = u.name;
+                        option.textContent = u.name;
+                        upazilaSelect.appendChild(option);
+                    });
+                } catch (e) { }
+            }
+
+            document.getElementById('requestFilterForm').submit();
+        });
+
+        document.getElementById('upazilaSelect').addEventListener('change', function () {
+            document.getElementById('requestFilterForm').submit();
+        });
+    </script>
+}

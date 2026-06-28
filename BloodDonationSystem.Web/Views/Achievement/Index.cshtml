@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Achievements & Badges";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🏆 Achievements & Badges</div>
+        <div class="page-header-sub">Your earned rewards and progress</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+
+        <!-- BADGES -->
+        <div class="mb-4">
+            <div class="section-title mb-3">🎖️ My Badges</div>
+            <div class="row g-3">
+                @{
+                    var userBadges = ViewBag.UserBadges as
+                    List<BloodDonationSystem.Domain.Entities.UserBadge> ?? new();
+                    var allBadges = ViewBag.AllBadges as
+                    List<BloodDonationSystem.Domain.Entities.Badge> ?? new();
+                }
+                @foreach (var badge in allBadges)
+                {
+                    var earned = userBadges.Any(ub => ub.BadgeId == badge.Id);
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="info-card text-center"
+                             style="@(earned ? "" : "opacity:0.4;filter:grayscale(1);")">
+                            <div style="font-size:2.5rem;margin-bottom:0.5rem;">
+                                @(badge.Type.ToString() switch
+                                {
+                                    "Bronze" => "🥉",
+                                    "Silver" => "🥈",
+                                    "Gold" => "🥇",
+                                    "Platinum" => "💎",
+                                    "EmergencyHero" => "🚨",
+                                    _ => "🏅"
+                                })
+                        </div>
+                        <div style="font-size:0.82rem;font-weight:700;
+                                        color:var(--navy-blue);">
+                            @badge.Name
+                        </div>
+                        <div style="font-size:0.7rem;color:var(--text-muted);
+                                        margin-top:0.25rem;">
+                            @badge.Description
+                        </div>
+                        @if (earned)
+                            {
+                                var eb = userBadges.First(ub => ub.BadgeId == badge.Id);
+                                <div class="avail-badge avail-yes mt-2"
+                                     style="justify-content:center;">
+                                    <span class="avail-dot"></span>
+                                    Earned @eb.EarnedAt.ToString("MMM yyyy")
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="font-size:0.7rem;color:var(--text-muted);
+                                                    margin-top:0.5rem;">
+                                    Need @badge.RequiredDonations donations
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- ACHIEVEMENTS -->
+        <div>
+            <div class="section-title mb-3">🌟 Achievements</div>
+            <div class="row g-3">
+                @{
+                    var userAchievements = ViewBag.UserAchievements as
+                    List<BloodDonationSystem.Application.DTOs.Achievement.UserAchievementDto>
+                    ?? new();
+                    var allAchievements = ViewBag.AllAchievements as
+                    List<BloodDonationSystem.Application.DTOs.Achievement.AchievementDto>
+                    ?? new();
+                }
+                @foreach (var achievement in allAchievements)
+                {
+                    var earned = userAchievements.Any(
+                    ua => ua.Achievement?.Id == achievement.Id);
+                    <div class="col-md-6 col-lg-4">
+                        <div class="donor-card @(earned ? "" : "")"
+                             style="@(earned ? "border-color:var(--deep-red);" : "opacity:0.6;")">
+                            <div class="donor-card-header">
+                                <div style="font-size:2rem;flex-shrink:0;">
+                                    @(achievement.Type.ToString() switch
+                                    {
+                                        "FirstDonation" => "🩸",
+                                        "FiveDonationsClub" => "🌟",
+                                        "TenDonationsClub" => "💫",
+                                        "TwentyDonationsClub" => "👑",
+                                        "EmergencyHero" => "🚨",
+                                        "TenLivesSaved" => "❤️",
+                                        "MonthlyTopDonor" => "🏆",
+                                        "ReferralChampion" => "🤝",
+                                        _ => "🏅"
+                                    })
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="donor-name">@achievement.Title</div>
+                                <div class="donor-loc">@achievement.Description</div>
+                            </div>
+                            @if (earned)
+                                {
+                                    <span class="badge-verified">✅ Earned</span>
+                                }
+                            </div>
+                            <div class="donor-card-body">
+                                <div class="d-flex align-items-center
+                                                justify-content-between">
+                                    <div class="donor-pill">
+                                        <i class="fas fa-coins"></i>
+                                        +@achievement.RewardPoints pts
+                                    </div>
+                                    <div style="font-size:0.75rem;color:var(--text-muted);">
+                                        Required: @achievement.RequiredCount
+                                    </div>
+                                </div>
+                                @if (earned)
+                                {
+                                    var ea = userAchievements.First(
+                                    ua => ua.Achievement?.Id == achievement.Id);
+                                    <div style="font-size:0.75rem;color:var(--success-green);
+                                                        margin-top:0.5rem;font-weight:600;">
+                                        Unlocked: @ea.EarnedAt.ToString("dd MMM yyyy")
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

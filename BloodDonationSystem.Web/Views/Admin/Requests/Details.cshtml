@@ -1,0 +1,159 @@
+﻿@using BloodDonationSystem.Application.DTOs.BloodRequest
+@model BloodRequestDto
+@{
+    ViewData["Title"] = "Request Details";
+    Layout = "_Layout.Admin";
+}
+
+<div class="admin-page-header">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+            <div class="admin-page-title">🩸 Request Details #@Model.Id</div>
+            <div class="admin-page-sub">Complete blood request information</div>
+        </div>
+        <a asp-controller="AdminRequest" asp-action="Index" class="btn-sm-outline">
+            <i class="fas fa-arrow-left"></i> Back to Requests
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <div class="admin-card-body">
+                <div class="d-flex align-items-start gap-3 mb-4">
+                    <div class="emg-blood-box" style="width:60px;height:60px;border-radius:14px;font-size:1.2rem;">
+                        @Model.BloodGroupDisplay
+                    </div>
+                    <div class="flex-grow-1">
+                        <div style="font-size:1.2rem;font-weight:800;color:var(--navy-blue);">
+                            @Model.PatientName
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">
+                            <i class="fas fa-hospital"></i> @Model.HospitalName
+                        </div>
+                        <div class="d-flex gap-2 mt-2 flex-wrap">
+                            @{
+                                var sc = Model.Status.ToString() switch
+                                {
+                                    "Pending" => "sp-pending",
+                                    "Accepted" => "sp-accepted",
+                                    "Rejected" => "sp-rejected",
+                                    "Completed" => "sp-completed",
+                                    _ => "sp-expired"
+                                };
+                            }
+                            <span class="status-pill @sc">@Model.StatusDisplay</span>
+                            @if (Model.IsEmergency)
+                            {
+                                <span class="status-pill sp-rejected"><i class="fas fa-bolt"></i> EMERGENCY</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="info-card">
+                            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">UNITS NEEDED</div>
+                            <div style="font-size:1.2rem;font-weight:800;color:var(--deep-red);margin-top:0.25rem;">
+                                @Model.UnitsNeeded
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="info-card">
+                            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">LOCATION</div>
+                            <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                                @Model.Upazila, @Model.District
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="info-card">
+                            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">REQUESTED BY</div>
+                            <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                                @Model.RequesterName
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="info-card">
+                            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">CONTACT</div>
+                            <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-top:0.25rem;">
+                                @(Model.ContactNumber ?? "Not provided")
+                            </div>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.DonorName))
+                    {
+                        <div class="col-sm-6">
+                            <div class="info-card">
+                                <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);">DONOR ASSIGNED</div>
+                                <div style="font-size:0.95rem;font-weight:700;color:var(--success-green);margin-top:0.25rem;">
+                                    @Model.DonorName
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.AdditionalInfo))
+                {
+                    <div class="mt-3">
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--text-muted);margin-bottom:0.5rem;">
+                            ADDITIONAL INFO
+                        </div>
+                        <div class="info-card">@Model.AdditionalInfo</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="admin-card">
+            <div class="admin-card-header"><span>Timeline</span></div>
+            <div class="admin-card-body" style="font-size:0.85rem;line-height:2;">
+                <div><i class="fas fa-plus-circle text-red"></i> Created: @Model.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")</div>
+                @if (Model.AcceptedAt.HasValue)
+                {
+                    <div><i class="fas fa-check-circle text-success"></i> Accepted: @Model.AcceptedAt.Value.ToString("dd MMM yyyy, hh:mm tt")</div>
+                }
+                @if (Model.CompletedAt.HasValue)
+                {
+                    <div><i class="fas fa-trophy"></i> Completed: @Model.CompletedAt.Value.ToString("dd MMM yyyy, hh:mm tt")</div>
+                }
+                @if (Model.ExpiryDate.HasValue)
+                {
+                    <div><i class="fas fa-clock"></i> Expires: @Model.ExpiryDate.Value.ToString("dd MMM yyyy, hh:mm tt")</div>
+                }
+            </div>
+        </div>
+
+        @if (Model.Status.ToString() == "Pending")
+        {
+            <div class="admin-card mt-3">
+                <div class="admin-card-body">
+                    <button onclick="forceComplete(@Model.Id)" class="btn-sm-red w-100 justify-content-center">
+                        <i class="fas fa-check"></i> Force Complete
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        async function forceComplete(id) {
+            if (!confirm('Force complete this request?')) return;
+            const res = await fetch(`/AdminRequest/ForceComplete/${id}`, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            const data = await res.json();
+            if (data.success) { showToast('Request completed.', 'success'); location.reload(); }
+        }
+    </script>
+}

@@ -1,0 +1,232 @@
+﻿@{ ViewData["Title"] = "My Statistics"; }
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">📊 My Statistics</div>
+        <div class="page-header-sub">Your donation performance and achievements</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        @{
+            var personal = ViewBag.Personal as
+                BloodDonationSystem.Application.DTOs.Statistics.PersonalStatsDto;
+            var monthly = ViewBag.Monthly as
+                BloodDonationSystem.Application.DTOs.Statistics.MonthlyStatsDto;
+        }
+
+        <!-- PERSONAL STATS -->
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-2">
+                <div class="stat-card">
+                    <div class="stat-icon si-red"><i class="fas fa-tint"></i></div>
+                    <div class="stat-number">@(personal?.TotalDonations ?? 0)</div>
+                    <div class="stat-label">Donations</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="stat-card">
+                    <div class="stat-icon si-green"><i class="fas fa-heart"></i></div>
+                    <div class="stat-number">@(personal?.LivesSaved ?? 0)</div>
+                    <div class="stat-label">Lives Saved</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="stat-card">
+                    <div class="stat-icon si-orange"><i class="fas fa-star"></i></div>
+                    <div class="stat-number">@(personal?.AverageRating.ToString("0.0") ?? "0.0")</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="stat-card">
+                    <div class="stat-icon si-blue"><i class="fas fa-coins"></i></div>
+                    <div class="stat-number">@(personal?.TotalPoints ?? 0)</div>
+                    <div class="stat-label">Total Points</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="stat-card">
+                    <div class="stat-icon si-red"><i class="fas fa-fire"></i></div>
+                    <div class="stat-number">@(personal?.CurrentStreak ?? 0)</div>
+                    <div class="stat-label">Streak</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="stat-card">
+                    <div class="stat-icon si-blue"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-number">#@(personal?.Rank ?? 0)</div>
+                    <div class="stat-label">Rank</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- CHART -->
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div style="font-size:1rem;font-weight:700;color:var(--navy-blue);
+                                margin-bottom:1.25rem;display:flex;
+                                align-items:center;gap:0.5rem;">
+                        <i class="fas fa-chart-bar" style="color:var(--deep-red);"></i>
+                        Monthly Donations (@DateTime.Now.Year)
+                    </div>
+                    <canvas id="monthlyChart" height="200"></canvas>
+                </div>
+
+                <!-- REQUEST STATS -->
+                <div class="row g-3 mt-1">
+                    <div class="col-md-4">
+                        <div class="info-card text-center">
+                            <div style="font-size:2rem;font-weight:800;color:var(--success-green);">
+                                @(personal?.AcceptedRequests ?? 0)
+                            </div>
+                            <div style="font-size:0.8rem;color:var(--text-muted);">
+                                Accepted Requests
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-card text-center">
+                            <div style="font-size:2rem;font-weight:800;color:var(--warning-orange);">
+                                @(personal?.PendingRequests ?? 0)
+                            </div>
+                            <div style="font-size:0.8rem;color:var(--text-muted);">
+                                Pending Requests
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info-card text-center">
+                            <div style="font-size:2rem;font-weight:800;color:var(--deep-red);">
+                                @(personal?.RejectedRequests ?? 0)
+                            </div>
+                            <div style="font-size:0.8rem;color:var(--text-muted);">
+                                Rejected Requests
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="col-lg-4">
+
+                <!-- Level Progress -->
+                <div class="info-card mb-3">
+                    <div class="info-card-title">
+                        <i class="fas fa-level-up-alt"></i> Current Level
+                    </div>
+                    <div style="text-align:center;padding:1rem 0;">
+                        <div style="font-size:2.5rem;margin-bottom:0.5rem;">
+                            @(personal?.Level switch
+                            {
+                                "LifeSaver" => "🏆",
+                                "Hero" => "⚡",
+                                "Helper" => "🥈",
+                                _ => "🆕"
+                            })
+                        </div>
+                        <div style="font-size:1.1rem;font-weight:800;color:var(--navy-blue);">
+                            @(personal?.Level ?? "New Donor")
+                        </div>
+                        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">
+                            @(personal?.TotalPoints ?? 0) / 1000 points
+                        </div>
+                        <div style="background:var(--card-border);border-radius:10px;
+                                    height:8px;margin-top:0.75rem;overflow:hidden;">
+                            <div style="background:linear-gradient(90deg,var(--deep-red),#FF6B6B);
+                                        border-radius:10px;height:100%;
+                                        width:@(Math.Min(100, ((personal?.TotalPoints ?? 0) * 100) / 1000))%;
+                                        transition:width 0.8s;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Life Saved Counter -->
+                <div class="form-card text-center mb-3"
+                     style="background:linear-gradient(135deg,var(--deep-red),#8B0000);color:white;">
+                    <div style="font-size:2.5rem;font-weight:800;margin-bottom:0.25rem;">
+                        ❤️ @(personal?.LivesSaved ?? 0)
+                    </div>
+                    <div style="font-size:1rem;font-weight:700;">Lives Saved</div>
+                    <div style="font-size:0.78rem;opacity:0.75;margin-top:0.25rem;">
+                        Est. 3 lives per donation
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="info-card">
+                    <div class="info-card-title">
+                        <i class="fas fa-link"></i> Quick Actions
+                    </div>
+                    <div class="d-flex flex-column gap-2 mt-2">
+                        <a asp-controller="Donor" asp-action="DonationHistory"
+                           class="btn-sm-outline justify-content-start">
+                            <i class="fas fa-history"></i> View Donation History
+                        </a>
+                        <a asp-controller="Certificate" asp-action="Index"
+                           class="btn-sm-outline justify-content-start">
+                            <i class="fas fa-certificate"></i> Download Certificates
+                        </a>
+                        <a asp-controller="Leaderboard" asp-action="Index"
+                           class="btn-sm-outline justify-content-start">
+                            <i class="fas fa-trophy"></i> View Leaderboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    }
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const monthlyData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                    (monthly?.MonthlyData ?? new List<BloodDonationSystem.Application.DTOs.Statistics.MonthDataDto>())
+                            .Select(m => new { month = m.MonthName, donations = m.Donations })
+                            .ToList()
+            ));
+
+    const ctx = document.getElementById('monthlyChart');
+    if (ctx && monthlyData.length > 0) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: monthlyData.map(d => d.month),
+                datasets: [{
+                    label: 'Donations',
+                    data: monthlyData.map(d => d.donations),
+                    backgroundColor: 'rgba(196,30,58,0.8)',
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => `${ctx.parsed.y} donation(s)`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 },
+                        grid: { color: 'rgba(0,0,0,0.04)' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+</script>
+}

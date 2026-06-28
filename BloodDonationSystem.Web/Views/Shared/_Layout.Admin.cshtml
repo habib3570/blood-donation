@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/admin.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <div class="admin-wrapper">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-brand">
+                <a asp-controller="Home" asp-action="Index" class="text-decoration-none">
+                    🩸 Blood<span>Donate</span>
+                </a>
+                <span class="sidebar-badge">Admin</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-section-label">Main</div>
+
+                <a asp-controller="AdminDashboard" asp-action="Index"
+                   class="sidebar-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminDashboard" ? "active" : "")">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+
+                <div class="sidebar-section-label">Management</div>
+
+                <a asp-controller="AdminUser" asp-action="Index"
+                   class="sidebar-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminUser" ? "active" : "")">
+                    <i class="fas fa-users"></i> Users
+                </a>
+
+                <a asp-controller="AdminRequest" asp-action="Index"
+                   class="sidebar-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminRequest" ? "active" : "")">
+                    <i class="fas fa-tint"></i> Blood Requests
+                </a>
+
+                <a asp-controller="AdminHospital" asp-action="Index"
+                   class="sidebar-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminHospital" ? "active" : "")">
+                    <i class="fas fa-hospital"></i> Hospitals
+                </a>
+
+                <a asp-controller="AdminBloodBank" asp-action="Index"
+                   class="sidebar-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminBloodBank" ? "active" : "")">
+                    <i class="fas fa-vials"></i> Blood Banks
+                </a>
+
+                <div class="sidebar-section-label">Reports</div>
+
+                <a asp-controller="AdminReport" asp-action="Index"
+                   class="sidebar-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "AdminReport" ? "active" : "")">
+                    <i class="fas fa-chart-bar"></i> Reports
+                </a>
+
+                <a asp-controller="AdminSettings" asp-action="Index"
+                   class="sidebar-link">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+
+                <div class="sidebar-section-label">System</div>
+
+                <a href="/admin/hangfire" target="_blank" class="sidebar-link">
+                    <i class="fas fa-tasks"></i> Background Jobs
+                </a>
+
+                <a asp-controller="Home" asp-action="Index" class="sidebar-link">
+                    <i class="fas fa-external-link-alt"></i> View Site
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="user-avatar-sm">A</div>
+                    <div>
+                        <div style="font-size:0.8rem;font-weight:600;color:var(--navy-blue);">Admin</div>
+                        <div style="font-size:0.7rem;color:var(--text-muted);">System Admin</div>
+                    </div>
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="sidebar-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="admin-main">
+
+            <!-- TOP BAR -->
+            <div class="admin-topbar">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <a asp-controller="Notification" asp-action="Index"
+                       class="nav-icon-btn position-relative">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                    <span style="font-size:0.85rem;font-weight:600;color:var(--navy-blue);">
+                        Admin Panel
+                    </span>
+                </div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="admin-content">
+                @if (TempData["Success"] != null)
+                {
+                    <div class="toast-custom toast-success mb-3">
+                        <i class="fas fa-check-circle"></i> @TempData["Success"]
+                    </div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="toast-custom toast-error mb-3">
+                        <i class="fas fa-times-circle"></i> @TempData["Error"]
+                    </div>
+                }
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('adminSidebar').classList.toggle('collapsed');
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

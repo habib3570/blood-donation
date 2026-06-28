@@ -1,0 +1,88 @@
+﻿@using BloodDonationSystem.Application.DTOs.BloodBank
+@model BloodBankDto
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🩸 @Model.Name</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a asp-action="Index">Blood Banks</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>@Model.Name</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div style="font-size:1rem;font-weight:700;color:var(--navy-blue);
+                                margin-bottom:1.25rem;">
+                        <i class="fas fa-vial text-red"></i> Current Blood Stock
+                    </div>
+                    <div class="row g-3">
+                        @foreach (var stock in Model.Stocks)
+                        {
+                            <div class="col-6 col-md-3">
+                                <div class="info-card text-center"
+                                     style="@(stock.IsLow ? "background:#FEF2F2;border-color:#FECACA;" : "")">
+                                    <div style="font-size:1.5rem;font-weight:800;
+                                                    color:@(stock.IsLow ? "var(--deep-red)" : "var(--navy-blue)");">
+                                        @stock.BloodGroupDisplay
+                                    </div>
+                                    <div style="font-size:1.1rem;font-weight:700;
+                                                    color:@(stock.IsLow ? "var(--deep-red)" : "var(--success-green)");
+                                                    margin-top:0.25rem;">
+                                        @stock.UnitsAvailable
+                                    </div>
+                                    <div style="font-size:0.7rem;color:var(--text-muted);">
+                                        units available
+                                    </div>
+                                    @if (stock.IsLow)
+                                    {
+                                        <span class="status-pill sp-rejected mt-2"
+                                              style="font-size:0.6rem;">LOW STOCK</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-card">
+                    <div class="info-card-title">
+                        <i class="fas fa-info-circle"></i> Blood Bank Info
+                    </div>
+                    <div style="font-size:0.85rem;color:var(--navy-blue);margin-top:0.75rem;">
+                        <div class="mb-2">
+                            <i class="fas fa-map-marker-alt text-red"></i>
+                            @Model.Address, @Model.Upazila, @Model.District
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                        {
+                            <div class="mb-2">
+                                <i class="fas fa-phone text-red"></i>
+                                @Model.PhoneNumber
+                            </div>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                    {
+                        <a href="tel:@Model.PhoneNumber"
+                           class="btn-red w-100 justify-content-center mt-3">
+                            <i class="fas fa-phone"></i> Call Blood Bank
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

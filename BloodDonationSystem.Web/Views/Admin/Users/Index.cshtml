@@ -1,0 +1,242 @@
+﻿@using BloodDonationSystem.Application.DTOs.User
+@model List<UserProfileDto>
+@{
+    ViewData["Title"] = "Manage Users"; Layout = "~/Views/Shared/_Layout.Admin.cshtml";
+}
+
+<div class="admin-page-header">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+            <div class="admin-page-title">👥 Manage Users</div>
+            <div class="admin-page-sub">View, block, and verify all registered users</div>
+        </div>
+        <div class="d-flex gap-2">
+            <input type="text" class="form-control-custom"
+                   placeholder="🔍 Search users..."
+                   id="userSearch"
+                   onkeyup="filterTable()"
+                   style="width:220px;" />
+        </div>
+    </div>
+</div>
+@Html.AntiForgeryToken()
+<!-- QUICK STATS -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-blue"><i class="fas fa-users"></i></div>
+            <div class="stat-number">@(Model?.Count ?? 0)</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-green"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-number">@(Model?.Count(u => u.DonorInfo != null) ?? 0)</div>
+            <div class="stat-label">Donors</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-orange"><i class="fas fa-shield-alt"></i></div>
+            <div class="stat-number">@(Model?.Count(u => u.IsVerified) ?? 0)</div>
+            <div class="stat-label">Verified</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-red"><i class="fas fa-ban"></i></div>
+            <div class="stat-number">@(Model?.Count(u => u.IsBlocked) ?? 0)</div>
+            <div class="stat-label">Blocked</div>
+        </div>
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-header">
+        <span>All Users</span>
+        <span style="font-size:0.75rem;color:var(--text-muted);">
+            @(Model?.Count ?? 0) records
+        </span>
+    </div>
+    <div class="admin-card-body" style="padding:0;">
+        <div class="table-responsive">
+            <table class="table-custom" id="userTable">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Blood Group</th>
+                        <th>Location</th>
+                        <th>Donor Status</th>
+                        <th>Account</th>
+                        <th>Joined</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="user-avatar-sm"
+                                             style="width:34px;height:34px;font-size:0.85rem;flex-shrink:0;">
+                                            @user.FullName[0]
+                                        </div>
+                                        <div>
+                                            <div style="font-weight:600;font-size:0.85rem;">
+                                                @user.FullName
+                                            </div>
+                                            <div style="font-size:0.75rem;color:var(--text-muted);">
+                                                @user.Email
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="donor-blood-tag"
+                                          style="position:static;font-size:0.78rem;">
+                                        @user.BloodGroupDisplay
+                                    </span>
+                                </td>
+                                <td style="font-size:0.82rem;">
+                                    @user.Upazila, @user.District
+                                </td>
+                                <td>
+                                    @if (user.DonorInfo != null)
+                                    {
+                                        <div>
+                                            @if (user.DonorInfo.TotalDonations > 0)
+                                            {
+                                                <span class="status-pill sp-completed">
+                                                    <i class="fas fa-tint"></i>
+                                                    @user.DonorInfo.TotalDonations donations
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="status-pill sp-pending">Donor</span>
+                                            }
+                                        </div>
+                                        <div class="mt-1">
+                                            <span class="avail-badge @(user.DonorInfo.TotalDonations >= 0 ? "avail-yes" : "avail-no")"
+                                                  style="font-size:0.68rem;">
+                                                <span class="avail-dot"></span>
+                                                @user.DonorInfo.Level
+                                            </span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span style="font-size:0.78rem;color:var(--text-muted);">
+                                            Not a donor
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (user.IsBlocked)
+                                    {
+                                        <span class="status-pill sp-rejected">Blocked</span>
+                                    }
+                                    else if (user.IsVerified)
+                                    {
+                                        <span class="status-pill sp-completed">Verified</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-pill sp-pending">Active</span>
+                                    }
+                                </td>
+                                <td style="font-size:0.78rem;color:var(--text-muted);">
+                                    @user.CreatedAt.ToString("dd MMM yy")
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <a asp-action="Details" asp-route-id="@user.Id"
+                                           class="btn-sm-outline" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        @if (!user.IsBlocked)
+                                        {
+                                            <button onclick="blockUser('@user.Id')"
+                                                    class="btn-sm-outline"
+                                                    title="Block User"
+                                                    style="color:#EF4444;border-color:#FECACA;">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button onclick="unblockUser('@user.Id')"
+                                                    class="btn-sm-red"
+                                                    title="Unblock User">
+                                                <i class="fas fa-unlock"></i>
+                                            </button>
+                                        }
+                                        @if (user.DonorInfo != null && !user.IsVerified)
+                                        {
+                                            <button onclick="verifyDonor(@user.DonorInfo.DonorProfileId)"
+                                                    class="btn-sm-outline"
+                                                    title="Verify Donor"
+                                                    style="color:var(--success-green);border-color:#6EE7B7;">
+                                                <i class="fas fa-check-circle"></i>
+                                            </button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function filterTable() {
+            const query = document.getElementById('userSearch').value.toLowerCase();
+            document.querySelectorAll('#userTable tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(query) ? '' : 'none';
+            });
+        }
+
+               async function blockUser(userId) {
+            if (!confirm('Block this user?')) return;
+            const res = await fetch(`/AdminUser/Block/${userId}`, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            const data = await res.json();
+            if (data.success) { showToast('User blocked.', 'success'); location.reload(); }
+            else showToast(data.message, 'error');
+        }
+
+        async function unblockUser(userId) {
+            if (!confirm('Unblock this user?')) return;
+            const res = await fetch(`/AdminUser/Unblock/${userId}`, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            const data = await res.json();
+            if (data.success) { showToast('User unblocked.', 'success'); location.reload(); }
+            else showToast(data.message, 'error');
+        }
+
+        async function verifyDonor(donorProfileId) {
+            if (!confirm('Verify this donor?')) return;
+            const res = await fetch(`/AdminUser/VerifyDonor/${donorProfileId}`, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            const data = await res.json();
+            if (data.success) { showToast('Donor verified!', 'success'); location.reload(); }
+            else showToast(data.message, 'error');
+        }
+
+        
+    </script>
+}

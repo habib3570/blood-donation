@@ -1,0 +1,119 @@
+﻿@using BloodDonationSystem.Application.DTOs.Hospital
+@model HospitalDto
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🏥 @Model.Name</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <a asp-action="Index">Hospitals</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>@Model.Name</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                        <div style="width:60px;height:60px;border-radius:14px;
+                                    background:var(--navy-blue);color:white;
+                                    display:flex;align-items:center;justify-content:center;
+                                    font-size:1.5rem;flex-shrink:0;">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div style="font-size:1.3rem;font-weight:800;color:var(--navy-blue);">
+                                @Model.Name
+                            </div>
+                            <div style="font-size:0.85rem;color:var(--text-muted);margin-top:0.25rem;">
+                                <i class="fas fa-map-marker-alt"></i>
+                                @Model.Address, @Model.Upazila, @Model.District
+                            </div>
+                            <div class="d-flex gap-2 mt-2 flex-wrap">
+                                @if (Model.IsOpen24Hours)
+                                {
+                                    <span class="avail-badge avail-yes">
+                                        <span class="avail-dot"></span> Open 24/7
+                                    </span>
+                                }
+                                @if (Model.HasBloodBank)
+                                {
+                                    <span class="badge-verified">
+                                        <i class="fas fa-vial"></i> Has Blood Bank
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                        {
+                            <div class="col-sm-6">
+                                <div class="info-card">
+                                    <div style="font-size:0.72rem;font-weight:600;
+                                                    color:var(--text-muted);">
+                                        PHONE
+                                    </div>
+                                    <div style="font-size:0.95rem;font-weight:700;
+                                                    color:var(--navy-blue);margin-top:0.25rem;">
+                                        @Model.PhoneNumber
+                                    </div>
+                                    <a href="tel:@Model.PhoneNumber" class="btn-sm-red mt-2">
+                                        <i class="fas fa-phone"></i> Call Now
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.EmergencyNumber))
+                        {
+                            <div class="col-sm-6">
+                                <div class="info-card" style="background:#FEF2F2;">
+                                    <div style="font-size:0.72rem;font-weight:600;
+                                                    color:var(--deep-red);">
+                                        EMERGENCY
+                                    </div>
+                                    <div style="font-size:0.95rem;font-weight:700;
+                                                    color:var(--deep-red);margin-top:0.25rem;">
+                                        @Model.EmergencyNumber
+                                    </div>
+                                    <a href="tel:@Model.EmergencyNumber" class="btn-sm-red mt-2">
+                                        <i class="fas fa-phone"></i> Emergency Call
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-card">
+                    <div class="info-card-title">
+                        <i class="fas fa-map-marker-alt"></i> Location
+                    </div>
+                    <div style="height:200px;background:var(--light-gray);
+                                border-radius:10px;display:flex;align-items:center;
+                                justify-content:center;color:var(--text-muted);
+                                margin-top:0.75rem;">
+                        <i class="fas fa-map fa-2x"></i>
+                    </div>
+                    <a href="https://maps.google.com/?q=@Model.Latitude,@Model.Longitude"
+                       target="_blank"
+                       class="btn-sm-outline w-100 justify-content-center mt-2">
+                        <i class="fas fa-directions"></i> Get Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,75 @@
+﻿@using BloodDonationSystem.Application.DTOs.BloodBank
+@model BloodBankDto
+@{
+    ViewData["Title"] = "Manage Stock - " + Model.Name;
+    Layout = "~/Views/Shared/_Layout.Admin.cshtml";
+}
+
+<div class="admin-page-header">
+    <div class="admin-page-title">🩸 @Model.Name - Stock Management</div>
+    <div class="admin-page-sub">Update blood unit availability</div>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-body">
+        <div class="row g-3" id="stockForm">
+            @{
+                var allGroups = new[] { "APositive","ANegative","BPositive","BNegative",
+                        "ABPositive","ABNegative","OPositive","ONegative" };
+                var displayMap = new Dictionary<string, string> {
+                        {"APositive","A+"}, {"ANegative","A-"},
+                        {"BPositive","B+"}, {"BNegative","B-"},
+                        {"ABPositive","AB+"}, {"ABNegative","AB-"},
+                        {"OPositive","O+"}, {"ONegative","O-"}
+                        };
+            }
+            @foreach (var group in allGroups)
+            {
+                var existing = Model.Stocks.FirstOrDefault(
+                s => s.BloodGroup.ToString() == group);
+                var units = existing?.UnitsAvailable ?? 0;
+
+                <div class="col-md-3">
+                    <div class="info-card">
+                        <label class="form-label-custom">@displayMap[group]</label>
+                        <input type="number"
+                               class="form-control-custom stock-input"
+                               data-group="@group"
+                               value="@units"
+                               min="0" />
+                        <button class="btn-sm-red w-100 justify-content-center mt-2"
+                                onclick="updateStock('@group', this)">
+                            <i class="fas fa-save"></i> Update
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        async function updateStock(group, btn) {
+            const input = document.querySelector(`[data-group="${group}"]`);
+            const units = parseInt(input.value);
+            const bloodBankId = @Model.Id;
+
+            const groupMap = {
+                'APositive': 0, 'ANegative': 1, 'BPositive': 2, 'BNegative': 3,
+                'ABPositive': 4, 'ABNegative': 5, 'OPositive': 6, 'ONegative': 7
+            };
+
+            const res = await fetch('/Admin/AdminBloodBank/UpdateStock', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'RequestVerificationToken': getAntiForgeryToken()
+                },
+                body: `bloodBankId=${bloodBankId}&bloodGroup=${groupMap[group]}&units=${units}`
+            });
+            const data = await res.json();
+            if (data.success) showToast('Stock updated!', 'success');
+        }
+    </script>
+}

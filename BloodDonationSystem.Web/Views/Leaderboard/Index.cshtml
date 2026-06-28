@@ -1,0 +1,173 @@
+﻿@using BloodDonationSystem.Application.DTOs.Donor
+@{
+    ViewData["Title"] = "Leaderboard"; var donors = ViewBag.TopDonors as List<DonorDto> ?? new();
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🏆 Leaderboard</div>
+        <div class="page-header-sub">Top blood donors of the month</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+
+        <!-- TOP 3 PODIUM -->
+        @if (donors.Count >= 3)
+        {
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-end justify-content-center gap-3">
+
+                        <!-- 2nd -->
+                        <div class="text-center flex-1" style="flex:1;">
+                            <div class="donor-avatar"
+                                 style="width:64px;height:64px;font-size:1.6rem;
+                                            margin:0 auto 0.5rem;
+                                            border:4px solid #C0C0C0;">
+                                @donors[1].FullName[0]
+                            </div>
+                            <div style="font-weight:700;font-size:0.9rem;color:var(--navy-blue);">
+                                @donors[1].FullName
+                            </div>
+                            <div style="font-size:0.78rem;color:var(--text-muted);">
+                                @donors[1].BloodGroupDisplay
+                            </div>
+                            <div style="font-size:1.1rem;font-weight:800;color:var(--deep-red);">
+                                @donors[1].TotalPoints pts
+                            </div>
+                            <div style="background:#C0C0C0;border-radius:12px 12px 0 0;
+                                            padding:1.5rem 1rem 1rem;margin-top:0.75rem;
+                                            color:#4A4A4A;font-size:2rem;font-weight:800;">
+                                🥈
+                            </div>
+                        </div>
+
+                        <!-- 1st -->
+                        <div class="text-center flex-1" style="flex:1;">
+                            <div style="font-size:1.5rem;margin-bottom:0.25rem;">👑</div>
+                            <div class="donor-avatar"
+                                 style="width:80px;height:80px;font-size:2rem;
+                                            margin:0 auto 0.5rem;
+                                            border:4px solid #FFD700;">
+                                @donors[0].FullName[0]
+                            </div>
+                            <div style="font-weight:800;font-size:1rem;color:var(--navy-blue);">
+                                @donors[0].FullName
+                            </div>
+                            <div style="font-size:0.78rem;color:var(--text-muted);">
+                                @donors[0].BloodGroupDisplay
+                            </div>
+                            <div style="font-size:1.3rem;font-weight:800;color:var(--deep-red);">
+                                @donors[0].TotalPoints pts
+                            </div>
+                            <div style="background:#FFD700;border-radius:12px 12px 0 0;
+                                            padding:2rem 1rem 1rem;margin-top:0.75rem;
+                                            color:#7B5E00;font-size:2.5rem;font-weight:800;">
+                                🥇
+                            </div>
+                        </div>
+
+                        <!-- 3rd -->
+                        <div class="text-center flex-1" style="flex:1;">
+                            <div class="donor-avatar"
+                                 style="width:56px;height:56px;font-size:1.3rem;
+                                            margin:0 auto 0.5rem;
+                                            border:4px solid #CD7F32;">
+                                @donors[2].FullName[0]
+                            </div>
+                            <div style="font-weight:700;font-size:0.9rem;color:var(--navy-blue);">
+                                @donors[2].FullName
+                            </div>
+                            <div style="font-size:0.78rem;color:var(--text-muted);">
+                                @donors[2].BloodGroupDisplay
+                            </div>
+                            <div style="font-size:1rem;font-weight:800;color:var(--deep-red);">
+                                @donors[2].TotalPoints pts
+                            </div>
+                            <div style="background:#CD7F32;border-radius:12px 12px 0 0;
+                                            padding:1rem 1rem 1rem;margin-top:0.75rem;
+                                            color:white;font-size:1.8rem;font-weight:800;">
+                                🥉
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- FULL LIST -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="leaderboard-card">
+                    <div class="lb-header">
+                        <span><i class="fas fa-list-ol"></i> Full Rankings</span>
+                        <span style="color:rgba(255,255,255,0.5);font-size:0.75rem;">
+                            @donors.Count donors
+                        </span>
+                    </div>
+                    @{
+                        int rank = 1;
+                    }
+                    @foreach (var donor in donors)
+                    {
+                        var rankClass = rank switch
+                        {
+                            1 => "r1",
+                            2 => "r2",
+                            3 => "r3",
+                            _ => "rn"
+                        };
+                        var rankEmoji = rank switch
+                        {
+                            1 => "🥇",
+                            2 => "🥈",
+                            3 => "🥉",
+                            _ => rank.ToString()
+                        };
+                        <div class="lb-item">
+                            <div class="rank-num @rankClass">
+                                @(rank <= 3 ? rankEmoji : rank.ToString())
+                            </div>
+                            <div class="lb-av">@donor.FullName[0]</div>
+                            <div class="lb-name">
+                                @donor.FullName
+                                @if (donor.IsVerifiedDonor)
+                                {
+                                    <i class="fas fa-check-circle"
+                                       style="color:var(--success-green);font-size:0.7rem;"></i>
+                                }
+                                <br>
+                                <span style="font-size:0.7rem;color:var(--text-muted);">
+                                    @donor.District · @donor.BloodGroupDisplay ·
+                                    @donor.TotalDonations donations
+                                </span>
+                            </div>
+                            <div class="d-flex flex-column align-items-end gap-1">
+                                <div class="lb-pts">@donor.TotalPoints pts</div>
+                                <div style="font-size:0.68rem;color:var(--text-muted);">
+                                    ❤️ @donor.LivesSaved lives
+                                </div>
+                            </div>
+                        </div>
+                        rank++;
+                    }
+                </div>
+
+                @if (!donors.Any())
+                {
+                    <div class="info-card text-center py-5">
+                        <div style="font-size:3rem;margin-bottom:1rem;">🏆</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);">
+                            No Data Yet
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);">
+                            Be the first donor to appear on the leaderboard!
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

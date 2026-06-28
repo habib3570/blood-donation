@@ -1,0 +1,95 @@
+﻿@using BloodDonationSystem.Application.DTOs.Donation
+@model List<DonationHistoryDto>
+@{
+    ViewData["Title"] = "Donation History";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">📋 My Donation History</div>
+        <div class="page-header-sub">A complete record of your life-saving donations</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                @if (Model != null && Model.Any())
+                {
+                    <div class="info-card mb-4 text-center"
+                         style="background:linear-gradient(135deg,var(--deep-red),#8B0000);color:white;">
+                        <div style="font-size:2.2rem;font-weight:800;">@Model.Count</div>
+                        <div style="font-size:0.9rem;opacity:0.9;">Total Donations</div>
+                    </div>
+
+                    <div style="position:relative;padding-left:1.5rem;">
+                        <div style="position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--card-border);"></div>
+
+                        @foreach (var donation in Model)
+                        {
+                            <div style="position:relative;margin-bottom:1.25rem;">
+                                <div style="position:absolute;left:-1.5rem;top:2px;width:14px;height:14px;
+                                                    border-radius:50%;background:var(--deep-red);
+                                                    border:2px solid white;box-shadow:0 0 0 2px var(--deep-red);"></div>
+                                <div class="info-card" style="margin-left:0.5rem;">
+                                    <div class="d-flex align-items-start justify-content-between gap-2">
+                                        <div>
+                                            <div style="font-weight:700;font-size:0.9rem;color:var(--navy-blue);">
+                                                @donation.HospitalName
+                                                @if (donation.IsEmergency)
+                                                {
+                                                    <span class="status-pill sp-rejected" style="font-size:0.65rem;margin-left:0.3rem;">
+                                                        <i class="fas fa-bolt"></i> Emergency
+                                                    </span>
+                                                }
+                                            </div>
+                                            <div style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">
+                                                <i class="fas fa-map-marker-alt"></i> @donation.District
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(donation.RecipientName))
+                                            {
+                                                <div style="font-size:0.78rem;color:var(--text-muted);">
+                                                    <i class="fas fa-user"></i> @donation.RecipientName
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="text-end" style="flex-shrink:0;">
+                                            <div style="font-size:0.85rem;font-weight:600;color:var(--navy-blue);">
+                                                @donation.DonationDate.ToString("dd MMM yyyy")
+                                            </div>
+                                            @if (donation.CertificateGenerated)
+                                            {
+                                                <a asp-controller="Certificate" asp-action="Download"
+                                                   asp-route-donationId="@donation.Id"
+                                                   class="btn-sm-outline mt-1" style="font-size:0.7rem;">
+                                                    <i class="fas fa-certificate"></i> Certificate
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="info-card text-center py-5">
+                        <div style="font-size:3rem;margin-bottom:1rem;">🩸</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                            No Donations Yet
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                            You haven't recorded any donations yet. Start your journey as a life saver today!
+                        </div>
+                        <a asp-controller="Donor" asp-action="BecomeDonor" class="btn-red">
+                            <i class="fas fa-tint"></i> Become a Donor
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

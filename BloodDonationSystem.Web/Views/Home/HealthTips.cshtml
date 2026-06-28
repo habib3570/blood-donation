@@ -1,0 +1,160 @@
+﻿@{
+    ViewData["Title"] = "Health Tips";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">❤️ Health Tips</div>
+        <div class="page-header-sub">Everything you need to know about blood donation</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- BEFORE DONATION -->
+            <div class="col-md-4">
+                <div class="form-card h-100">
+                    <div style="font-size:2.5rem;text-align:center;margin-bottom:1rem;">
+                        🍎
+                    </div>
+                    <div style="font-size:1.1rem;font-weight:800;color:var(--navy-blue);
+                                text-align:center;margin-bottom:1rem;">
+                        Before Donation
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+                        @foreach (var tip in new[]
+                                                {
+                                                "Drink at least 16 oz of water before donating",
+                                                "Eat a healthy meal 2-3 hours before",
+                                                "Avoid fatty foods before donation",
+                                                "Get a good night's sleep",
+                                                "Wear a shirt with sleeves that roll up easily",
+                                                "Bring your ID and donor card"
+                                                })
+                        {
+                            <div class="info-card d-flex align-items-start gap-2"
+                                 style="padding:0.6rem 0.85rem;">
+                                <i class="fas fa-check-circle text-red"
+                                   style="margin-top:2px;flex-shrink:0;"></i>
+                                <span style="font-size:0.82rem;color:var(--navy-blue);">
+                                    @tip
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- AFTER DONATION -->
+            <div class="col-md-4">
+                <div class="form-card h-100">
+                    <div style="font-size:2.5rem;text-align:center;margin-bottom:1rem;">
+                        💧
+                    </div>
+                    <div style="font-size:1.1rem;font-weight:800;color:var(--navy-blue);
+                                text-align:center;margin-bottom:1rem;">
+                        After Donation
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+                        @foreach (var tip in new[]
+                                                {
+                                                "Rest for 10-15 minutes after donating",
+                                                "Drink extra fluids for the next 24-48 hours",
+                                                "Avoid alcohol for at least 24 hours",
+                                                "Don't smoke for at least 30 minutes",
+                                                "Keep the bandage on for at least 4 hours",
+                                                "Avoid strenuous exercise for 24 hours"
+                                                })
+                        {
+                            <div class="info-card d-flex align-items-start gap-2"
+                                 style="padding:0.6rem 0.85rem;">
+                                <i class="fas fa-info-circle"
+                                   style="color:var(--navy-blue);margin-top:2px;flex-shrink:0;"></i>
+                                <span style="font-size:0.82rem;color:var(--navy-blue);">
+                                    @tip
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ELIGIBILITY -->
+            <div class="col-md-4">
+                <div class="form-card h-100">
+                    <div style="font-size:2.5rem;text-align:center;margin-bottom:1rem;">
+                        ✅
+                    </div>
+                    <div style="font-size:1.1rem;font-weight:800;color:var(--navy-blue);
+                                text-align:center;margin-bottom:1rem;">
+                        Who Can Donate
+                    </div>
+                    <div class="d-flex flex-column gap-2">
+                        @{
+                            var criteria = new[]
+                            {
+                                                new { Icon = "check", Text = "Age 18-60 years", Ok = true },
+                                                new { Icon = "check", Text = "Weight minimum 50 kg", Ok = true },
+                                                new { Icon = "check", Text = "Hemoglobin ≥ 12.5 g/dL", Ok = true },
+                                                new { Icon = "check", Text = "Good general health", Ok = true },
+                                                new { Icon = "times", Text = "Pregnant or breastfeeding", Ok = false },
+                                                new { Icon = "times", Text = "Recent illness or surgery", Ok = false }
+                                                };
+                        }
+                        @foreach (var c in criteria)
+                        {
+                            <div class="info-card d-flex align-items-start gap-2"
+                                 style="padding:0.6rem 0.85rem;
+                                            background:@(c.Ok ? "#ECFDF5" : "#FEF2F2");">
+                                <i class="fas fa-@(c.Ok ? "check" : "times")-circle"
+                                   style="color:@(c.Ok ? "var(--success-green)" : "var(--deep-red)");
+                                              margin-top:2px;flex-shrink:0;"></i>
+                                <span style="font-size:0.82rem;color:var(--navy-blue);">
+                                    @c.Text
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- FACTS -->
+            <div class="col-12">
+                <div class="info-card">
+                    <div class="info-card-title">
+                        <i class="fas fa-lightbulb"></i> Did You Know?
+                    </div>
+                    <div class="row g-3 mt-1">
+                        @{
+                            var facts = new[]
+                            {
+                                                new { Icon = "❤️", Fact = "One donation can save up to 3 lives" },
+                                                new { Icon = "🩸", Fact = "Blood cannot be manufactured — it can only come from donors" },
+                                                new { Icon = "⏱️", Fact = "The actual donation process takes only 8-10 minutes" },
+                                                new { Icon = "🔄", Fact = "Your body replaces the donated blood within 24-48 hours" },
+                                                new { Icon = "📅", Fact = "You can donate whole blood every 90 days" },
+                                                new { Icon = "🌍", Fact = "Every 2 seconds, someone in the world needs blood" }
+                                                };
+                        }
+                        @foreach (var fact in facts)
+                        {
+                            <div class="col-md-4">
+                                <div style="background:white;border-radius:10px;
+                                                padding:0.85rem;border:1px solid var(--card-border);
+                                                display:flex;align-items:center;gap:0.75rem;">
+                                    <div style="font-size:1.5rem;flex-shrink:0;">@fact.Icon</div>
+                                    <div style="font-size:0.82rem;color:var(--navy-blue);
+                                                    font-weight:500;">
+                                        @fact.Fact
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

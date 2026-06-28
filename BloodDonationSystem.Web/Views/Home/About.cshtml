@@ -1,0 +1,186 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">ℹ️ About BloodDonate BD</div>
+        <div class="page-header-sub">Connecting donors and recipients to save lives across Bangladesh</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+
+        <!-- MISSION -->
+        <div class="row g-4 align-items-center mb-5">
+            <div class="col-lg-6">
+                <div style="font-size:0.8rem;font-weight:700;color:var(--deep-red);
+                            text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem;">
+                    Our Mission
+                </div>
+                <h2 style="font-size:1.8rem;font-weight:800;color:var(--navy-blue);margin-bottom:1rem;">
+                    Every Drop Counts, Every Life Matters
+                </h2>
+                <p style="color:var(--text-muted);line-height:1.8;font-size:0.95rem;">
+                    BloodDonate BD was created with a simple but powerful mission: to bridge the gap
+                    between blood donors and patients in urgent need across Bangladesh. We believe that
+                    no one should lose their life due to a shortage of blood when willing donors exist
+                    nearby.
+                </p>
+                <p style="color:var(--text-muted);line-height:1.8;font-size:0.95rem;">
+                    Through technology, we connect verified donors with hospitals, blood banks, and
+                    individuals in real-time — making blood donation faster, safer, and more accessible
+                    than ever before.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="info-card text-center" style="padding:3rem 2rem;
+                            background:linear-gradient(135deg,var(--deep-red-light),white);">
+                    <div style="font-size:4rem;">🩸</div>
+                    <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-top:1rem;">
+                        Saving Lives Since Day One
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="row g-3 mb-5">
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-red"><i class="fas fa-users"></i></div>
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Registered Donors</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-green"><i class="fas fa-tint"></i></div>
+                    <div class="stat-number">25,000+</div>
+                    <div class="stat-label">Successful Donations</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-blue"><i class="fas fa-hospital"></i></div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Partner Hospitals</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-orange"><i class="fas fa-heart"></i></div>
+                    <div class="stat-number">75,000+</div>
+                    <div class="stat-label">Lives Saved</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <div class="mb-5">
+            <div class="section-title text-center mb-4">How We Work</div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="info-card text-center h-100">
+                        <div style="font-size:2.5rem;margin-bottom:1rem;">📝</div>
+                        <div style="font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                            1. Register
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);">
+                            Sign up as a donor with your blood group and location details.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-card text-center h-100">
+                        <div style="font-size:2.5rem;margin-bottom:1rem;">🔍</div>
+                        <div style="font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                            2. Connect
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);">
+                            Patients and hospitals search and connect with nearby matching donors.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-card text-center h-100">
+                        <div style="font-size:2.5rem;margin-bottom:1rem;">❤️</div>
+                        <div style="font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                            3. Save Lives
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);">
+                            Donate blood and earn points, badges, and recognition as a life saver.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VALUES -->
+        <div class="mb-5">
+            <div class="section-title text-center mb-4">Our Core Values</div>
+            <div class="row g-3">
+                @{
+                    var values = new[]
+                    {
+                                new { Icon = "🛡️", Title = "Trust & Verification", Desc = "Every donor profile is carefully reviewed and verified for authenticity." },
+                                new { Icon = "⚡", Title = "Speed & Urgency", Desc = "Emergency requests are prioritized and broadcast to nearby donors instantly." },
+                                new { Icon = "🤝", Title = "Community First", Desc = "We're built by and for the community, fostering a culture of giving." },
+                                new { Icon = "🔒", Title = "Privacy & Safety", Desc = "Your personal data is protected and shared only with verified parties." }
+                                };
+                }
+                @foreach (var v in values)
+                {
+                    <div class="col-md-6 col-lg-3">
+                        <div class="info-card text-center h-100">
+                            <div style="font-size:2rem;margin-bottom:0.75rem;">@v.Icon</div>
+                            <div style="font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;font-size:0.9rem;">
+                                @v.Title
+                            </div>
+                            <div style="font-size:0.8rem;color:var(--text-muted);">
+                                @v.Desc
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="info-card text-center"
+             style="background:linear-gradient(135deg,var(--deep-red),#8B0000);
+                    color:white;padding:3rem 2rem;">
+            <div style="font-size:1.5rem;font-weight:800;margin-bottom:0.75rem;">
+                Ready to Make a Difference?
+            </div>
+            <div style="opacity:0.9;margin-bottom:1.5rem;">
+                Join thousands of donors who are saving lives every single day.
+            </div>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                @if (!User.Identity?.IsAuthenticated ?? true)
+                {
+                    <a asp-controller="Account" asp-action="Register"
+                       style="background:white;color:var(--deep-red);padding:0.75rem 2rem;
+                                  border-radius:10px;text-decoration:none;font-weight:700;">
+                        <i class="fas fa-user-plus"></i> Join as Donor
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Donor" asp-action="Search"
+                       style="background:white;color:var(--deep-red);padding:0.75rem 2rem;
+                                  border-radius:10px;text-decoration:none;font-weight:700;">
+                        <i class="fas fa-search"></i> Find a Donor
+                    </a>
+                }
+                <a asp-controller="Home" asp-action="FAQ"
+                   style="background:rgba(255,255,255,0.15);color:white;padding:0.75rem 2rem;
+                          border-radius:10px;text-decoration:none;font-weight:700;
+                          border:1px solid rgba(255,255,255,0.3);">
+                    <i class="fas fa-question-circle"></i> Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

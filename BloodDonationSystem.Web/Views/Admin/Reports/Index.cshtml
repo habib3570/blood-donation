@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+    Layout = "~/Views/Shared/_Layout.Admin.cshtml";
+    var stats = ViewBag.Stats as BloodDonationSystem.Application.DTOs.Statistics.AdminStatsDto;
+}
+
+<div class="admin-page-header">
+    <div class="admin-page-title">📊 System Reports</div>
+    <div class="admin-page-sub">Detailed analytics and reports</div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-blue"><i class="fas fa-users"></i></div>
+            <div class="stat-number">@(stats?.TotalUsers ?? 0)</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-red"><i class="fas fa-tint"></i></div>
+            <div class="stat-number">@(stats?.TotalDonations ?? 0)</div>
+            <div class="stat-label">Total Donations</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-green"><i class="fas fa-check"></i></div>
+            <div class="stat-number">@(stats?.CompletedRequests ?? 0)</div>
+            <div class="stat-label">Completed</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-orange"><i class="fas fa-exclamation"></i></div>
+            <div class="stat-number">@(stats?.TotalEmergencyRequests ?? 0)</div>
+            <div class="stat-label">Emergencies</div>
+        </div>
+    </div>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-header">
+        <span>📈 Weekly Donation Trend</span>
+    </div>
+    <div class="admin-card-body">
+        <canvas id="weeklyChart" height="250"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        new Chart(document.getElementById('weeklyChart'), {
+            type: 'line',
+            data: {
+                labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                datasets: [{
+                    label: 'Donations',
+                    data: [12, 19, 15, 25, 22, 30, 18],
+                    borderColor: '#C41E3A',
+                    backgroundColor: 'rgba(196,30,58,0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    </script>
+}

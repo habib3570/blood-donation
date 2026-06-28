@@ -1,0 +1,249 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = BloodDonationSystem.Web
+build_property.RootNamespace = BloodDonationSystem.Web
+build_property.ProjectDir = E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/EditProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxFZGl0UHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/LoginActivity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbkFjdGl2aXR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Achievement/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNoaWV2ZW1lbnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/BloodBank/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQmxvb2RCYW5rXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/BloodBank/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQmxvb2RCYW5rXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Hospitals/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9zcGl0YWxzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Hospitals/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9zcGl0YWxzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Hospitals/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9zcGl0YWxzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Hospitals/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9zcGl0YWxzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Reports/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVwb3J0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Requests/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVxdWVzdHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Requests/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVxdWVzdHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Settings/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cU2V0dGluZ3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Users/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlcnNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/Users/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVXNlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Admin/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/BloodBank/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RCYW5rXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/BloodBank/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RCYW5rXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/BloodRequest/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RSZXF1ZXN0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/BloodRequest/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RSZXF1ZXN0XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/BloodRequest/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RSZXF1ZXN0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/BloodRequest/MyRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQmxvb2RSZXF1ZXN0XE15UmVxdWVzdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Chat/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Donor/DonationHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9ub3JcRG9uYXRpb25IaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Donor/MyFavorites.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9ub3JcTXlGYXZvcml0ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Donor/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9ub3JcUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Donor/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9ub3JcU2VhcmNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Emergency/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1lcmdlbmN5XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Emergency/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1lcmdlbmN5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Emergency/SOS.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1lcmdlbmN5XFNPUy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Home/FAQ.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGQVEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Home/HealthTips.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIZWFsdGhUaXBzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Hospital/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9zcGl0YWxcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Hospital/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9zcGl0YWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Leaderboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGVhZGVyYm9hcmRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Notification/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Shared/_Layout.Admin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuQWRtaW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Shared/_Navbar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OYXZiYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/Statistics/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3RhdGlzdGljc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/SuccessStory/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjY2Vzc1N0b3J5XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/SuccessStory/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjY2Vzc1N0b3J5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Programming/New folder/ECommerceWebsite/BloodDonationSystem/BloodDonationSystem.Web/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

@@ -1,0 +1,241 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard"; Layout = "~/Views/Shared/_Layout.Admin.cshtml";
+}
+
+<div class="admin-page-header">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+            <div class="admin-page-title">📊 Admin Dashboard</div>
+            <div class="admin-page-sub">System overview and statistics</div>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-muted);">
+            Last updated: @DateTime.Now.ToString("dd MMM yyyy, hh:mm tt")
+        </div>
+    </div>
+</div>
+
+@{
+    var stats = ViewBag.Stats as BloodDonationSystem.Application.DTOs.Statistics.AdminStatsDto;
+    var lowStocks = ViewBag.LowStocks as List<BloodDonationSystem.Application.DTOs.BloodBank.BloodStockDto> ?? new();
+    var emergencies = ViewBag.Emergencies as List<BloodDonationSystem.Application.DTOs.Emergency.EmergencyRequestDto> ?? new();
+}
+
+<!-- STAT CARDS -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-blue"><i class="fas fa-users"></i></div>
+            <div class="stat-number">@(stats?.TotalUsers ?? 0)</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-red"><i class="fas fa-tint"></i></div>
+            <div class="stat-number">@(stats?.TotalDonors ?? 0)</div>
+            <div class="stat-label">Total Donors</div>
+            <div class="stat-change">@(stats?.VerifiedDonors ?? 0) verified</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-green"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-number">@(stats?.CompletedRequests ?? 0)</div>
+            <div class="stat-label">Completed Requests</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-orange"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="stat-number">@(stats?.TotalEmergencyRequests ?? 0)</div>
+            <div class="stat-label">Emergency Requests</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-red"><i class="fas fa-ban"></i></div>
+            <div class="stat-number">@(stats?.BlockedUsers ?? 0)</div>
+            <div class="stat-label">Blocked Users</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-orange"><i class="fas fa-clock"></i></div>
+            <div class="stat-number">@(stats?.PendingRequests ?? 0)</div>
+            <div class="stat-label">Pending Requests</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-green"><i class="fas fa-heart"></i></div>
+            <div class="stat-number">@(stats?.TotalDonations ?? 0)</div>
+            <div class="stat-label">Total Donations</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="stat-card">
+            <div class="stat-icon si-blue"><i class="fas fa-flag"></i></div>
+            <div class="stat-number">@(stats?.FakeReports ?? 0)</div>
+            <div class="stat-label">Pending Reports</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <!-- LOW STOCK ALERTS -->
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span><i class="fas fa-exclamation-triangle text-red"></i> Low Blood Stock Alerts</span>
+                <a asp-controller="AdminBloodBank" asp-action="Index" class="view-all-link">View All</a>
+            </div>
+            <div class="admin-card-body">
+                @if (lowStocks.Any())
+                {
+                    @foreach (var stock in lowStocks.Take(6))
+                    {
+                        <div class="d-flex align-items-center justify-content-between
+                                            py-2 border-bottom" style="border-color:var(--card-border)!important;">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="donor-blood-tag" style="position:static;font-size:0.8rem;">
+                                    @stock.BloodGroupDisplay
+                                </span>
+                                <span style="font-size:0.82rem;color:var(--navy-blue);">
+                                    @stock.BloodBankId
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span style="font-size:0.85rem;font-weight:700;color:var(--deep-red);">
+                                    @stock.UnitsAvailable units
+                                </span>
+                                <span class="status-pill sp-rejected" style="font-size:0.65rem;">
+                                    LOW
+                                </span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center py-3" style="color:var(--text-muted);font-size:0.85rem;">
+                        <i class="fas fa-check-circle text-success"></i>
+                        All blood stocks are at normal levels
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIVE EMERGENCIES -->
+    <div class="col-lg-6">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span><i class="fas fa-ambulance text-red"></i> Active Emergencies</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);">@emergencies.Count active</span>
+            </div>
+            <div class="admin-card-body">
+                @if (emergencies.Any())
+                {
+                    @foreach (var emg in emergencies.Take(5))
+                    {
+                        <div class="d-flex align-items-start gap-2 py-2 border-bottom"
+                             style="border-color:var(--card-border)!important;">
+                            <span class="donor-blood-tag" style="position:static;font-size:0.78rem;">
+                                @emg.BloodGroupDisplay
+                            </span>
+                            <div class="flex-grow-1">
+                                <div style="font-size:0.82rem;font-weight:600;color:var(--navy-blue);">
+                                    @emg.PatientName
+                                </div>
+                                <div style="font-size:0.75rem;color:var(--text-muted);">
+                                    @emg.HospitalName · @emg.District
+                                </div>
+                            </div>
+                            <div style="font-size:0.7rem;color:var(--deep-red);font-weight:600;">
+                                @{
+                                    var rem = emg.ExpiryDate - DateTime.UtcNow;
+                                }
+                                @((int)rem.TotalHours)h left
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center py-3"
+                         style="color:var(--text-muted);font-size:0.85rem;">
+                        No active emergencies
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div class="col-12">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <span>⚡ Quick Actions</span>
+            </div>
+            <div class="admin-card-body">
+                <div class="row g-3">
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="AdminUser" asp-action="Index" class="admin-action-card">
+                            <i class="fas fa-users fa-2x text-red mb-2"></i>
+                            <div style="font-weight:600;font-size:0.85rem;">Manage Users</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="AdminRequest" asp-action="Index" class="admin-action-card">
+                            <i class="fas fa-list fa-2x text-red mb-2"></i>
+                            <div style="font-weight:600;font-size:0.85rem;">View Requests</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="AdminHospital" asp-action="Create" class="admin-action-card">
+                            <i class="fas fa-hospital fa-2x text-red mb-2"></i>
+                            <div style="font-weight:600;font-size:0.85rem;">Add Hospital</div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="AdminReport" asp-action="Index" class="admin-action-card">
+                            <i class="fas fa-chart-bar fa-2x text-red mb-2"></i>
+                            <div style="font-weight:600;font-size:0.85rem;">View Reports</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Monthly Donations Chart
+        const ctx = document.getElementById('donationChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+                    datasets: [{
+                        label: 'Donations',
+                        data: [45, 62, 38, 71, 55, 89],
+                        backgroundColor: 'rgba(196,30,58,0.8)',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+    </script>
+}

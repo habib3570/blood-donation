@@ -1,0 +1,336 @@
+﻿@using BloodDonationSystem.Application.DTOs.Donor
+@using BloodDonationSystem.Application.DTOs.Location
+@{
+    ViewData["Title"] = "Find Donor";
+    var donors = ViewBag.Donors as List<DonorDto> ?? new List<DonorDto>();
+    var filter = ViewBag.Filter as DonorFilterDto ?? new DonorFilterDto();
+    var districts = ViewBag.Districts as List<DistrictDto> ?? new List<DistrictDto>();
+    var upazilas = ViewBag.Upazilas as List<UpazilaDto> ?? new List<UpazilaDto>();
+
+    string bgValue = filter.BloodGroup?.ToString() ?? "";
+    string genderValue = filter.Gender?.ToString() ?? "";
+    string districtValue = filter.District ?? "";
+    string upazilaValue = filter.Upazila ?? "";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🔍 Find Blood Donor</div>
+        <div class="page-header-sub">Search verified donors by blood group, location, and distance</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>Find Donor</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- FILTERS -->
+            <div class="col-lg-3">
+                <div class="search-card" style="position:sticky;top:80px;">
+                    <div class="search-card-title">
+                        <i class="fas fa-sliders-h"></i> Search Filters
+                    </div>
+                    <form asp-action="Search" method="get" id="filterForm">
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Blood Group</label>
+                            <select name="BloodGroup" id="bloodGroupSelect" class="form-select-custom">
+                                <option value="">All Groups</option>
+                                <option value="0">A+</option>
+                                <option value="1">A-</option>
+                                <option value="2">B+</option>
+                                <option value="3">B-</option>
+                                <option value="4">AB+</option>
+                                <option value="5">AB-</option>
+                                <option value="6">O+</option>
+                                <option value="7">O-</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">District</label>
+                            <select id="districtSelect" name="District" class="form-select-custom">
+                                <option value="">All Districts</option>
+                                @foreach (var d in districts)
+                                {
+                                    <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Upazila</label>
+                            <select id="upazilaSelect" name="Upazila" class="form-select-custom">
+                                <option value="">All Upazilas</option>
+                                @foreach (var u in upazilas)
+                                {
+                                    <option value="@u.Name">@u.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Gender</label>
+                            <select name="Gender" id="genderSelect" class="form-select-custom">
+                                <option value="">Any Gender</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Availability</label>
+                            <select name="IsAvailable" id="availSelect" class="form-select-custom">
+                                <option value="">All</option>
+                                <option value="true">Available Only</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Verified Only</label>
+                            <select name="IsVerified" id="verifiedSelect" class="form-select-custom">
+                                <option value="">All Donors</option>
+                                <option value="true">Verified Only</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">📍 Search by GPS</label>
+                            <div class="radius-filter mb-2">
+                                <button type="button" class="radius-btn" data-radius="1">1 km</button>
+                                <button type="button" class="radius-btn" data-radius="5">5 km</button>
+                                <button type="button" class="radius-btn" data-radius="10">10 km</button>
+                            </div>
+                            <input type="hidden" name="RadiusKm" id="radiusInput" value="@filter.RadiusKm" />
+                            <input type="hidden" name="Latitude" id="filterLat" value="@filter.Latitude" />
+                            <input type="hidden" name="Longitude" id="filterLng" value="@filter.Longitude" />
+                            <button type="button" class="btn-sm-outline w-100 justify-content-center"
+                                    onclick="getCurrentLocation('filterLat','filterLng', () => document.getElementById('filterForm').submit())">
+                                <i class="fas fa-location-arrow"></i> Use My Location
+                            </button>
+                        </div>
+
+                        <button type="submit" class="btn-red w-100 justify-content-center">
+                            <i class="fas fa-search"></i> Apply Filters
+                        </button>
+
+                        @if (filter.BloodGroup.HasValue || !string.IsNullOrEmpty(filter.District))
+                        {
+                            <a asp-action="Search" class="btn-sm-outline w-100 justify-content-center mt-2">
+                                <i class="fas fa-times"></i> Clear Filters
+                            </a>
+                        }
+                    </form>
+                </div>
+            </div>
+
+            <!-- RESULTS -->
+            <div class="col-lg-9">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <div class="section-title">Search Results</div>
+                        <div class="section-subtitle">
+                            @if (donors.Any())
+                            {
+                                <span>@donors.Count donor(s) found</span>
+                            }
+                            else
+                            {
+                                <span>Enter filters to search</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                        <span style="font-size:0.78rem;color:var(--text-muted);">Sort by:</span>
+                        <select class="form-select-custom" style="width:auto;padding:0.35rem 0.75rem;font-size:0.78rem;">
+                            <option>Smart Priority</option>
+                            <option>Distance</option>
+                            <option>Rating</option>
+                        </select>
+                    </div>
+                </div>
+
+                @if (donors.Any())
+                {
+                    <div class="row g-3">
+                        @foreach (var donor in donors)
+                        {
+                            <div class="col-md-6 col-xl-4">
+                                <div class="donor-card">
+                                    <div class="donor-card-header">
+                                        <div class="donor-avatar">@donor.FullName[0]</div>
+                                        <div class="flex-grow-1">
+                                            <div class="donor-name">
+                                                @donor.FullName
+                                                @if (donor.IsVerifiedDonor)
+                                                {
+                                                    <span class="badge-verified"><i class="fas fa-check-circle"></i></span>
+                                                }
+                                            </div>
+                                            <div class="donor-loc">
+                                                <i class="fas fa-map-marker-alt"></i> @donor.Upazila, @donor.District
+                                                @if (donor.DistanceKm.HasValue)
+                                                {
+                                                    <span style="color:var(--deep-red);font-weight:600;">
+                                                        · @donor.DistanceKm.Value.ToString("0.0")km
+                                                    </span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <span class="donor-blood-tag">@donor.BloodGroupDisplay</span>
+                                    </div>
+                                    <div class="donor-card-body">
+                                        <div class="donor-pills">
+                                            <div class="donor-pill"><i class="fas fa-tint"></i> @donor.TotalDonations</div>
+                                            <div class="donor-pill"><i class="fas fa-star"></i> @donor.AverageRating.ToString("0.0")</div>
+                                            <div class="donor-pill"><i class="fas fa-heart"></i> @donor.LivesSaved</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="avail-badge @(donor.IsAvailable ? "avail-yes" : "avail-no")">
+                                                <span class="avail-dot"></span>
+                                                @(donor.IsAvailable ? "Available" : "Unavailable")
+                                            </span>
+                                            <span style="font-size:0.68rem;color:var(--text-muted);">
+                                                @donor.Gender
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="donor-card-footer">
+                                        @if (donor.IsAvailable && !string.IsNullOrEmpty(donor.PhoneNumber))
+                                        {
+                                            <a href="tel:@donor.PhoneNumber" class="btn-sm-red">
+                                                <i class="fas fa-phone"></i>
+                                            </a>
+                                            <a href="https://wa.me/@donor.PhoneNumber" target="_blank" class="btn-sm-outline">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>
+                                        }
+                                        <a asp-controller="Donor" asp-action="Profile" asp-route-id="@donor.DonorProfileId"
+                                           class="btn-sm-outline flex-grow-1 justify-content-center">
+                                            <i class="fas fa-user"></i> View Profile
+                                        </a>
+                                        <button class="btn-sm-outline"
+                                                data-fav="false"
+                                                onclick="toggleFavorite(@donor.DonorProfileId, this)">
+                                            <i class="far fa-heart"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else if (filter.BloodGroup.HasValue || !string.IsNullOrEmpty(filter.District))
+                {
+                    <div class="info-card text-center py-5">
+                        <div style="font-size:3rem;margin-bottom:1rem;">😔</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">No Donors Found</div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                            No available donors found for your search criteria. Try expanding your search.
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a asp-action="Search" class="btn-outline-red">Clear Filters</a>
+                            <a asp-controller="Emergency" asp-action="Create" class="btn-red">
+                                <i class="fas fa-exclamation-triangle"></i> Create Emergency Request
+                            </a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="info-card text-center py-5">
+                        <div style="font-size:3rem;margin-bottom:1rem;">🔍</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">Search for Donors</div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);">
+                            Use the filters on the left to find available blood donors in your area.
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // ── Server থেকে আসা filter ভ্যালু দিয়ে dropdown সেট করা ──
+        window.addEventListener('DOMContentLoaded', function () {
+            const bgSelect = document.getElementById('bloodGroupSelect');
+            if (bgSelect) bgSelect.value = "@bgValue";
+
+            const genderSelect = document.getElementById('genderSelect');
+            if (genderSelect) genderSelect.value = "@genderValue";
+
+            const districtSelect = document.getElementById('districtSelect');
+            if (districtSelect) districtSelect.value = "@districtValue";
+
+            const upazilaSelect = document.getElementById('upazilaSelect');
+            if (upazilaSelect) upazilaSelect.value = "@upazilaValue";
+
+            const radius = "@filter.RadiusKm";
+            if (radius) {
+                document.querySelectorAll('.radius-btn').forEach(btn => {
+                    if (btn.dataset.radius === radius) btn.classList.add('active');
+                });
+            }
+        });
+
+        // ── Blood Group / Gender পরিবর্তন হলে সাথে সাথে সাবমিট ──
+        document.getElementById('bloodGroupSelect').addEventListener('change', function () {
+            document.getElementById('filterForm').submit();
+        });
+
+        document.getElementById('genderSelect').addEventListener('change', function () {
+            document.getElementById('filterForm').submit();
+        });
+
+        document.getElementById('availSelect').addEventListener('change', function () {
+            document.getElementById('filterForm').submit();
+        });
+
+        document.getElementById('verifiedSelect').addEventListener('change', function () {
+            document.getElementById('filterForm').submit();
+        });
+
+        // ── District পরিবর্তন হলে Upazila cascade লোড করে সাবমিট ──
+        document.getElementById('districtSelect').addEventListener('change', async function () {
+            const districtId = this.options[this.selectedIndex]?.dataset.id;
+            const upazilaSelect = document.getElementById('upazilaSelect');
+
+            upazilaSelect.innerHTML = '<option value="">All Upazilas</option>';
+
+            if (districtId) {
+                try {
+                    const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                    const upazilas = await res.json();
+                    upazilas.forEach(u => {
+                        const option = document.createElement('option');
+                        option.value = u.name;
+                        option.textContent = u.name;
+                        upazilaSelect.appendChild(option);
+                    });
+                } catch (e) { }
+            }
+
+            document.getElementById('filterForm').submit();
+        });
+
+        document.getElementById('upazilaSelect').addEventListener('change', function () {
+            document.getElementById('filterForm').submit();
+        });
+
+        // ── Radius বাটন ──
+        document.querySelectorAll('.radius-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.radius-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('radiusInput').value = this.dataset.radius;
+            });
+        });
+    </script>
+}

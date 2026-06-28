@@ -1,0 +1,89 @@
+﻿@model BloodDonationSystem.Application.DTOs.Auth.LoginDto
+@{
+    ViewData["Title"] = "Login"; Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">Welcome Back 👋</div>
+        <div class="page-header-sub">Sign in to your BloodDonate BD account</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="form-card">
+                    <div class="text-center mb-4">
+                        <div style="font-size:2.5rem;">🩸</div>
+                        <div class="form-card-title">Sign In</div>
+                        <div class="form-card-subtitle">Enter your credentials to continue</div>
+                    </div>
+
+                    <form asp-action="Login" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
+                        <div asp-validation-summary="All" class="validation-msg mb-3"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Email Address</label>
+                            <div class="input-group-custom">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input asp-for="Email" class="form-control-custom input-with-icon"
+                                       placeholder="your@email.com" />
+                            </div>
+                            <span asp-validation-for="Email" class="validation-msg"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Password</label>
+                            <div class="input-group-custom">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input asp-for="Password" type="password"
+                                       class="form-control-custom input-with-icon"
+                                       placeholder="••••••••" />
+                            </div>
+                            <span asp-validation-for="Password" class="validation-msg"></span>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <label class="d-flex align-items-center gap-2" style="cursor:pointer;font-size:0.85rem;">
+                                <input asp-for="RememberMe" type="checkbox" style="accent-color:var(--deep-red);" />
+                                <span style="color:var(--navy-blue);">Remember me</span>
+                            </label>
+                            <a asp-action="ForgotPassword" style="font-size:0.85rem;color:var(--deep-red);text-decoration:none;font-weight:600;">
+                                Forgot Password?
+                            </a>
+                        </div>
+
+                        <button type="submit" class="btn-red w-100 justify-content-center" style="padding:0.8rem;">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4" style="font-size:0.875rem;color:var(--text-muted);">
+                        Don't have an account?
+                        <a asp-action="Register" style="color:var(--deep-red);font-weight:700;text-decoration:none;">Register Now</a>
+                    </div>
+                </div>
+
+                <!-- INFO BOX -->
+                <div class="info-card mt-3">
+                    <div class="info-card-title"><i class="fas fa-shield-alt"></i> Secure Login</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.6;">
+                        Your data is protected with industry-standard encryption.
+                        Your donation history and personal information are safe with us.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

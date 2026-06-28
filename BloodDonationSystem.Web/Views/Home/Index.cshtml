@@ -1,0 +1,393 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var stats = ViewBag.Stats;
+    var emergencies = ViewBag.Emergencies as List<BloodDonationSystem.Application.DTOs.Emergency.EmergencyRequestDto> ?? new();
+    var topDonors = ViewBag.TopDonors as List<BloodDonationSystem.Application.DTOs.Donor.DonorDto> ?? new();
+}
+
+<!-- HERO -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7" style="position:relative;z-index:1;">
+                <h1 class="hero-title">
+                    Donate Blood,<br>
+                    <span class="accent">Save Lives</span> ❤️
+                </h1>
+                <p class="hero-subtitle">
+                    Bangladesh's most advanced blood donation platform. Connect with verified donors,
+                    manage emergency requests, and save lives in real-time.
+                </p>
+                <div class="d-flex gap-3 mt-4 flex-wrap">
+                    <a asp-controller="Donor" asp-action="Search" class="btn-red">
+                        <i class="fas fa-search"></i> Find Donor
+                    </a>
+                    @if (!User.Identity?.IsAuthenticated ?? true)
+                    {
+                        <a asp-controller="Account" asp-action="Register" class="btn-outline-white">
+                            <i class="fas fa-tint"></i> Become Donor
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Emergency" asp-action="Create" class="btn-outline-white">
+                            <i class="fas fa-exclamation-triangle"></i> Emergency Request
+                        </a>
+                    }
+                </div>
+                <div class="d-flex gap-4 mt-4 flex-wrap">
+                    <div>
+                        <div class="hero-stat-number">@(stats?.TotalDonors?.ToString("N0") ?? "12,450")+ </div>
+                        <div class="hero-stat-label">Active Donors</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">@(stats?.TotalDonations?.ToString("N0") ?? "8,320")+</div>
+                        <div class="hero-stat-label">Total Donations</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">@(stats?.LivesSaved?.ToString("N0") ?? "24,960")+</div>
+                        <div class="hero-stat-label">Lives Saved</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center d-none d-lg-block" style="position:relative;z-index:1;">
+                <div class="hero-drop">🩸</div>
+                <div style="color:rgba(255,255,255,0.45);font-size:0.85rem;margin-top:0.5rem;">Every drop counts</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section pb-3">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-red"><i class="fas fa-users"></i></div>
+                    <div class="stat-number">@(stats?.TotalDonors?.ToString("N0") ?? "12,450")</div>
+                    <div class="stat-label">Total Donors</div>
+                    <div class="stat-change"><i class="fas fa-arrow-up"></i> +234 this month</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-blue"><i class="fas fa-tint"></i></div>
+                    <div class="stat-number">@(stats?.TotalDonations?.ToString("N0") ?? "8,320")</div>
+                    <div class="stat-label">Total Donations</div>
+                    <div class="stat-change"><i class="fas fa-arrow-up"></i> +89 this week</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-green"><i class="fas fa-heart"></i></div>
+                    <div class="stat-number">@(stats?.LivesSaved?.ToString("N0") ?? "24,960")</div>
+                    <div class="stat-label">Lives Saved</div>
+                    <div class="stat-change"><i class="fas fa-arrow-up"></i> Est. 3x donations</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon si-orange"><i class="fas fa-exclamation-circle"></i></div>
+                    <div class="stat-number">@(stats?.EmergencyRequests ?? 47)</div>
+                    <div class="stat-label">Emergency Requests</div>
+                    <div class="stat-change" style="color:var(--deep-red);">
+                        <i class="fas fa-circle"></i> @(emergencies.Count) Active now
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="section-pad">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- LEFT -->
+            <div class="col-lg-8">
+
+                <!-- AVAILABLE DONORS -->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <div class="section-title">Available Donors</div>
+                        <div class="section-subtitle">Sorted by Smart Priority Score</div>
+                    </div>
+                    <a asp-controller="Donor" asp-action="Search" class="view-all-link">
+                        View All <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                @if (topDonors.Any())
+                {
+                    <div class="row g-3">
+                        @foreach (var donor in topDonors.Take(4))
+                        {
+                            <div class="col-md-6">
+                                <div class="donor-card">
+                                    <div class="donor-card-header">
+                                        <div class="donor-avatar">@donor.FullName[0]</div>
+                                        <div class="flex-grow-1">
+                                            <div class="donor-name">
+                                                @donor.FullName
+                                                @if (donor.IsVerifiedDonor)
+                                                {
+                                                    <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                                                }
+                                            </div>
+                                            <div class="donor-loc">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                @donor.Upazila, @donor.District
+                                                @if (donor.DistanceKm.HasValue)
+                                                {
+                                                    <span>· @donor.DistanceKm.Value.ToString("0.0") km</span>
+                                                }
+                                            </div>
+                                            <div class="mt-1">
+                                                @{
+                                                    var levelClass = donor.Level.ToString() switch
+                                                    {
+                                                        "LifeSaver" => "lv-gold",
+                                                        "Hero" => "lv-hero",
+                                                        "Helper" => "lv-silver",
+                                                        _ => "lv-new"
+                                                    };
+                                                    var levelEmoji = donor.Level.ToString() switch
+                                                    {
+                                                        "LifeSaver" => "🏆",
+                                                        "Hero" => "⚡",
+                                                        "Helper" => "🥈",
+                                                        _ => "🆕"
+                                                    };
+                                                }
+                                                <span class="level-badge @levelClass">@levelEmoji @donor.LevelDisplay</span>
+                                            </div>
+                                        </div>
+                                        <span class="donor-blood-tag">@donor.BloodGroupDisplay</span>
+                                    </div>
+                                    <div class="donor-card-body">
+                                        <div class="donor-pills">
+                                            <div class="donor-pill"><i class="fas fa-tint"></i> @donor.TotalDonations Donations</div>
+                                            <div class="donor-pill"><i class="fas fa-star"></i> @donor.AverageRating.ToString("0.0")</div>
+                                            <div class="donor-pill"><i class="fas fa-heart"></i> @donor.LivesSaved Lives</div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="avail-badge @(donor.IsAvailable ? "avail-yes" : "avail-no")">
+                                                <span class="avail-dot"></span>
+                                                @(donor.IsAvailable ? "Available Now" : "Unavailable")
+                                            </span>
+                                            @if (donor.LastSeenAt.HasValue)
+                                            {
+                                                <span class="last-seen">
+                                                    Last seen @((DateTime.UtcNow - donor.LastSeenAt.Value).TotalMinutes < 60
+                                                                                            ? $"{(int)(DateTime.UtcNow - donor.LastSeenAt.Value).TotalMinutes}m ago"
+                                                                                            : $"{(int)(DateTime.UtcNow - donor.LastSeenAt.Value).TotalHours}h ago")
+                                    </span>
+                                                                        }
+                                        </div>
+                                    </div>
+                                    <div class="donor-card-footer">
+                                        @if (donor.IsAvailable)
+                                        {
+                                            <a href="tel:@donor.PhoneNumber" class="btn-sm-red flex-grow-1 justify-content-center">
+                                                <i class="fas fa-phone"></i> Call
+                                            </a>
+                                            <a href="https://wa.me/@donor.PhoneNumber" target="_blank" class="btn-sm-outline">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>
+                                            <a asp-controller="Chat" asp-action="Index" asp-route-userId="@donor.UserId" class="btn-sm-outline">
+                                                <i class="fas fa-comment"></i>
+                                            </a>
+                                        }
+                                        <a asp-controller="Donor" asp-action="Profile" asp-route-id="@donor.DonorProfileId" class="btn-sm-outline">
+                                            <i class="fas fa-user"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="info-card text-center py-4">
+                        <div style="font-size:3rem;margin-bottom:1rem;">🩸</div>
+                        <div style="font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">No Donors Found</div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);">Be the first to register as a donor!</div>
+                        <a asp-controller="Donor" asp-action="BecomeDonor" class="btn-red mt-3">
+                            <i class="fas fa-tint"></i> Become a Donor
+                        </a>
+                    </div>
+                }
+
+                <!-- EMERGENCY REQUESTS -->
+                @if (emergencies.Any())
+                {
+                    <div class="d-flex align-items-center justify-content-between mt-4 mb-3">
+                        <div>
+                            <div class="section-title">Emergency Requests</div>
+                            <div class="section-subtitle">Respond immediately to save lives</div>
+                        </div>
+                        <a asp-controller="Emergency" asp-action="Index" class="view-all-link">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        @foreach (var emg in emergencies.Take(3))
+                        {
+                            <div class="emergency-req-card">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="emg-blood-box">@emg.BloodGroupDisplay</div>
+                                    <div class="flex-grow-1">
+                                        <div style="font-size:0.95rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.25rem;">
+                                            @emg.PatientName · @emg.HospitalName
+                                        </div>
+                                        <div style="font-size:0.8rem;color:var(--text-muted);">
+                                            <i class="fas fa-map-marker-alt"></i> @emg.Upazila, @emg.District · @emg.UnitsNeeded units needed
+                                        </div>
+                                        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:0.2rem;">
+                                            <i class="fas fa-phone"></i> @emg.ContactNumber
+                                        </div>
+                                    </div>
+                                    <div class="emg-timer">
+                                        <i class="fas fa-clock"></i>
+                                        @{
+                                            var remaining = emg.ExpiryDate - DateTime.UtcNow;
+                                        }
+                                        @(remaining.TotalHours > 1 ? $"{(int)remaining.TotalHours}h {remaining.Minutes}m" : $"{remaining.Minutes}m") left
+                                    </div>
+                                </div>
+                                <div class="emg-footer">
+                                    @if (User.Identity?.IsAuthenticated == true)
+                                    {
+                                        <form asp-controller="Emergency" asp-action="Accept" asp-route-id="@emg.Id" method="post" class="flex-grow-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn-sm-red w-100 justify-content-center">
+                                                <i class="fas fa-check"></i> Accept & Help
+                                            </button>
+                                        </form>
+                                    }
+                                    <a asp-controller="Emergency" asp-action="Details" asp-route-id="@emg.Id" class="btn-sm-outline">
+                                        <i class="fas fa-info-circle"></i> Details
+                                    </a>
+                                    @if (!string.IsNullOrEmpty(emg.HospitalName))
+                                    {
+                                        <a href="https://maps.google.com/?q=@emg.HospitalLatitude,@emg.HospitalLongitude" target="_blank" class="btn-sm-outline">
+                                            <i class="fas fa-map"></i> Map
+                                        </a>
+                                    }
+                                    <a href="tel:@emg.ContactNumber" class="btn-sm-outline">
+                                        <i class="fas fa-phone"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            <!-- RIGHT SIDEBAR -->
+            <div class="col-lg-4">
+
+                <!-- SOS -->
+                <div class="sos-wrap mb-4">
+                    <a asp-controller="Emergency" asp-action="SOS" class="sos-circle text-decoration-none">
+                        <i class="fas fa-exclamation-triangle" style="font-size:1.6rem;"></i>
+                        <span style="font-size:0.85rem;font-weight:800;">SOS</span>
+                    </a>
+                    <div class="sos-title">Emergency SOS</div>
+                    <div class="sos-desc">Press to alert all nearby donors immediately</div>
+                </div>
+
+                <!-- LEADERBOARD -->
+                <div class="leaderboard-card mb-4">
+                    <div class="lb-header">
+                        <span><i class="fas fa-trophy"></i> Monthly Top Donors</span>
+                        <a asp-controller="Leaderboard" asp-action="Index">View All</a>
+                    </div>
+                    <div>
+                        @{
+                            int lbRank = 1;
+                        }
+                        @foreach (var donor in topDonors.Take(5))
+                        {
+                            var rankClass = lbRank switch { 1 => "r1", 2 => "r2", 3 => "r3", _ => "rn" };
+                            <div class="lb-item">
+                                <div class="rank-num @rankClass">@lbRank</div>
+                                <div class="lb-av">@donor.FullName[0]</div>
+                                <div class="lb-name">
+                                    @donor.FullName<br>
+                                    <span style="font-size:0.7rem;color:var(--text-muted);">@donor.District · @donor.BloodGroupDisplay</span>
+                                </div>
+                                <div class="lb-pts">@donor.TotalPoints pts</div>
+                            </div>
+                            lbRank++;
+                        }
+                        @if (!topDonors.Any())
+                        {
+                            <div class="text-center py-3" style="color:var(--text-muted);font-size:0.85rem;">
+                                No donors yet
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- BLOOD COMPATIBILITY -->
+                <div class="info-card mb-4">
+                    <div class="info-card-title"><i class="fas fa-exchange-alt"></i> Blood Compatibility</div>
+                    <div class="compat-row">
+                        <span class="blood-tag">O-</span>
+                        <i class="fas fa-arrow-right" style="color:var(--text-muted);font-size:0.7rem;"></i>
+                        <span style="font-size:0.75rem;color:var(--text-muted);">Donates to</span>
+                        <span class="blood-tag-sm">All Types</span>
+                    </div>
+                    <div class="compat-row">
+                        <span class="blood-tag">AB+</span>
+                        <i class="fas fa-arrow-left" style="color:var(--text-muted);font-size:0.7rem;"></i>
+                        <span style="font-size:0.75rem;color:var(--text-muted);">Receives from</span>
+                        <span class="blood-tag-sm">All Types</span>
+                    </div>
+                    <div class="compat-row">
+                        <span class="blood-tag">A+</span>
+                        <i class="fas fa-arrow-right" style="color:var(--text-muted);font-size:0.7rem;"></i>
+                        <span class="blood-tag-sm">A+</span>
+                        <span class="blood-tag-sm">AB+</span>
+                    </div>
+                    <div class="compat-row">
+                        <span class="blood-tag">B+</span>
+                        <i class="fas fa-arrow-right" style="color:var(--text-muted);font-size:0.7rem;"></i>
+                        <span class="blood-tag-sm">B+</span>
+                        <span class="blood-tag-sm">AB+</span>
+                    </div>
+                    <a asp-controller="Home" asp-action="About" class="view-all-link mt-2 d-inline-flex">
+                        Full Chart <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- MOST NEEDED -->
+                <div class="info-card">
+                    <div class="info-card-title"><i class="fas fa-fire"></i> Most Needed Right Now</div>
+                    <div class="d-flex flex-wrap gap-2">
+                        @{
+                            var needed = new[] {
+                                                new { Group = "O-", Count = 42, Hot = true },
+                                                new { Group = "AB-", Count = 28, Hot = true },
+                                                new { Group = "B-", Count = 19, Hot = false },
+                                                new { Group = "A-", Count = 15, Hot = false }
+                                                };
+                        }
+                        @foreach (var n in needed)
+                        {
+                            <div style="background:@(n.Hot ? "var(--deep-red-light)" : "var(--light-gray)");border:1.5px solid @(n.Hot ? "var(--deep-red)" : "var(--card-border)");border-radius:10px;padding:0.6rem 1rem;text-align:center;flex:1;min-width:60px;">
+                                <div style="font-size:1.05rem;font-weight:800;color:@(n.Hot ? "var(--deep-red)" : "var(--navy-blue)");">@n.Group</div>
+                                <div style="font-size:0.68rem;color:var(--text-muted);">@n.Count requests</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

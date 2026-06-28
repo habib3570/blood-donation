@@ -1,0 +1,109 @@
+﻿@model BloodDonationSystem.Application.DTOs.SubmitSuccessStoryDto
+@{
+    ViewData["Title"] = "Share Your Story";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">❤️ Share Your Success Story</div>
+        <div class="page-header-sub">Inspire others with your blood donation experience</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="form-card">
+                    <div class="text-center mb-4">
+                        <div style="font-size:2.5rem;">❤️</div>
+                        <div class="form-card-title">Tell Your Story</div>
+                        <div class="form-card-subtitle">
+                            Your story could inspire someone to become a life-saving donor
+                        </div>
+                    </div>
+
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="All" class="validation-msg mb-3"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Story Title *</label>
+                            <input asp-for="Title" class="form-control-custom"
+                                   placeholder="Give your story a meaningful title" />
+                            <span asp-validation-for="Title" class="validation-msg"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-custom">Your Story *</label>
+                            <textarea asp-for="Content" class="form-control-custom"
+                                      rows="8"
+                                      placeholder="Share your experience donating blood, receiving blood, or how blood donation impacted your life..."></textarea>
+                            <span asp-validation-for="Content" class="validation-msg"></span>
+                            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.35rem;">
+                                Minimum 50 characters. Be authentic and share what made your experience meaningful.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label-custom">Add a Photo (Optional)</label>
+                            <div class="info-card">
+                                <input type="file"
+                                       name="ImageFile"
+                                       accept="image/*"
+                                       class="form-control-custom"
+                                       style="font-size:0.82rem;"
+                                       onchange="previewImage(event)" />
+                                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.4rem;">
+                                    JPG or PNG, max 5MB. A photo helps your story connect with readers.
+                                </div>
+                                <img id="imagePreview"
+                                     style="display:none;max-width:100%;border-radius:10px;margin-top:0.75rem;" />
+                            </div>
+                        </div>
+
+                        <div class="info-card mb-4"
+                             style="background:#FFFBEB;border-color:#FDE68A;">
+                            <div style="font-size:0.8rem;color:#92400E;">
+                                <i class="fas fa-info-circle"></i>
+                                Your story will be reviewed by our team before being published
+                                to ensure it meets our community guidelines.
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <a asp-action="Index" class="btn-outline-red">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn-red flex-grow-1 justify-content-center">
+                                <i class="fas fa-paper-plane"></i> Submit Story
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+}

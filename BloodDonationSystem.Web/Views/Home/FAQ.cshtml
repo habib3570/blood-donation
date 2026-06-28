@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "FAQ";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">❓ Frequently Asked Questions</div>
+        <div class="page-header-sub">Everything you need to know about blood donation</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                @{
+                    var faqs = new[]
+                    {
+                                new {
+                                Q = "How old do you need to be to donate blood?",
+                                A = "You must be at least 18 years old to donate blood in Bangladesh. The maximum age is 60 years."
+                                },
+                                new {
+                                Q = "How often can you donate blood?",
+                                A = "You can donate whole blood every 90 days (3 months). This allows your body enough time to replenish the donated blood."
+                                },
+                                new {
+                                Q = "What is the minimum weight to donate blood?",
+                                A = "You must weigh at least 50 kg (110 lbs) to donate blood. This ensures donor safety."
+                                },
+                                new {
+                                Q = "How long does the donation process take?",
+                                A = "The actual blood donation takes about 8-10 minutes. The entire process including registration, health screening, and refreshments takes about 45-60 minutes."
+                                },
+                                new {
+                                Q = "Is blood donation safe?",
+                                A = "Yes, blood donation is completely safe. New, sterile equipment is used for each donor, so there is no risk of infection."
+                                },
+                                new {
+                                Q = "What should I eat before donating blood?",
+                                A = "Eat a healthy meal 2-3 hours before donating. Avoid fatty foods. Drink plenty of water."
+                                },
+                                new {
+                                Q = "Can I donate blood if I have a cold?",
+                                A = "No. You should not donate blood if you have a cold, flu, or any active illness. Wait until you are fully recovered."
+                                },
+                                new {
+                                Q = "How is my blood used after donation?",
+                                A = "Your donated blood is tested, processed, and separated into components (red cells, platelets, plasma) that can help multiple patients."
+                                },
+                                new {
+                                Q = "Will donating blood make me weak?",
+                                A = "Most donors feel fine after donating. Your body replaces the fluid within 24 hours. Red blood cells are replaced within a few weeks."
+                                },
+                                new {
+                                Q = "Can diabetics donate blood?",
+                                A = "People with diabetes can donate blood if they are well-controlled on diet or oral medications. Those on insulin may not be eligible."
+                                }
+                                };
+                }
+
+                <div class="d-flex flex-column gap-3" id="faqContainer">
+                    @for (int i = 0; i < faqs.Length; i++)
+                    {
+                        var faq = faqs[i];
+                        <div class="form-card"
+                             style="padding:0;overflow:hidden;cursor:pointer;"
+                             onclick="toggleFaq(@i)">
+                            <div class="d-flex align-items-center justify-content-between"
+                                 style="padding:1rem 1.25rem;">
+                                <div style="font-weight:700;color:var(--navy-blue);
+                                                font-size:0.9rem;flex:1;">
+                                    @faq.Q
+                                </div>
+                                <i class="fas fa-chevron-down"
+                                   id="faqIcon@i"
+                                   style="color:var(--deep-red);flex-shrink:0;
+                                              margin-left:1rem;transition:transform 0.3s;"></i>
+                            </div>
+                            <div id="faqAnswer@i"
+                                 style="display:none;padding:0 1.25rem 1rem;
+                                            border-top:1px solid var(--card-border);">
+                                <div style="font-size:0.85rem;color:var(--text-muted);
+                                                line-height:1.7;padding-top:0.75rem;">
+                                    @faq.A
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- CTA -->
+                <div class="info-card text-center mt-4"
+                     style="background:linear-gradient(135deg,var(--deep-red-light),white);">
+                    <div style="font-size:1.5rem;margin-bottom:0.5rem;">🩸</div>
+                    <div style="font-size:1rem;font-weight:800;color:var(--navy-blue);
+                                margin-bottom:0.5rem;">
+                        Ready to Save a Life?
+                    </div>
+                    <div style="font-size:0.85rem;color:var(--text-muted);
+                                margin-bottom:1rem;">
+                        Register as a donor today and make a difference in someone's life.
+                    </div>
+                    @if (!User.Identity?.IsAuthenticated ?? true)
+                    {
+                        <a asp-controller="Account" asp-action="Register" class="btn-red">
+                            <i class="fas fa-user-plus"></i> Register as Donor
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Donor" asp-action="BecomeDonor" class="btn-red">
+                            <i class="fas fa-tint"></i> Become a Donor
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faqAnswer${index}`);
+            const icon = document.getElementById(`faqIcon${index}`);
+            const isOpen = answer.style.display !== 'none';
+
+            document.querySelectorAll('[id^="faqAnswer"]').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('[id^="faqIcon"]').forEach(el => {
+                el.style.transform = 'rotate(0deg)';
+            });
+
+            if (!isOpen) {
+                answer.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+}

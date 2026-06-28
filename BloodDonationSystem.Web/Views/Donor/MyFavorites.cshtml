@@ -1,0 +1,115 @@
+﻿@using BloodDonationSystem.Application.DTOs.Donor
+@model List<DonorDto>
+@{
+    ViewData["Title"] = "My Favorite Donors";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">❤️ My Favorite Donors</div>
+        <div class="page-header-sub">Donors you've saved for quick access</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-3">
+                @foreach (var donor in Model)
+                {
+                    <div class="col-md-6 col-xl-4">
+                        <div class="donor-card">
+                            <div class="donor-card-header">
+                                <div class="donor-avatar">@donor.FullName[0]</div>
+                                <div class="flex-grow-1">
+                                    <div class="donor-name">
+                                        @donor.FullName
+                                        @if (donor.IsVerifiedDonor)
+                                        {
+                                            <span class="badge-verified"><i class="fas fa-check-circle"></i></span>
+                                        }
+                                    </div>
+                                    <div class="donor-loc">
+                                        <i class="fas fa-map-marker-alt"></i> @donor.Upazila, @donor.District
+                                    </div>
+                                </div>
+                                <span class="donor-blood-tag">@donor.BloodGroupDisplay</span>
+                            </div>
+                            <div class="donor-card-body">
+                                <div class="donor-pills">
+                                    <div class="donor-pill"><i class="fas fa-tint"></i> @donor.TotalDonations</div>
+                                    <div class="donor-pill"><i class="fas fa-star"></i> @donor.AverageRating.ToString("0.0")</div>
+                                    <div class="donor-pill"><i class="fas fa-heart"></i> @donor.LivesSaved</div>
+                                </div>
+                                <span class="avail-badge @(donor.IsAvailable ? "avail-yes" : "avail-no")">
+                                    <span class="avail-dot"></span>
+                                    @(donor.IsAvailable ? "Available" : "Unavailable")
+                                </span>
+                            </div>
+                            <div class="donor-card-footer">
+                                @if (donor.IsAvailable && !string.IsNullOrEmpty(donor.PhoneNumber))
+                                {
+                                    <a href="tel:@donor.PhoneNumber" class="btn-sm-red">
+                                        <i class="fas fa-phone"></i>
+                                    </a>
+                                    <a href="https://wa.me/@donor.PhoneNumber" target="_blank" class="btn-sm-outline">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                }
+                                <a asp-controller="Donor" asp-action="Profile" asp-route-id="@donor.DonorProfileId"
+                                   class="btn-sm-outline flex-grow-1 justify-content-center">
+                                    <i class="fas fa-user"></i> View Profile
+                                </a>
+                                <button class="btn-sm-outline" data-fav="true"
+                                        onclick="removeFavorite(@donor.DonorProfileId, this)"
+                                        title="Remove from Favorites">
+                                    <i class="fas fa-heart" style="color:var(--deep-red);"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="info-card text-center py-5">
+                <div style="font-size:3rem;margin-bottom:1rem;">❤️</div>
+                <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                    No Favorites Yet
+                </div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                    You haven't added any donors to your favorites yet.
+                </div>
+                <a asp-controller="Donor" asp-action="Search" class="btn-red">
+                    <i class="fas fa-search"></i> Find Donors
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        async function removeFavorite(donorProfileId, btn) {
+            try {
+                const res = await fetch('/Donor/RemoveFavorite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'RequestVerificationToken': getAntiForgeryToken()
+                    },
+                    body: `donorProfileId=${donorProfileId}`
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Removed from favorites.', 'success');
+                    btn.closest('.col-md-6').remove();
+                }
+            } catch (e) {
+                showToast('Failed to remove.', 'error');
+            }
+        }
+    </script>
+}

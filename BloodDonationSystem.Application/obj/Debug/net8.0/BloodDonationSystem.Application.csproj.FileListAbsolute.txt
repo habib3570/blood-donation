@@ -1,0 +1,15 @@
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\bin\Debug\net8.0\BloodDonationSystem.Application.deps.json
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\bin\Debug\net8.0\BloodDonationSystem.Application.dll
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\bin\Debug\net8.0\BloodDonationSystem.Application.pdb
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\bin\Debug\net8.0\BloodDonationSystem.Domain.dll
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\bin\Debug\net8.0\BloodDonationSystem.Domain.pdb
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDonationSystem.Application.csproj.AssemblyReference.cache
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDonationSystem.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDonationSystem.Application.AssemblyInfoInputs.cache
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDonationSystem.Application.AssemblyInfo.cs
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDonationSystem.Application.csproj.CoreCompileInputs.cache
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDon.C915D482.Up2Date
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDonationSystem.Application.dll
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\refint\BloodDonationSystem.Application.dll
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\BloodDonationSystem.Application.pdb
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Application\obj\Debug\net8.0\ref\BloodDonationSystem.Application.dll

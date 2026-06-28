@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "SOS Emergency";
+}
+
+<div class="page-header" style="background:linear-gradient(135deg,#8B0000,var(--deep-red));">
+    <div class="container">
+        <div class="page-header-title">🚨 SOS Emergency</div>
+        <div class="page-header-sub">Send immediate alert to all nearby donors</div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+
+                <!-- SOS BUTTON -->
+                <div class="sos-wrap mb-4">
+                    <button class="sos-circle" id="sosMainBtn" onclick="activateSOS()">
+                        <i class="fas fa-exclamation-triangle" style="font-size:2rem;"></i>
+                        <span style="font-size:1rem;font-weight:800;">SOS</span>
+                    </button>
+                    <div class="sos-title">Press SOS to Alert Nearby Donors</div>
+                    <div class="sos-desc">
+                        @if (ViewBag.CanSend == true)
+                        {
+                            <span class="avail-badge avail-yes"><span class="avail-dot"></span> You can send emergency request</span>
+                        }
+                        else
+                        {
+                            <span class="avail-badge avail-no"><span class="avail-dot"></span> Daily limit reached (3/day)</span>
+                        }
+                    </div>
+                </div>
+
+                <!-- QUICK FORM -->
+                <div class="form-card text-start">
+                    <div class="form-card-title text-center mb-1">Quick Emergency Request</div>
+                    <div class="form-card-subtitle text-center">Fill details to send targeted alert</div>
+
+                    <form asp-controller="Emergency" asp-action="Create" method="post" id="sosForm">
+                        @Html.AntiForgeryToken()
+                        <div class="mb-3">
+                            <label class="form-label-custom">Patient Name *</label>
+                            <input name="PatientName" class="form-control-custom" placeholder="Patient full name" required />
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-6">
+                                <label class="form-label-custom">Blood Group *</label>
+                                <select name="BloodGroup" class="form-select-custom" required>
+                                    <option value="">Select</option>
+                                    <option value="0">A+</option>
+                                    <option value="1">A-</option>
+                                    <option value="2">B+</option>
+                                    <option value="3">B-</option>
+                                    <option value="4">AB+</option>
+                                    <option value="5">AB-</option>
+                                    <option value="6">O+</option>
+                                    <option value="7">O-</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label-custom">Units Needed *</label>
+                                <input name="UnitsNeeded" type="number" min="1" max="10" value="1" class="form-control-custom" required />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Hospital Name *</label>
+                            <input name="HospitalName" class="form-control-custom" placeholder="Hospital name" required />
+                        </div>
+                        @using BloodDonationSystem.Application.DTOs.Location
+                        @{
+                            var districts = ViewBag.Districts as List<DistrictDto> ?? new List<DistrictDto>();
+                        }
+
+                        <div class="col-md-6">
+                            <label class="form-label-custom">District *</label>
+                            <select id="districtSelect" name="District" class="form-select-custom" required>
+                                <option value="">Select District</option>
+                                @foreach (var d in districts)
+                                {
+                                    <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Upazila *</label>
+                            <select id="upazilaSelect" name="Upazila" class="form-select-custom" required disabled>
+                                <option value="">Select District First</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label-custom">Contact Number *</label>
+                            <div class="input-group-custom">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input name="ContactNumber" class="form-control-custom input-with-icon" placeholder="01XXXXXXXXX" required />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label-custom">Additional Info</label>
+                            <textarea name="AdditionalInfo" class="form-control-custom" rows="2" placeholder="Any additional details..."></textarea>
+                        </div>
+                        <input type="hidden" name="HospitalLatitude" id="hosLat" />
+                        <input type="hidden" name="HospitalLongitude" id="hosLng" />
+
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn-sm-outline" onclick="getCurrentLocation('hosLat','hosLng')">
+                                <i class="fas fa-location-arrow"></i> Get Location
+                            </button>
+                            <button type="submit" class="btn-red flex-grow-1 justify-content-center" @(ViewBag.CanSend == false ? "disabled" : "")>
+                                <i class="fas fa-paper-plane"></i> Send Emergency Alert
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- INFO -->
+                <div class="info-card mt-3 text-start">
+                    <div class="info-card-title"><i class="fas fa-info-circle"></i> How it works</div>
+                    <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.8;">
+                        <div>✅ Your request is sent to all nearby donors instantly</div>
+                        <div>✅ Donors within 10km radius will be notified</div>
+                        <div>✅ Request expires automatically after 6 hours</div>
+                        <div>⚠️ Maximum 3 emergency requests per day</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('districtSelect').addEventListener('change', async function () {
+        const districtId = this.options[this.selectedIndex]?.dataset.id;
+        const upazilaSelect = document.getElementById('upazilaSelect');
+
+        upazilaSelect.innerHTML = '<option value="">Loading...</option>';
+        upazilaSelect.disabled = true;
+
+        if (!districtId) {
+            upazilaSelect.innerHTML = '<option value="">Select District First</option>';
+            return;
+        }
+
+        try {
+            const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+            const upazilas = await res.json();
+            upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
+            upazilas.forEach(u => {
+                const option = document.createElement('option');
+                option.value = u.name;
+                option.textContent = u.name;
+                upazilaSelect.appendChild(option);
+            });
+            upazilaSelect.disabled = false;
+        } catch (e) {
+            upazilaSelect.innerHTML = '<option value="">Failed to load</option>';
+        }
+    });
+</script>

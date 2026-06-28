@@ -1,0 +1,318 @@
+﻿@using BloodDonationSystem.Application.DTOs.Notification
+@model List<NotificationDto>
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div>
+                <div class="page-header-title">🔔 Notifications</div>
+                <div class="page-header-sub">Stay updated with all your alerts</div>
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="markAllRead()" class="btn-sm-outline">
+                    <i class="fas fa-check-double"></i> Mark All Read
+                </button>
+                <div class="dropdown" style="position:relative;">
+                    <button class="btn-sm-outline" onclick="toggleMuteMenu()">
+                        <i class="fas fa-bell-slash"></i> Mute
+                    </button>
+                    <div id="muteMenu"
+                         style="display:none;position:absolute;right:0;top:100%;
+                                margin-top:8px;background:white;border-radius:12px;
+                                box-shadow:0 4px 20px rgba(0,0,0,0.1);
+                                border:1px solid var(--card-border);z-index:100;
+                                min-width:160px;padding:0.5rem;">
+                        <button onclick="muteFor(1)"
+                                class="dropdown-item-custom">
+                            For 1 hour
+                        </button>
+                        <button onclick="muteFor(24)"
+                                class="dropdown-item-custom">
+                            For 1 day
+                        </button>
+                        <button onclick="muteFor(168)"
+                                class="dropdown-item-custom">
+                            For 1 week
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                @if (Model != null && Model.Any())
+                {
+                    var pinned = Model.Where(n => n.IsPinned).ToList();
+                    var regular = Model.Where(n => !n.IsPinned).ToList();
+
+                    @if (pinned.Any())
+                    {
+                        <div style="font-size:0.78rem;font-weight:700;
+                                            color:var(--text-muted);margin-bottom:0.75rem;
+                                            text-transform:uppercase;letter-spacing:0.5px;">
+                            📌 Pinned
+                        </div>
+                        @foreach (var notif in pinned)
+                        {
+                            <div class="notif-card pinned @(notif.IsRead ? "" : "unread")"
+                                 onclick="readNotif(@notif.Id, '@notif.ActionUrl')"
+                                 style="margin-bottom:0.75rem;">
+                                <div class="notif-card-icon @GetNotifIconClass(notif.Type)">
+                                    <i class="fas @GetNotifIcon(notif.Type)"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="notif-card-title">@notif.Title</div>
+                                    <div class="notif-card-msg">@notif.Message</div>
+                                    <div class="notif-card-time">
+                                        @GetTimeAgo(notif.CreatedAt)
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column align-items-end gap-1">
+                                    @if (!notif.IsRead)
+                                    {
+                                        <span class="avail-dot"
+                                              style="background:var(--deep-red);
+                                                                     width:8px;height:8px;
+                                                                     border-radius:50%;flex-shrink:0;"></span>
+                                    }
+                                    <span style="font-size:0.65rem;background:var(--deep-red-light);
+                                                             color:var(--deep-red);padding:1px 6px;
+                                                             border-radius:4px;font-weight:600;">
+                                        PINNED
+                                    </span>
+                                </div>
+                            </div>
+                        }
+                        <hr style="border-color:var(--card-border);margin:1rem 0;" />
+                    }
+
+                    @if (regular.Any())
+                    {
+                        <div style="font-size:0.78rem;font-weight:700;
+                                            color:var(--text-muted);margin-bottom:0.75rem;
+                                            text-transform:uppercase;letter-spacing:0.5px;">
+                            All Notifications
+                        </div>
+                        @foreach (var notif in regular)
+                        {
+                            <div class="notif-card @(notif.IsRead ? "" : "unread")"
+                                 onclick="readNotif(@notif.Id, '@notif.ActionUrl')"
+                                 style="margin-bottom:0.5rem;">
+                                <div class="notif-card-icon @GetNotifIconClass(notif.Type)">
+                                    <i class="fas @GetNotifIcon(notif.Type)"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="notif-card-title">@notif.Title</div>
+                                    <div class="notif-card-msg">@notif.Message</div>
+                                    <div class="notif-card-time">@GetTimeAgo(notif.CreatedAt)</div>
+                                </div>
+                                @if (!notif.IsRead)
+                                {
+                                    <span class="avail-dot"
+                                          style="background:var(--deep-red);
+                                                                 width:8px;height:8px;
+                                                                 border-radius:50%;flex-shrink:0;"></span>
+                                }
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="info-card text-center py-5">
+                        <div style="font-size:3rem;margin-bottom:1rem;">🔔</div>
+                        <div style="font-size:1.1rem;font-weight:700;
+                                        color:var(--navy-blue);margin-bottom:0.5rem;">
+                            No Notifications
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);">
+                            You're all caught up! No new notifications.
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <style>
+        .notif-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            padding: 1rem 1.15rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+            .notif-card:hover {
+                border-color: var(--deep-red);
+                box-shadow: 0 4px 16px rgba(196,30,58,0.08);
+            }
+
+            .notif-card.unread {
+                background: var(--deep-red-light);
+                border-color: rgba(196,30,58,0.2);
+            }
+
+            .notif-card.pinned {
+                border-left: 4px solid var(--deep-red);
+            }
+
+        .notif-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .ni-emergency {
+            background: #FEF2F2;
+            color: var(--deep-red);
+        }
+
+        .ni-success {
+            background: #ECFDF5;
+            color: var(--success-green);
+        }
+
+        .ni-info {
+            background: #EEF2FF;
+            color: var(--navy-blue);
+        }
+
+        .ni-warning {
+            background: #FFFBEB;
+            color: var(--warning-orange);
+        }
+
+        .notif-card-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--navy-blue);
+            margin-bottom: 0.2rem;
+        }
+
+        .notif-card-msg {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .notif-card-time {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        async function readNotif(id, url) {
+            await fetch(`/Notification/MarkAsRead/${id}`, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            if (url && url !== 'null' && url !== '') window.location.href = url;
+            else location.reload();
+        }
+
+        async function markAllRead() {
+            await fetch('/Notification/MarkAllAsRead', {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            location.reload();
+        }
+
+        function toggleMuteMenu() {
+            const m = document.getElementById('muteMenu');
+            m.style.display = m.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function muteFor(hours) {
+            const res = await fetch(`/Notification/Mute?hours=${hours}`, {
+                method: 'POST',
+                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+            });
+            const data = await res.json();
+            showToast(data.message, 'success');
+            document.getElementById('muteMenu').style.display = 'none';
+        }
+    </script>
+}
+
+@functions {
+    string GetNotifIcon(BloodDonationSystem.Domain.Enums.NotificationType type)
+    {
+        switch (type)
+        {
+            case BloodDonationSystem.Domain.Enums.NotificationType.EmergencyAlert:
+                return "fa-exclamation-triangle";
+            case BloodDonationSystem.Domain.Enums.NotificationType.RequestAccepted:
+                return "fa-check-circle";
+            case BloodDonationSystem.Domain.Enums.NotificationType.RequestRejected:
+                return "fa-times-circle";
+            case BloodDonationSystem.Domain.Enums.NotificationType.RequestCompleted:
+                return "fa-trophy";
+            case BloodDonationSystem.Domain.Enums.NotificationType.DonationReminder:
+                return "fa-tint";
+            case BloodDonationSystem.Domain.Enums.NotificationType.BirthdayWish:
+                return "fa-birthday-cake";
+            case BloodDonationSystem.Domain.Enums.NotificationType.BadgeEarned:
+                return "fa-medal";
+            case BloodDonationSystem.Domain.Enums.NotificationType.AchievementUnlocked:
+                return "fa-star";
+            case BloodDonationSystem.Domain.Enums.NotificationType.NewMessage:
+                return "fa-comment";
+            default:
+                return "fa-bell";
+        }
+    }
+
+    string GetNotifIconClass(BloodDonationSystem.Domain.Enums.NotificationType type)
+    {
+        switch (type)
+        {
+            case BloodDonationSystem.Domain.Enums.NotificationType.EmergencyAlert:
+                return "ni-emergency";
+            case BloodDonationSystem.Domain.Enums.NotificationType.RequestAccepted:
+                return "ni-success";
+            case BloodDonationSystem.Domain.Enums.NotificationType.RequestCompleted:
+                return "ni-success";
+            case BloodDonationSystem.Domain.Enums.NotificationType.BadgeEarned:
+                return "ni-warning";
+            case BloodDonationSystem.Domain.Enums.NotificationType.AchievementUnlocked:
+                return "ni-warning";
+            default:
+                return "ni-info";
+        }
+    }
+
+    string GetTimeAgo(DateTime dt)
+    {
+        var diff = DateTime.UtcNow - dt;
+        if (diff.TotalMinutes < 1) return "Just now";
+        if (diff.TotalMinutes < 60) return $"{(int)diff.TotalMinutes}m ago";
+        if (diff.TotalHours < 24) return $"{(int)diff.TotalHours}h ago";
+        if (diff.TotalDays < 7) return $"{(int)diff.TotalDays}d ago";
+        return dt.ToString("dd MMM yyyy");
+    }
+}
