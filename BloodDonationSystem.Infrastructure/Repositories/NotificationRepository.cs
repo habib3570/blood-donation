@@ -63,5 +63,31 @@ namespace BloodDonationSystem.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.MutedUntil > DateTime.UtcNow);
             return mute != null;
         }
+        // ✅ Mute object DB তে save করা
+        public async Task AddMuteAsync(NotificationMute mute)
+        {
+            await _context.NotificationMutes.AddAsync(mute);
+        }
+
+        // ✅ Mute delete করা
+        public async Task RemoveMuteAsync(string userId)
+        {
+            var mute = await _context.NotificationMutes
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.MutedUntil > DateTime.UtcNow);
+
+            if (mute != null)
+                _context.NotificationMutes.Remove(mute);
+        }
+
+        // ✅ Notification pin করা
+        public async Task PinNotificationAsync(int notificationId)
+        {
+            var notification = await _dbSet.FindAsync(notificationId);
+            if (notification != null)
+            {
+                notification.IsPinned = true;
+                _dbSet.Update(notification);
+            }
+        }
     }
 }

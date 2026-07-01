@@ -51,5 +51,7 @@ namespace BloodDonationSystem.Infrastructure.Repositories
 
             return donations.ToDictionary(x => x.Month, x => x.Count);
         }
+        public async Task<int> GetDonationsCountSinceAsync(DateTime since)
+        => await _dbSet.CountAsync(x => x.DonationDate >= since);
     }
 }

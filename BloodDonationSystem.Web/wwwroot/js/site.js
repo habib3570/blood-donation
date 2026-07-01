@@ -124,14 +124,25 @@ async function toggleFavorite(donorProfileId, btn) {
             },
             body: `donorProfileId=${donorProfileId}`
         });
+
+        if (!res.ok) {
+            showToast('Please login to add favorites.', 'error');
+            return;
+        }
+
         const data = await res.json();
         if (data.success) {
             btn.dataset.fav = isFav ? 'false' : 'true';
             btn.innerHTML = isFav
                 ? '<i class="far fa-heart"></i>'
                 : '<i class="fas fa-heart" style="color:var(--deep-red)"></i>';
+            showToast(isFav ? 'Removed from favorites.' : 'Added to favorites!', 'success');
+        } else {
+            showToast(data.message || 'Action failed.', 'error');
         }
-    } catch (e) { }
+    } catch (e) {
+        showToast('Something went wrong.', 'error');
+    }
 }
 
 // ── CONFIRM DELETE ──

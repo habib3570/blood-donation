@@ -16,5 +16,8 @@ namespace BloodDonationSystem.Application.Interfaces.Repositories
         Task UpdateSmartPriorityScoreAsync(int donorProfileId, double score);
         Task<bool> IsEligibleToDonateAsync(int donorProfileId);
         Task<int> GetDaysUntilEligibleAsync(int donorProfileId);
+        Task<List<DonorProfile>> GetDonorsByBloodGroupAsync(BloodGroup bloodGroup);
+       
+
     }
 }

@@ -15,5 +15,8 @@ namespace BloodDonationSystem.Application.Interfaces.Repositories
         Task<int> GetTodayRequestCountByUserAsync(string userId);
         Task<List<BloodRequest>> GetRequestsByDonorAsync(string donorId);
         Task UpdateStatusAsync(int requestId, RequestStatus status);
+
+     
+        Task<List<BloodRequest>> GetAcceptedRequestsByDonorAsync(string donorId);
     }
 }

@@ -147,5 +147,15 @@ namespace BloodDonationSystem.Application.Services
             await _gamificationService.UpdateStreakAsync(donorProfileId);
             return Result.Success();
         }
+        public async Task<Result<List<DonationHistoryDto>>> GetDonationHistoryByUserIdAsync(string userId)
+        {
+            var donor = await _donorRepository.GetByUserIdAsync(userId);
+            if (donor == null)
+                return Result<List<DonationHistoryDto>>.Failure("Donor profile not found.");
+
+            var donations = await _donationRepository.GetDonationHistoryAsync(donor.Id);
+            var dtos = _mapper.Map<List<DonationHistoryDto>>(donations);
+            return Result<List<DonationHistoryDto>>.Success(dtos);
+        }
     }
 }

@@ -12,5 +12,10 @@ namespace BloodDonationSystem.Application.Interfaces.Repositories
         Task MarkAllAsReadAsync(string userId);
         Task<List<Notification>> GetPinnedNotificationsAsync(string userId);
         Task<bool> IsUserMutedAsync(string userId);
+
+        // ✅ নতুন তিনটা method যোগ করা হলো
+        Task AddMuteAsync(NotificationMute mute);
+        Task RemoveMuteAsync(string userId);
+        Task PinNotificationAsync(int notificationId);
     }
 }

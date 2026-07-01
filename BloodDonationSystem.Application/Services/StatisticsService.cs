@@ -48,6 +48,13 @@ namespace BloodDonationSystem.Application.Services
             var totalBloodBanks = await _bloodBankRepository.CountAsync();
 
             var now = DateTime.UtcNow;
+
+            // Real "growth" numbers instead of hardcoded
+            var monthStart = new DateTime(now.Year, now.Month, 1);
+            var weekStart = now.AddDays(-7);
+            var newDonorsThisMonth = await _donorRepository.CountAsync(x => x.CreatedAt >= monthStart);
+            var newDonationsThisWeek = await _donationRepository.GetDonationsCountSinceAsync(weekStart);
+
             var monthlyData = new List<object>();
             for (int i = 5; i >= 0; i--)
             {
@@ -55,6 +62,27 @@ namespace BloodDonationSystem.Application.Services
                 var count = await _donationRepository.GetMonthlyDonationsCountAsync(month.Month, month.Year);
                 monthlyData.Add(new { month = month.ToString("MMM"), count });
             }
+
+            // Real blood group distribution from pending BloodRequests
+            var bloodGroupDistribution = new List<BloodGroupStatDto>();
+            foreach (Domain.Enums.BloodGroup bg in Enum.GetValues(typeof(Domain.Enums.BloodGroup)))
+            {
+                var count = await _bloodRequestRepository.CountAsync(
+                    x => x.BloodGroup == bg && x.Status == Domain.Enums.RequestStatus.Pending);
+                if (count > 0)
+                {
+                    bloodGroupDistribution.Add(new BloodGroupStatDto
+                    {
+                        Group = GetBloodGroupDisplay(bg),
+                        Count = count,
+                        Hot = count >= 20
+                    });
+                }
+            }
+            bloodGroupDistribution = bloodGroupDistribution
+                .OrderByDescending(x => x.Count)
+                .Take(4)
+                .ToList();
 
             return Result<DashboardStatsDto>.Success(new DashboardStatsDto
             {
@@ -66,7 +94,10 @@ namespace BloodDonationSystem.Application.Services
                 TotalHospitals = totalHospitals,
                 TotalBloodBanks = totalBloodBanks,
                 PendingRequests = pendingRequests,
-                MonthlyDonationChart = monthlyData
+                NewDonorsThisMonth = newDonorsThisMonth,
+                NewDonationsThisWeek = newDonationsThisWeek,
+                MonthlyDonationChart = monthlyData,
+                BloodGroupDistribution = bloodGroupDistribution
             });
         }
 
@@ -151,5 +182,18 @@ namespace BloodDonationSystem.Application.Services
         {
             return Result<List<object>>.Success(new List<object>());
         }
+
+        private static string GetBloodGroupDisplay(Domain.Enums.BloodGroup bg) => bg switch
+        {
+            Domain.Enums.BloodGroup.APositive => "A+",
+            Domain.Enums.BloodGroup.ANegative => "A-",
+            Domain.Enums.BloodGroup.BPositive => "B+",
+            Domain.Enums.BloodGroup.BNegative => "B-",
+            Domain.Enums.BloodGroup.ABPositive => "AB+",
+            Domain.Enums.BloodGroup.ABNegative => "AB-",
+            Domain.Enums.BloodGroup.OPositive => "O+",
+            Domain.Enums.BloodGroup.ONegative => "O-",
+            _ => bg.ToString()
+        };
     }
 }

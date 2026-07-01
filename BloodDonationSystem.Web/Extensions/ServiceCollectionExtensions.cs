@@ -110,6 +110,9 @@ namespace BloodDonationSystem.Web.Extensions
             services.AddScoped<ILocationDataService, LocationDataService>();
 
             services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<IChatService, ChatService>();
+
+
 
             // UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -147,6 +150,8 @@ namespace BloodDonationSystem.Web.Extensions
             services.AddScoped<RequestExpiryJob>();
             services.AddScoped<BloodStockWarningJob>();
             services.AddScoped<MonthlyTopDonorJob>();
+            services.AddScoped<DonorAvailabilityJob>();     
+            services.AddScoped<SuccessStoryCleanupJob>();
 
             // HttpClient for SMS
             services.AddHttpClient<ISmsService, SmsService>();
@@ -173,7 +178,13 @@ namespace BloodDonationSystem.Web.Extensions
 
             RecurringJob.AddOrUpdate<MonthlyTopDonorJob>("monthly-top-donor",
                 job => job.ExecuteAsync(), Cron.Monthly());
+
            
+            RecurringJob.AddOrUpdate<DonorAvailabilityJob>("donor-availability-check",
+                job => job.ExecuteAsync(), Cron.Daily(0)); 
+
+            RecurringJob.AddOrUpdate<SuccessStoryCleanupJob>("success-story-cleanup",
+                job => job.ExecuteAsync(), Cron.Hourly()); 
         }
     }
 }

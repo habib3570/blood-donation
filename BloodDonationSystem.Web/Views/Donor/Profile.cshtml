@@ -126,44 +126,40 @@
                     }
                 </div>
 
-                <!-- Stats Card -->
-                <div class="info-card mb-3">
-                    <div class="info-card-title"><i class="fas fa-chart-bar"></i> Donor Stats</div>
-                    <div class="row g-2 mt-1">
-                        <div class="col-6">
-                            <div style="text-align:center;background:white;border-radius:10px;padding:0.75rem;">
-                                <div style="font-size:1.3rem;font-weight:800;color:var(--deep-red);">
-                                    @Model.TotalDonations
-                                </div>
-                                <div style="font-size:0.72rem;color:var(--text-muted);">Donations</div>
-                            </div>
+                @{
+                    var donor = Model; // DonorDto
+                    var now = DateTime.UtcNow;
+                    bool isEligible = !donor.NextEligibleDate.HasValue
+                    || donor.NextEligibleDate.Value <= now;
+                    int daysLeft = donor.NextEligibleDate.HasValue && donor.NextEligibleDate.Value > now
+                    ? (int)(donor.NextEligibleDate.Value - now).TotalDays + 1
+                    : 0;
+                }
+
+                @if (!isEligible)
+                {
+                    <div style="background:#fff3cd;border:1.5px solid #ffc107;border-radius:10px;
+                    padding:0.8rem 1rem;margin-top:1rem;text-align:center;">
+                        <div style="font-size:0.9rem;font-weight:700;color:#856404;">
+                            <i class="fas fa-clock"></i> পরবর্তী donation eligible date
                         </div>
-                        <div class="col-6">
-                            <div style="text-align:center;background:white;border-radius:10px;padding:0.75rem;">
-                                <div style="font-size:1.3rem;font-weight:800;color:var(--navy-blue);">
-                                    @Model.AverageRating.ToString("0.0") ⭐
-                                </div>
-                                <div style="font-size:0.72rem;color:var(--text-muted);">Rating</div>
-                            </div>
+                        <div style="font-size:1.3rem;font-weight:800;color:#dc3545;margin:0.3rem 0;">
+                            @daysLeft দিন পরে
                         </div>
-                        <div class="col-6">
-                            <div style="text-align:center;background:white;border-radius:10px;padding:0.75rem;">
-                                <div style="font-size:1.3rem;font-weight:800;color:var(--success-green);">
-                                    @Model.LivesSaved
-                                </div>
-                                <div style="font-size:0.72rem;color:var(--text-muted);">Lives Saved</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div style="text-align:center;background:white;border-radius:10px;padding:0.75rem;">
-                                <div style="font-size:1.3rem;font-weight:800;color:var(--warning-orange);">
-                                    @Model.TotalPoints
-                                </div>
-                                <div style="font-size:0.72rem;color:var(--text-muted);">Points</div>
-                            </div>
+                        <div style="font-size:0.75rem;color:#6c757d;">
+                            @donor.NextEligibleDate?.ToString("dd MMMM yyyy")
                         </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div style="background:#d1e7dd;border:1.5px solid #198754;border-radius:10px;
+                    padding:0.8rem 1rem;margin-top:1rem;text-align:center;">
+                        <div style="font-size:0.9rem;font-weight:700;color:#0f5132;">
+                            <i class="fas fa-check-circle"></i> আপনি এখন রক্ত দিতে পারবেন!
+                        </div>
+                    </div>
+                }
 
                 <!-- Eligibility -->
                 @if (Model.NextEligibleDate.HasValue)
@@ -173,10 +169,10 @@
                             <i class="fas fa-calendar-check"></i> Next Eligible Date
                         </div>
                         @{
-                            var isEligible = Model.NextEligibleDate.Value <= DateTime.UtcNow;
-                            var daysLeft = (Model.NextEligibleDate.Value - DateTime.UtcNow).Days;
+                            var donorIsEligible = Model.NextEligibleDate.Value <= DateTime.UtcNow;
+                            var donorDaysLeft = (Model.NextEligibleDate.Value - DateTime.UtcNow).Days;
                         }
-                        @if (isEligible)
+                        @if (donorIsEligible)
                         {
                             <div class="avail-badge avail-yes mt-2">
                                 <span class="avail-dot"></span> Eligible to donate now!
@@ -185,24 +181,22 @@
                         else
                         {
                             <div style="font-size:0.875rem;color:var(--navy-blue);margin-top:0.5rem;">
-                                <strong style="color:var(--deep-red);">@daysLeft days</strong>
+                                <strong style="color:var(--deep-red);">@donorDaysLeft days</strong>
                                 until next donation
                             </div>
                             <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.25rem;">
                                 @Model.NextEligibleDate.Value.ToString("dd MMMM yyyy")
                             </div>
-                            <!-- Progress Bar -->
                             <div style="background:var(--card-border);border-radius:10px;
-                                                height:6px;margin-top:0.75rem;overflow:hidden;">
+                                height:6px;margin-top:0.75rem;overflow:hidden;">
                                 <div style="background:var(--deep-red);border-radius:10px;height:100%;
-                                                    width:@(Math.Max(0, Math.Min(100, (90 - daysLeft) * 100 / 90)))%;
-                                                    transition:width 0.5s;">
+                                    width:@(Math.Max(0, Math.Min(100, (90 - donorDaysLeft) * 100 / 90)))%;
+                                    transition:width 0.5s;">
                                 </div>
                             </div>
                         }
                     </div>
                 }
-            </div>
 
             <!-- RIGHT: Details -->
             <div class="col-lg-8">

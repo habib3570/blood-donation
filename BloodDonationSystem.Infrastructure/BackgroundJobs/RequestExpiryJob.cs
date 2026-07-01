@@ -1,5 +1,5 @@
-﻿using BloodDonationSystem.Domain.Enums;
-using BloodDonationSystem.Infrastructure.Data;
+﻿using BloodDonationSystem.Infrastructure.Data;
+using BloodDonationSystem.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -10,7 +10,9 @@ namespace BloodDonationSystem.Infrastructure.BackgroundJobs
         private readonly ApplicationDbContext _context;
         private readonly ILogger<RequestExpiryJob> _logger;
 
-        public RequestExpiryJob(ApplicationDbContext context, ILogger<RequestExpiryJob> logger)
+        public RequestExpiryJob(
+            ApplicationDbContext context,
+            ILogger<RequestExpiryJob> logger)
         {
             _context = context;
             _logger = logger;
@@ -20,27 +22,32 @@ namespace BloodDonationSystem.Infrastructure.BackgroundJobs
         {
             _logger.LogInformation("Request Expiry Job started");
 
-            var expiredBloodRequests = await _context.BloodRequests
-                .Where(x => x.Status == RequestStatus.Pending
-                    && x.ExpiryDate.HasValue
-                    && x.ExpiryDate < DateTime.UtcNow)
+            var now = DateTime.UtcNow;
+
+            var expiredRequests = await _context.BloodRequests
+                .Where(x =>
+                    (x.Status == RequestStatus.Pending || x.Status == RequestStatus.Accepted)
+                    && (
+                       
+                        (x.RequiredDate.HasValue && x.RequiredDate.Value < now)
+                        ||
+                    
+                        (x.ExpiryDate.HasValue && x.ExpiryDate.Value < now)
+                    ))
                 .ToListAsync();
 
-            foreach (var request in expiredBloodRequests)
-                request.Status = RequestStatus.Expired;
-
-            var expiredEmergency = await _context.EmergencyRequests
-                .Where(x => x.IsActive && x.ExpiryDate < DateTime.UtcNow)
-                .ToListAsync();
-
-            foreach (var request in expiredEmergency)
+            foreach (var request in expiredRequests)
             {
-                request.IsActive = false;
                 request.Status = RequestStatus.Expired;
+                request.UpdatedAt = now;
             }
 
-            await _context.SaveChangesAsync();
-            _logger.LogInformation($"Expired {expiredBloodRequests.Count} blood requests and {expiredEmergency.Count} emergency requests");
+            if (expiredRequests.Any())
+                await _context.SaveChangesAsync();
+
+            _logger.LogInformation(
+                "Request Expiry Job completed. {Count} requests expired.",
+                expiredRequests.Count);
         }
     }
 }

@@ -13,5 +13,6 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result<int>> GetDaysUntilNextDonationAsync(int donorProfileId);
         Task<Result> UpdateDonorLevelAsync(int donorProfileId);
         Task<Result> UpdateDonationStreakAsync(int donorProfileId);
+        Task<Result<List<DonationHistoryDto>>> GetDonationHistoryByUserIdAsync(string userId);
     }
 }

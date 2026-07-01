@@ -30,6 +30,7 @@ E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSyst
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Infrastructure\obj\Debug\net8.0\BloodDonationSystem.Infrastructure.AssemblyInfoInputs.cache
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Infrastructure\obj\Debug\net8.0\BloodDonationSystem.Infrastructure.AssemblyInfo.cs
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Infrastructure\obj\Debug\net8.0\BloodDonationSystem.Infrastructure.csproj.CoreCompileInputs.cache
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Infrastructure\obj\Debug\net8.0\BloodDonationSystem.Infrastructure.sourcelink.json
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Infrastructure\obj\Debug\net8.0\BloodDon.05A48391.Up2Date
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Infrastructure\obj\Debug\net8.0\BloodDonationSystem.Infrastructure.dll
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Infrastructure\obj\Debug\net8.0\refint\BloodDonationSystem.Infrastructure.dll

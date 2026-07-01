@@ -18,6 +18,8 @@ namespace BloodDonationSystem.Application.Services
         private readonly IGamificationService _gamificationService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;                                     
+       
 
         public EmergencyService(
             IEmergencyRequestRepository emergencyRepository,
@@ -25,7 +27,9 @@ namespace BloodDonationSystem.Application.Services
             INotificationService notificationService,
             IGamificationService gamificationService,
             IUnitOfWork unitOfWork,
-            IMapper mapper)
+            IMapper mapper,
+            IUserRepository userRepository)                                                   // ✅ যোগ করা হয়েছে
+                
         {
             _emergencyRepository = emergencyRepository;
             _donorRepository = donorRepository;
@@ -33,8 +37,11 @@ namespace BloodDonationSystem.Application.Services
             _gamificationService = gamificationService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userRepository = userRepository;                                                  // ✅ যোগ করা হয়েছে
+             
         }
 
+        // ✅ Part 3.5 — NotifyNearbyDonorsAsync সরিয়ে NotifyMatchingDonorsForEmergencyAsync ব্যবহার করা হয়েছে
         public async Task<Result<EmergencyRequestDto>> CreateEmergencyRequestAsync(string userId, CreateEmergencyRequestDto dto)
         {
             var todayCount = await _emergencyRepository.GetTodayEmergencyCountByUserAsync(userId);
@@ -51,7 +58,8 @@ namespace BloodDonationSystem.Application.Services
             await _emergencyRepository.AddAsync(request);
             await _unitOfWork.SaveChangesAsync();
 
-            await NotifyNearbyDonorsAsync(request.Id);
+            // ✅ NotifyNearbyDonorsAsync এর বদলে এটি ব্যবহার করা হচ্ছে
+            await _notificationService.NotifyMatchingDonorsForEmergencyAsync(request.Id);
 
             return Result<EmergencyRequestDto>.Success(_mapper.Map<EmergencyRequestDto>(request), "Emergency request sent!");
         }
@@ -70,34 +78,28 @@ namespace BloodDonationSystem.Application.Services
             return Result<EmergencyRequestDto>.Success(_mapper.Map<EmergencyRequestDto>(request));
         }
 
-        public async Task<Result> AcceptEmergencyRequestAsync(string donorId, int requestId)
+        public async Task<Result> AcceptEmergencyRequestAsync(string donorUserId, int emergencyId)
         {
-            var request = await _emergencyRepository.GetByIdAsync(requestId);
-            if (request == null || !request.IsActive)
-                return Result.Failure("Emergency request not found or expired.");
+            var emergency = await _emergencyRepository.GetByIdAsync(emergencyId);
+            if (emergency == null)
+                return Result.Failure("Emergency request not found.");
 
-            var donorProfile = await _donorRepository.GetByUserIdAsync(donorId);
-            if (donorProfile == null)
-                return Result.Failure("Donor profile not found.");
-
-            var isEligible = await _donorRepository.IsEligibleToDonateAsync(donorProfile.Id);
-            if (!isEligible)
-                return Result.Failure("You are not eligible to donate at this time.");
-
-            request.Status = RequestStatus.Accepted;
-            _emergencyRepository.Update(request);
+            // ✅ Acceptance আলাদা repository ছাড়াই emergency update করুন
+            emergency.Status = RequestStatus.Accepted;
+            emergency.IsActive = false;
+            _emergencyRepository.Update(emergency);
             await _unitOfWork.SaveChangesAsync();
 
+            var donor = await _userRepository.FirstOrDefaultAsync(u => u.Id == donorUserId);
+            await _notificationService.NotifyDonorsEmergencyFulfilledAsync(emergencyId, donor?.FullName ?? "A donor");
+
             await _notificationService.SendNotificationAsync(
-                request.RequesterId,
-                "Emergency Help Coming! 🚨",
-                "A donor is on the way to help you!",
-                NotificationType.RequestAccepted,
-                $"/Emergency/Details/{requestId}");
+                emergency.RequesterId,
+                "✅ Donor Responding!",
+                $"{donor?.FullName ?? "A donor"} has accepted your emergency request for {emergency.PatientName}.",
+                Domain.Enums.NotificationType.RequestAccepted);
 
-            await _gamificationService.AddPointsAsync(donorId, PointConstants.EmergencyDonationPoints, "Emergency Request Accepted", requestId.ToString());
-
-            return Result.Success("Emergency request accepted. Please proceed to the hospital immediately.");
+            return Result.Success("Thank you for accepting! The requester has been notified.");
         }
 
         public async Task<Result> CompleteEmergencyRequestAsync(int requestId)
@@ -119,50 +121,6 @@ namespace BloodDonationSystem.Application.Services
             return Result<bool>.Success(count < DonationConstants.MaxEmergencyRequestsPerDay);
         }
 
-        public async Task<Result> NotifyNearbyDonorsAsync(int emergencyRequestId)
-        {
-            var request = await _emergencyRepository.GetByIdAsync(emergencyRequestId);
-            if (request == null) return Result.Failure("Request not found.");
-
-            List<DonorProfile> donors;
-
-            if (request.HospitalLatitude.HasValue && request.HospitalLongitude.HasValue)
-            {
-                donors = await _donorRepository.GetNearbyDonorsAsync(
-                    request.HospitalLatitude.Value,
-                    request.HospitalLongitude.Value,
-                    DonationConstants.NearbyRadiusKm10,
-                    request.BloodGroup);
-            }
-            else
-            {
-                donors = await _donorRepository.SearchDonorsAsync(
-                    request.BloodGroup, request.District, request.Upazila);
-            }
-
-            var bloodGroupDisplay = GetBloodGroupDisplay(request.BloodGroup);
-
-            foreach (var donor in donors)
-            {
-                if (donor.IsEmergencyOnly || !donor.IsEmergencyOnly)
-                {
-                    await _notificationService.SendNotificationAsync(
-                        donor.UserId,
-                        $"🚨 EMERGENCY: {bloodGroupDisplay} Blood Needed!",
-                        $"Patient: {request.PatientName} at {request.HospitalName}, {request.District}. Contact: {request.ContactNumber}",
-                        NotificationType.EmergencyAlert,
-                        $"/Emergency/Details/{emergencyRequestId}",
-                        emergencyRequestId.ToString());
-                }
-            }
-
-            request.NotificationsSent = donors.Count;
-            _emergencyRepository.Update(request);
-            await _unitOfWork.SaveChangesAsync();
-
-            return Result.Success($"Notified {donors.Count} donors.");
-        }
-
         public async Task<Result> ExpireOldEmergencyRequestsAsync()
         {
             var expired = await _emergencyRepository.GetExpiredRequestsAsync();
@@ -175,6 +133,7 @@ namespace BloodDonationSystem.Application.Services
             await _unitOfWork.SaveChangesAsync();
             return Result.Success($"{expired.Count} emergency requests expired.");
         }
+       
 
         private static string GetBloodGroupDisplay(BloodGroup bg) => bg switch
         {
@@ -188,5 +147,11 @@ namespace BloodDonationSystem.Application.Services
             BloodGroup.ONegative => "O-",
             _ => bg.ToString()
         };
+        public async Task<Result> NotifyNearbyDonorsAsync(int emergencyRequestId)
+        {
+            // Interface requirement পূরণের জন্য — actual কাজ NotifyMatchingDonorsForEmergencyAsync করছে
+            await _notificationService.NotifyMatchingDonorsForEmergencyAsync(emergencyRequestId);
+            return Result.Success();
+        }
     }
 }

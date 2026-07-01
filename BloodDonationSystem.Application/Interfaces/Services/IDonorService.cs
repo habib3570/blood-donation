@@ -10,6 +10,7 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result<DonorDto>> GetDonorByIdAsync(int id);
         Task<Result> BecomeDonorAsync(string userId);
         Task<Result> UpdateDonorProfileAsync(string userId, UpdateDonorProfileDto dto);
+        Task<Result<DonorDto>> GetDonorProfileAsync(int id);
         Task<Result> ToggleAvailabilityAsync(string userId);
         Task<Result> SetVacationModeAsync(string userId, DateTime? endDate);
         Task<Result> SetEmergencyOnlyModeAsync(string userId, bool emergencyOnly);
@@ -19,5 +20,7 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result<DonorAvailabilityDto>> CheckAvailabilityAsync(int donorProfileId);
         Task<Result> UpdateSmartPriorityScoresAsync();
         Task<Result> VerifyDonorAsync(int donorProfileId);
+       
+
     }
 }

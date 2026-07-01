@@ -7,6 +7,7 @@ E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSyst
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Domain\obj\Debug\net8.0\BloodDonationSystem.Domain.AssemblyInfoInputs.cache
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Domain\obj\Debug\net8.0\BloodDonationSystem.Domain.AssemblyInfo.cs
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Domain\obj\Debug\net8.0\BloodDonationSystem.Domain.csproj.CoreCompileInputs.cache
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Domain\obj\Debug\net8.0\BloodDonationSystem.Domain.sourcelink.json
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Domain\obj\Debug\net8.0\BloodDonationSystem.Domain.dll
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Domain\obj\Debug\net8.0\refint\BloodDonationSystem.Domain.dll
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Domain\obj\Debug\net8.0\BloodDonationSystem.Domain.pdb

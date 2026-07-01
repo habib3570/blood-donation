@@ -136,31 +136,54 @@
                                             color:var(--text-muted);margin-bottom:0.35rem;">
                                     TIMELINE
                                 </div>
-                                <div style="font-size:0.82rem;line-height:1.8;">
+                                @{
+                                    
+                                    var bdZone = TimeZoneInfo.FindSystemTimeZoneById("Bangladesh Standard Time");
+                                    DateTime ToBD(DateTime utc) => TimeZoneInfo.ConvertTimeFromUtc(utc, bdZone);
+                                }
+                                <div style="font-size:0.82rem;line-height:2;">
                                     <div>
                                         <i class="fas fa-plus-circle" style="color:var(--deep-red);"></i>
-                                        Created: @Model.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")
+                                        <strong>Created:</strong> @ToBD(Model.CreatedAt).ToString("dd MMM yyyy, hh:mm tt")
                                     </div>
+
+                                    @if (Model.RequiredDate.HasValue)
+                                    {
+                                        var reqBD = ToBD(Model.RequiredDate.Value);
+                                        var isExpired = Model.RequiredDate.Value < DateTime.UtcNow;
+                                        <div style="color:@(isExpired ? "#dc3545" : "var(--navy-blue)");">
+                                            <i class="fas fa-calendar-check"
+                                               style="color:@(isExpired ? "#dc3545" : "var(--success-green)");"></i>
+                                            <strong>Required By:</strong> @reqBD.ToString("dd MMM yyyy, hh:mm tt")
+                                            @if (isExpired)
+                                            {
+                                                <span style="font-size:0.7rem;background:#dc3545;color:white;
+                                     border-radius:4px;padding:0.1rem 0.4rem;margin-left:0.3rem;">
+                                                    Expired
+                                                </span>
+                                            }
+                                        </div>
+                                    }
+
                                     @if (Model.AcceptedAt.HasValue)
                                     {
                                         <div>
-                                            <i class="fas fa-check-circle"
-                                               style="color:var(--success-green);"></i>
-                                            Accepted: @Model.AcceptedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                            <i class="fas fa-check-circle" style="color:var(--success-green);"></i>
+                                            <strong>Accepted:</strong> @ToBD(Model.AcceptedAt.Value).ToString("dd MMM yyyy, hh:mm tt")
                                         </div>
                                     }
                                     @if (Model.CompletedAt.HasValue)
                                     {
                                         <div>
                                             <i class="fas fa-trophy" style="color:#F59E0B;"></i>
-                                            Completed: @Model.CompletedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                            <strong>Completed:</strong> @ToBD(Model.CompletedAt.Value).ToString("dd MMM yyyy, hh:mm tt")
                                         </div>
                                     }
                                     @if (Model.ExpiryDate.HasValue)
                                     {
                                         <div>
                                             <i class="fas fa-clock" style="color:var(--text-muted);"></i>
-                                            Expires: @Model.ExpiryDate.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                            <strong>Emergency Expires:</strong> @ToBD(Model.ExpiryDate.Value).ToString("dd MMM yyyy, hh:mm tt")
                                         </div>
                                     }
                                 </div>

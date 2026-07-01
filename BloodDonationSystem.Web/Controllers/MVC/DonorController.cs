@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
+
 namespace BloodDonationSystem.Web.Controllers.MVC
 {
     public class DonorController : Controller
@@ -62,27 +63,7 @@ namespace BloodDonationSystem.Web.Controllers.MVC
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Profile(int id)
-        {
-            var donor = await _donorService.GetDonorByIdAsync(id);
-            if (!donor.IsSuccess) return NotFound();
-
-            var ratings = await _ratingService.GetDonorRatingsAsync(id);
-            var history = await _donationService.GetDonationHistoryAsync(id);
-
-            ViewBag.Ratings = ratings.Data;
-            ViewBag.History = history.Data;
-
-            if (User.Identity?.IsAuthenticated == true)
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-                var isFav = await _favoriteDonorService.IsFavoriteAsync(userId, id);
-                ViewBag.IsFavorite = isFav.Data;
-            }
-
-            return View(donor.Data);
-        }
+        
 
         [HttpGet]
         [Authorize]
@@ -96,12 +77,11 @@ namespace BloodDonationSystem.Web.Controllers.MVC
         public async Task<IActionResult> DonationHistory()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            var donor = await _donorService.GetDonorByUserIdAsync(userId);
+            var history = await _donationService.GetDonationHistoryByUserIdAsync(userId);
 
-            if (!donor.IsSuccess || donor.Data == null)
+            if (!history.IsSuccess)
                 return RedirectToAction("Profile", "Account");
 
-            var history = await _donationService.GetDonationHistoryAsync(donor.Data.DonorProfileId);
             return View(history.Data);
         }
 
@@ -126,25 +106,7 @@ namespace BloodDonationSystem.Web.Controllers.MVC
             return Json(new { success = result.IsSuccess, message = result.Message });
         }
 
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddFavorite(int donorProfileId)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            var result = await _favoriteDonorService.AddFavoriteAsync(userId, donorProfileId);
-            return Json(new { success = result.IsSuccess, message = result.Message });
-        }
-
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveFavorite(int donorProfileId)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            var result = await _favoriteDonorService.RemoveFavoriteAsync(userId, donorProfileId);
-            return Json(new { success = result.IsSuccess, message = result.Message });
-        }
+        
 
         [HttpGet]
         [Authorize]
@@ -156,5 +118,47 @@ namespace BloodDonationSystem.Web.Controllers.MVC
             return View(result.Data);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Profile(int id)
+        {
+            var result = await _donorService.GetDonorProfileAsync(id);
+            if (!result.IsSuccess) return NotFound();
+
+            var history = await _donationService.GetDonationHistoryAsync(id);
+            var ratings = await _ratingService.GetDonorRatingsAsync(id);
+
+            ViewBag.History = history.Data;
+            ViewBag.Ratings = ratings.Data;
+
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+                var isFav = await _favoriteDonorService.IsFavoriteAsync(userId, id);
+                ViewBag.IsFavorite = isFav.Data;
+            }
+
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddFavorite(int donorProfileId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var result = await _favoriteDonorService.AddFavoriteAsync(userId, donorProfileId);
+            return Json(new { success = result.IsSuccess, message = result.Errors.FirstOrDefault() ?? result.Message });
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveFavorite(int donorProfileId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var result = await _favoriteDonorService.RemoveFavoriteAsync(userId, donorProfileId);
+            return Json(new { success = result.IsSuccess, message = result.Errors.FirstOrDefault() ?? result.Message });
+        }
     }
 }

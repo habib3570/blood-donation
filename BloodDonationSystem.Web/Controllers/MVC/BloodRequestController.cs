@@ -1,6 +1,5 @@
 ﻿using BloodDonationSystem.Application.DTOs.BloodRequest;
 using BloodDonationSystem.Application.Interfaces.Services;
-using BloodDonationSystem.Application.Services;
 using BloodDonationSystem.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +25,7 @@ namespace BloodDonationSystem.Web.Controllers.MVC
         public async Task<IActionResult> Index(string? bloodGroup, string? district, string? upazila, string? priority)
         {
             var allRequests = await _bloodRequestService.GetAllActiveRequestsAsync();
-            var filtered = allRequests.Data ?? new List<BloodDonationSystem.Application.DTOs.BloodRequest.BloodRequestDto>();
+            var filtered = allRequests.Data ?? new List<BloodRequestDto>();
 
             if (!string.IsNullOrEmpty(bloodGroup) && Enum.TryParse<BloodDonationSystem.Domain.Enums.BloodGroup>(bloodGroup, out var bg))
                 filtered = filtered.Where(r => r.BloodGroup == bg).ToList();
@@ -37,7 +36,7 @@ namespace BloodDonationSystem.Web.Controllers.MVC
             if (!string.IsNullOrEmpty(upazila))
                 filtered = filtered.Where(r => r.Upazila == upazila).ToList();
 
-            if (!string.IsNullOrEmpty(priority) && Enum.TryParse<BloodDonationSystem.Domain.Enums.RequestPriority>(priority, out var pr))
+            if (!string.IsNullOrEmpty(priority) && Enum.TryParse<RequestPriority>(priority, out var pr))
                 filtered = filtered.Where(r => r.Priority == pr).ToList();
 
             var districts = await _locationDataService.GetAllDistrictsAsync();
@@ -77,7 +76,6 @@ namespace BloodDonationSystem.Web.Controllers.MVC
                 ViewBag.Districts = districts.Data;
                 return View(dto);
             }
-            if (!ModelState.IsValid) return View(dto);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             var result = await _bloodRequestService.CreateRequestAsync(userId, dto);
             if (!result.IsSuccess)
@@ -131,7 +129,7 @@ namespace BloodDonationSystem.Web.Controllers.MVC
         {
             var result = await _bloodRequestService.CompleteRequestAsync(id);
             TempData[result.IsSuccess ? "Success" : "Error"] = result.IsSuccess ? result.Message : result.Errors.FirstOrDefault();
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction("AcceptedRequests");
         }
 
         [HttpPost]
@@ -151,6 +149,24 @@ namespace BloodDonationSystem.Web.Controllers.MVC
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             var result = await _bloodRequestService.ReportRequestAsync(userId, id, reason);
             return Json(new { success = result.IsSuccess, message = result.Message });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AcceptedRequests()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var result = await _bloodRequestService.GetAcceptedRequestsByDonorAsync(userId);
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelAccepted(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var result = await _bloodRequestService.CancelAcceptedRequestByDonorAsync(userId, id);
+            TempData[result.IsSuccess ? "Success" : "Error"] = result.IsSuccess ? result.Message : result.Errors.FirstOrDefault();
+            return RedirectToAction("AcceptedRequests");
         }
     }
 }

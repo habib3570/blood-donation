@@ -1,5 +1,4 @@
 ﻿using BloodDonationSystem.Domain.Entities;
-
 namespace BloodDonationSystem.Application.Interfaces.Repositories
 {
     public interface IDonationRepository : IGenericRepository<Donation>
@@ -11,5 +10,6 @@ namespace BloodDonationSystem.Application.Interfaces.Repositories
         Task<int> GetMonthlyDonationsCountAsync(int month, int year);
         Task<List<Donation>> GetDonationsByDistrictAsync(string district);
         Task<Dictionary<int, int>> GetMonthlyDonationStatsAsync(int donorProfileId, int year);
+        Task<int> GetDonationsCountSinceAsync(DateTime since);
     }
 }

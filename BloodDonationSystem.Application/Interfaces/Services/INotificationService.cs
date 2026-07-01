@@ -16,5 +16,9 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result> UnmuteNotificationsAsync(string userId);
         Task<Result<bool>> IsUserMutedAsync(string userId);
         Task<Result> PinNotificationAsync(int notificationId);
+        Task NotifyMatchingDonorsForRequestAsync(int bloodRequestId);
+        Task NotifyMatchingDonorsForEmergencyAsync(int emergencyRequestId);
+        Task NotifyDonorsRequestFulfilledAsync(int bloodRequestId, string acceptedDonorName);
+        Task NotifyDonorsEmergencyFulfilledAsync(int emergencyRequestId, string acceptedDonorName);
     }
 }

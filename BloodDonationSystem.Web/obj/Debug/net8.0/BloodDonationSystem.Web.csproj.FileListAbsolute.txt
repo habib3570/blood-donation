@@ -328,6 +328,7 @@ E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSyst
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\obj\Debug\net8.0\BloodDonationSystem.Web.MvcApplicationPartsAssemblyInfo.cache
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\obj\Debug\net8.0\BloodDonationSystem.Web.RazorAssemblyInfo.cache
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\obj\Debug\net8.0\BloodDonationSystem.Web.RazorAssemblyInfo.cs
+E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\obj\Debug\net8.0\BloodDonationSystem.Web.sourcelink.json
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\obj\Debug\net8.0\rjimswa.dswa.cache.json
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 E:\Programming\New folder\ECommerceWebsite\BloodDonationSystem\BloodDonationSystem.Web\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json

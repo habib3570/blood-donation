@@ -248,5 +248,13 @@ namespace BloodDonationSystem.Application.Services
 
             return Result.Success("Donor verified successfully.");
         }
+        
+        public async Task<Result<DonorDto>> GetDonorProfileAsync(int id)
+        {
+            var donor = await _donorRepository.GetWithDetailsAsync(id); 
+            if (donor == null)
+                return Result<DonorDto>.Failure("Donor not found.");
+            return Result<DonorDto>.Success(_mapper.Map<DonorDto>(donor));
+        }
     }
 }

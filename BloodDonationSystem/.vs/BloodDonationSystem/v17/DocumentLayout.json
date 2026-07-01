@@ -3,7 +3,157 @@
   "WorkspaceRootPath": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\common\\mappings\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\dtos\\bloodrequest\\bloodrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\bloodrequest\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\bloodrequest\\acceptedrequests.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\bloodrequest\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\gamificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\repositories\\donorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\account\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\bloodrequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\donor\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\dtos\\donor\\donordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\idonorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\dtos\\donor\\donoravailabilitydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\common\\auditableentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\backgroundjobs\\requestexpiryjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\backgroundjobs\\successstorycleanupjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\backgroundjobs\\donoravailabilityjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\extensions\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\backgroundjobs\\donationreminderjob.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\isuccessstoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\entities\\successstory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\middleware\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\donorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\entities\\donorprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\unitofwork\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\controllers\\mvc\\bloodrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\statisticsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\repositories\\donationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\repositories\\idonationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\dtos\\statistics\\dashboardstatsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\dtos\\statistics\\bloodgroupstatdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\controllers\\mvc\\donorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\donationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\idonationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\enums\\bloodgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\entities\\bloodrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\controllers\\mvc\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\entities\\donation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\repositories\\ibloodrequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\shared\\_navbar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\ibloodrequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\repositories\\bloodrequestrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\bloodrequest\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\bloodrequest\\myrequests.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\enums\\requeststatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\home\\faq.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\chatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -12,34 +162,10 @@
       "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\ichatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\home\\faq.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\controllers\\mvc\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\donor\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\donorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\views\\donor\\profile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\common\\mappings\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\dtos\\donor\\donordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0D5E2B59-CCE0-4F07-98E2-1191D293C209}|..\\BloodDonationSystem.Web\\BloodDonationSystem.Web.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.web\\controllers\\mvc\\donorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\notificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -51,31 +177,13 @@
       "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\repositories\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\repositories\\donorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\enums\\notificationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\emergencyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\services\\bloodrequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\repositories\\idonationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8561109-3E0D-4383-9E69-A1DE7B6FE8D5}|..\\BloodDonationSystem.Infrastructure\\BloodDonationSystem.Infrastructure.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.infrastructure\\repositories\\donationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A00B6EBD-B8E3-477C-AE46-148A1790B7BC}|..\\BloodDonationSystem.Domain\\BloodDonationSystem.Domain.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.domain\\entities\\donorprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\repositories\\idonorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\idonorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A62FBC41-EE37-42E1-B88C-07A023A6DAD0}|..\\BloodDonationSystem.Application\\BloodDonationSystem.Application.csproj|e:\\programming\\new folder\\ecommercewebsite\\blooddonationsystem\\blooddonationsystem.application\\interfaces\\services\\inotificationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -88,7 +196,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -97,117 +205,158 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ChatService.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAABAAAAAAAAAA==",
+              "Title": "BloodRequestDto.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\BloodRequest\\BloodRequestDto.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\DTOs\\BloodRequest\\BloodRequestDto.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\BloodRequest\\BloodRequestDto.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\DTOs\\BloodRequest\\BloodRequestDto.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T13:04:26.719Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Program.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Program.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Program.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T12:59:18.11Z",
+              "WhenOpened": "2026-07-01T07:43:38.251Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "IChatService.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T12:58:30.211Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ServiceCollectionExtensions.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAQwHcAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T12:57:45.038Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "site.js",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
-              "RelativeToolTip": "..\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
-              "ViewState": "AgIAAJEAAAAAAAAAAAAAAJQAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-06-29T12:45:53.454Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAawDUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T12:34:23.544Z",
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\Details.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\Details.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\Details.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\Details.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAgwIsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-01T07:38:10.582Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "FAQ.cshtml",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
-              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAgwNgAAAAAAAAAAAAAAA==",
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\Create.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\Create.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\Create.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\Create.cshtml",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAgwJYAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-29T12:34:15.939Z",
+              "WhenOpened": "2026-07-01T07:27:57.418Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 7,
+              "Title": "Profile.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Account\\Profile.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Account\\Profile.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Account\\Profile.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Account\\Profile.cshtml",
+              "ViewState": "AgIAADwAAAAAAAAAAAAgwIcAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-01T06:32:42.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GamificationService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\GamificationService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\GamificationService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\GamificationService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Services\\GamificationService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAlwCUAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T06:18:47.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BloodRequestService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
+              "ViewState": "AgIAAOUAAAAAAAAAAAAgwP4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T04:16:46.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MappingProfile.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Common\\Mappings\\MappingProfile.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Common\\Mappings\\MappingProfile.cs",
               "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Common\\Mappings\\MappingProfile.cs",
               "RelativeToolTip": "..\\BloodDonationSystem.Application\\Common\\Mappings\\MappingProfile.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAAwCMAAABNAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAYwEQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T05:42:15.217Z"
+              "WhenOpened": "2026-06-29T05:42:15.217Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
+              "Title": "AcceptedRequests.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\AcceptedRequests.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\AcceptedRequests.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\AcceptedRequests.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\AcceptedRequests.cshtml",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAJQAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T15:17:46.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "DonorDto.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorDto.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorDto.cs",
               "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorDto.cs",
               "RelativeToolTip": "..\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAiwBgAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T05:40:07.637Z"
+              "WhenOpened": "2026-06-29T05:40:07.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IDonorService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T16:09:30.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DonorRepository.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T16:12:06.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DonorAvailabilityDto.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorAvailabilityDto.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorAvailabilityDto.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorAvailabilityDto.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\DTOs\\Donor\\DonorAvailabilityDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T06:15:32.454Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -217,13 +366,519 @@
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Donor\\Profile.cshtml",
               "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Donor\\Profile.cshtml",
               "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Donor\\Profile.cshtml",
-              "ViewState": "AgIAAHUBAAAAAAAAAAAgwI8BAABNAAAAAAAAAA==",
+              "ViewState": "AgIAAG8BAAAAAAAAAAAgwJ4BAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-29T05:35:46.928Z"
+              "WhenOpened": "2026-06-29T05:35:46.928Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
+              "Title": "AuditableEntity.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Common\\AuditableEntity.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Common\\AuditableEntity.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Common\\AuditableEntity.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Common\\AuditableEntity.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T06:07:15.722Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "RequestExpiryJob.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\RequestExpiryJob.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\RequestExpiryJob.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\RequestExpiryJob.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\RequestExpiryJob.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAYwCEAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T06:02:36.993Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "SuccessStoryCleanupJob.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\SuccessStoryCleanupJob.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\SuccessStoryCleanupJob.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\SuccessStoryCleanupJob.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\SuccessStoryCleanupJob.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAYwBkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T06:01:53.411Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "DonorAvailabilityJob.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonorAvailabilityJob.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonorAvailabilityJob.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonorAvailabilityJob.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonorAvailabilityJob.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAYwBwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T05:56:42.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "DonationReminderJob.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonationReminderJob.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonationReminderJob.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonationReminderJob.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\BackgroundJobs\\DonationReminderJob.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAQwBoAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T05:54:18.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ISuccessStoryService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\ISuccessStoryService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\ISuccessStoryService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\ISuccessStoryService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\ISuccessStoryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T05:52:04.915Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Extensions\\ServiceCollectionExtensions.cs",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAgwLoAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T12:57:45.038Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "SuccessStory.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\SuccessStory.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Entities\\SuccessStory.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\SuccessStory.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Entities\\SuccessStory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T05:51:15.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ExceptionHandlingMiddleware.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Middleware\\ExceptionHandlingMiddleware.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Middleware\\ExceptionHandlingMiddleware.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Middleware\\ExceptionHandlingMiddleware.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Middleware\\ExceptionHandlingMiddleware.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-01T05:48:12.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Home\\Index.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAgwEgAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T16:49:46.187Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "DbInitializer.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Data\\DbInitializer.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Data\\DbInitializer.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Data\\DbInitializer.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\Data\\DbInitializer.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAgwLQAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T17:53:45.276Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "DonorProfile.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA8wCIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T16:38:06.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "DonorService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\DonorService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\DonorService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\DonorService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Services\\DonorService.cs",
+              "ViewState": "AgIAANYAAAAAAAAAAAAQwOUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T16:10:09.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "BloodRequestController.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\BloodRequestController.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\BloodRequestController.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\BloodRequestController.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\BloodRequestController.cs",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAAAKsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T15:03:33.387Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "StatisticsService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\StatisticsService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\StatisticsService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\StatisticsService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Services\\StatisticsService.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAApwE4AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T16:44:28.311Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "DonationRepository.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAYwDYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T16:25:30.645Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Repositories\\GenericRepository.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAwwC4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T17:51:30.142Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\UnitOfWork\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\UnitOfWork\\UnitOfWork.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\UnitOfWork\\UnitOfWork.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\UnitOfWork\\UnitOfWork.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAqwDQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T17:51:55.179Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Program.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Program.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Program.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Program.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAQwE0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T12:59:18.11Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "IDonationRepository.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T16:35:14.809Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "DashboardStatsDto.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Statistics\\DashboardStatsDto.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\DTOs\\Statistics\\DashboardStatsDto.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Statistics\\DashboardStatsDto.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\DTOs\\Statistics\\DashboardStatsDto.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA5wBIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T16:51:04.041Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "BloodGroupStatDto.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Statistics\\BloodGroupStatDto.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\DTOs\\Statistics\\BloodGroupStatDto.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\DTOs\\Statistics\\BloodGroupStatDto.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\DTOs\\Statistics\\BloodGroupStatDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T16:59:04.295Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "DonationService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\DonationService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\DonationService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\DonationService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Services\\DonationService.cs",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAQwJ4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T16:45:00.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "IDonationService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonationService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonationService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonationService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T16:56:44.364Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "BloodGroup.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Enums\\BloodGroup.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Enums\\BloodGroup.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Enums\\BloodGroup.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Enums\\BloodGroup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T16:55:09.129Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "DonorController.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAhwFUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-28T16:16:08.378Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "Donation.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\Donation.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Entities\\Donation.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\Donation.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Entities\\Donation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T15:40:43.352Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\HomeController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAuwDwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T12:34:23.544Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "BloodRequest.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\BloodRequest.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Entities\\BloodRequest.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\BloodRequest.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Entities\\BloodRequest.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA8wBMAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T14:57:40.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAAAH4AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T15:18:53.828Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "IBloodRequestRepository.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IBloodRequestRepository.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IBloodRequestRepository.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IBloodRequestRepository.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IBloodRequestRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T14:59:54.465Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "_Navbar.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Shared\\_Navbar.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Shared\\_Navbar.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Shared\\_Navbar.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Shared\\_Navbar.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T15:19:27.573Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "IBloodRequestService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IBloodRequestService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IBloodRequestService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IBloodRequestService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IBloodRequestService.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAYwBkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T15:01:27.632Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "BloodRequestRepository.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\BloodRequestRepository.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Repositories\\BloodRequestRepository.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\BloodRequestRepository.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\Repositories\\BloodRequestRepository.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAADwv1MAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T15:00:47.478Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\Index.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\Index.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\Index.cshtml",
+              "ViewState": "AgIAAAIBAAAAAAAAAAAgwAsBAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T15:04:25.516Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "MyRequests.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\MyRequests.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\MyRequests.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\BloodRequest\\MyRequests.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\BloodRequest\\MyRequests.cshtml",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-30T15:04:15.724Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "RequestStatus.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Enums\\RequestStatus.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Enums\\RequestStatus.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Enums\\RequestStatus.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Enums\\RequestStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-30T14:58:24.88Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "ChatService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\ChatService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T13:04:26.719Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "IChatService.cs",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
+              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IChatService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-29T12:58:30.211Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "site.js",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\wwwroot\\js\\site.js",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAAAJQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-06-29T12:45:53.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "FAQ.cshtml",
+              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
+              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
+              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
+              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Home\\FAQ.cshtml",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAAANgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-29T12:34:15.939Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
               "Title": "Search.cshtml",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Views\\Donor\\Search.cshtml",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Views\\Donor\\Search.cshtml",
@@ -231,12 +886,11 @@
               "RelativeToolTip": "..\\BloodDonationSystem.Web\\Views\\Donor\\Search.cshtml",
               "ViewState": "AgIAABUBAAAAAAAAAAAgwCgBAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-29T05:35:22.403Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-29T05:35:22.403Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 56,
               "Title": "NotificationRepository.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\NotificationRepository.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Repositories\\NotificationRepository.cs",
@@ -248,7 +902,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 57,
               "Title": "INotificationRepository.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\INotificationRepository.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\INotificationRepository.cs",
@@ -260,20 +914,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "DonorService.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\DonorService.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\DonorService.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\DonorService.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Services\\DonorService.cs",
-              "ViewState": "AgIAAOkAAAAAAAAAAAAlwP0AAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T16:10:09.954Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 58,
               "Title": "NotificationType.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Enums\\NotificationType.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Enums\\NotificationType.cs",
@@ -285,43 +926,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "DonorRepository.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonorRepository.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAAAJMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T16:12:06.286Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "DonorController.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Web\\Controllers\\MVC\\DonorController.cs",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAAwI4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T16:16:08.378Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "IDonationRepository.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonationRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T16:35:14.809Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 55,
               "Title": "NotificationService.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\NotificationService.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\NotificationService.cs",
@@ -333,31 +938,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "BloodRequestService.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Services\\BloodRequestService.cs",
-              "ViewState": "AgIAALwAAAAAAAAAAAAAwOgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-29T04:16:46.891Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "IDonorService.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\IDonorService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T16:09:30.405Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 59,
               "Title": "EmergencyService.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Services\\EmergencyService.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Services\\EmergencyService.cs",
@@ -369,31 +950,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "DonationRepository.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Infrastructure\\Repositories\\DonationRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAABWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T16:25:30.645Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "DonorProfile.cs",
-              "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
-              "RelativeDocumentMoniker": "..\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
-              "ToolTip": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
-              "RelativeToolTip": "..\\BloodDonationSystem.Domain\\Entities\\DonorProfile.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAA8wCIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T16:38:06.145Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 60,
               "Title": "IDonorRepository.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonorRepository.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Repositories\\IDonorRepository.cs",
@@ -405,7 +962,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 61,
               "Title": "INotificationService.cs",
               "DocumentMoniker": "E:\\Programming\\New folder\\ECommerceWebsite\\BloodDonationSystem\\BloodDonationSystem.Application\\Interfaces\\Services\\INotificationService.cs",
               "RelativeDocumentMoniker": "..\\BloodDonationSystem.Application\\Interfaces\\Services\\INotificationService.cs",

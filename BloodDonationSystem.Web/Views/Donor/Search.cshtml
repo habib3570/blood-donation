@@ -36,6 +36,7 @@
                         <i class="fas fa-sliders-h"></i> Search Filters
                     </div>
                     <form asp-action="Search" method="get" id="filterForm">
+                        @Html.AntiForgeryToken()
 
                         <div class="mb-3">
                             <label class="form-label-custom">Blood Group</label>
@@ -214,11 +215,20 @@
                                            class="btn-sm-outline flex-grow-1 justify-content-center">
                                             <i class="fas fa-user"></i> View Profile
                                         </a>
-                                        <button class="btn-sm-outline"
-                                                data-fav="false"
-                                                onclick="toggleFavorite(@donor.DonorProfileId, this)">
-                                            <i class="far fa-heart"></i>
-                                        </button>
+                                        @if (User.Identity?.IsAuthenticated == true)
+                                        {
+                                            <button class="btn-sm-outline"
+                                                    data-fav="false"
+                                                    onclick="toggleFavorite(@donor.DonorProfileId, this)">
+                                                <i class="far fa-heart"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <a asp-controller="Account" asp-action="Login" class="btn-sm-outline">
+                                                <i class="far fa-heart"></i>
+                                            </a>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -257,80 +267,42 @@
 </section>
 
 @section Scripts {
-    <script>
-        // ── Server থেকে আসা filter ভ্যালু দিয়ে dropdown সেট করা ──
-        window.addEventListener('DOMContentLoaded', function () {
-            const bgSelect = document.getElementById('bloodGroupSelect');
-            if (bgSelect) bgSelect.value = "@bgValue";
+       async function toggleFavorite(donorProfileId, btn) {
+        const isFav = btn.dataset.fav === "true";
+        const url = isFav ? '/Donor/RemoveFavorite' : '/Donor/AddFavorite';
 
-            const genderSelect = document.getElementById('genderSelect');
-            if (genderSelect) genderSelect.value = "@genderValue";
+       
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
 
-            const districtSelect = document.getElementById('districtSelect');
-            if (districtSelect) districtSelect.value = "@districtValue";
-
-            const upazilaSelect = document.getElementById('upazilaSelect');
-            if (upazilaSelect) upazilaSelect.value = "@upazilaValue";
-
-            const radius = "@filter.RadiusKm";
-            if (radius) {
-                document.querySelectorAll('.radius-btn').forEach(btn => {
-                    if (btn.dataset.radius === radius) btn.classList.add('active');
-                });
-            }
-        });
-
-        // ── Blood Group / Gender পরিবর্তন হলে সাথে সাথে সাবমিট ──
-        document.getElementById('bloodGroupSelect').addEventListener('change', function () {
-            document.getElementById('filterForm').submit();
-        });
-
-        document.getElementById('genderSelect').addEventListener('change', function () {
-            document.getElementById('filterForm').submit();
-        });
-
-        document.getElementById('availSelect').addEventListener('change', function () {
-            document.getElementById('filterForm').submit();
-        });
-
-        document.getElementById('verifiedSelect').addEventListener('change', function () {
-            document.getElementById('filterForm').submit();
-        });
-
-        // ── District পরিবর্তন হলে Upazila cascade লোড করে সাবমিট ──
-        document.getElementById('districtSelect').addEventListener('change', async function () {
-            const districtId = this.options[this.selectedIndex]?.dataset.id;
-            const upazilaSelect = document.getElementById('upazilaSelect');
-
-            upazilaSelect.innerHTML = '<option value="">All Upazilas</option>';
-
-            if (districtId) {
-                try {
-                    const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
-                    const upazilas = await res.json();
-                    upazilas.forEach(u => {
-                        const option = document.createElement('option');
-                        option.value = u.name;
-                        option.textContent = u.name;
-                        upazilaSelect.appendChild(option);
-                    });
-                } catch (e) { }
-            }
-
-            document.getElementById('filterForm').submit();
-        });
-
-        document.getElementById('upazilaSelect').addEventListener('change', function () {
-            document.getElementById('filterForm').submit();
-        });
-
-        // ── Radius বাটন ──
-        document.querySelectorAll('.radius-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                document.querySelectorAll('.radius-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById('radiusInput').value = this.dataset.radius;
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'RequestVerificationToken': token 
+                },
+                body: `donorProfileId=${donorProfileId}&__RequestVerificationToken=${token}`
             });
-        });
-    </script>
+
+            const data = await res.json();
+
+            if (data.success) {
+                
+                btn.dataset.fav = isFav ? "false" : "true";
+                const icon = btn.querySelector('i');
+                if (isFav) {
+                    icon.className = 'far fa-heart'; 
+                    btn.style.color = '';
+                } else {
+                    icon.className = 'fas fa-heart'; 
+                    btn.style.color = 'red';
+                }
+            } else {
+                alert(data.message || 'Something went wrong!');
+            }
+        } catch (err) {
+            console.error('Favorite error:', err);
+            alert('Request failed. Please try again.');
+        }
+    }
 }

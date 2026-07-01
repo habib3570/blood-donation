@@ -42,7 +42,7 @@ namespace BloodDonationSystem.Infrastructure.Repositories
         public async Task<List<BloodRequest>> GetActiveRequestsAsync()
             => await _dbSet
                 .Include(x => x.Requester)
-                .Where(x => x.Status == RequestStatus.Pending || x.Status == RequestStatus.Accepted)
+                .Where(x => x.Status == RequestStatus.Pending)
                 .OrderByDescending(x => x.IsEmergency)
                 .ThenByDescending(x => x.CreatedAt)
                 .ToListAsync();
@@ -80,5 +80,14 @@ namespace BloodDonationSystem.Infrastructure.Repositories
                 _dbSet.Update(request);
             }
         }
+
+       
+        public async Task<List<BloodRequest>> GetAcceptedRequestsByDonorAsync(string donorId)
+            => await _dbSet
+                .Include(x => x.Requester)
+                .Where(x => x.DonorId == donorId &&
+                            (x.Status == RequestStatus.Accepted || x.Status == RequestStatus.Completed))
+                .OrderByDescending(x => x.AcceptedAt)
+                .ToListAsync();
     }
 }

@@ -33,6 +33,7 @@ namespace BloodDonationSystem.Application.Common.Mappings
 
             // Donor
             CreateMap<DonorProfile, DonorDto>()
+                .ForMember(d => d.DonorProfileId, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.FullName, o => o.MapFrom(s => s.User.FullName))
                 .ForMember(d => d.ProfileImageUrl, o => o.MapFrom(s => s.User.ProfileImageUrl))
                 .ForMember(d => d.BloodGroup, o => o.MapFrom(s => s.User.BloodGroup))
@@ -43,14 +44,28 @@ namespace BloodDonationSystem.Application.Common.Mappings
                 .ForMember(d => d.PhoneNumber, o => o.MapFrom(s => s.User.PhoneNumber))
                 .ForMember(d => d.LastSeenAt, o => o.MapFrom(s => s.User.LastSeenAt))
                 .ForMember(d => d.LevelDisplay, o => o.MapFrom(s => s.Level.ToString()))
-                .ForMember(d => d.UserId, o => o.MapFrom(s => s.UserId));
-
+                .ForMember(d => d.UserId, o => o.MapFrom(s => s.UserId))
+             
+                .ForMember(d => d.IsAvailable, o => o.MapFrom(s => s.IsAvailable))
+                .ForMember(d => d.IsVerifiedDonor, o => o.MapFrom(s => s.IsVerifiedDonor))
+                .ForMember(d => d.IsEmergencyOnly, o => o.MapFrom(s => s.IsEmergencyOnly))
+                .ForMember(d => d.TotalDonations, o => o.MapFrom(s => s.TotalDonations))
+                .ForMember(d => d.AverageRating, o => o.MapFrom(s => s.AverageRating))
+                .ForMember(d => d.TotalRatings, o => o.MapFrom(s => s.TotalRatings))
+                .ForMember(d => d.Level, o => o.MapFrom(s => s.Level))
+                .ForMember(d => d.TotalPoints, o => o.MapFrom(s => s.TotalPoints))
+                .ForMember(d => d.LivesSaved, o => o.MapFrom(s => s.LivesSaved))
+                .ForMember(d => d.LastDonationDate, o => o.MapFrom(s => s.LastDonationDate))
+                .ForMember(d => d.NextEligibleDate, o => o.MapFrom(s => s.NextEligibleDate))
+                .ForMember(d => d.SmartPriorityScore, o => o.MapFrom(s => s.SmartPriorityScore))
+                .ForMember(d => d.DistanceKm, o => o.Ignore());
             // BloodRequest
             CreateMap<BloodRequest, BloodRequestDto>()
                 .ForMember(d => d.RequesterName, o => o.MapFrom(s => s.Requester.FullName))
                 .ForMember(d => d.DonorName, o => o.MapFrom(s => s.Donor != null ? s.Donor.FullName : null))
                 .ForMember(d => d.BloodGroupDisplay, o => o.MapFrom(s => GetBloodGroupDisplay(s.BloodGroup)))
-                .ForMember(d => d.StatusDisplay, o => o.MapFrom(s => s.Status.ToString()));
+                .ForMember(d => d.StatusDisplay, o => o.MapFrom(s => s.Status.ToString()))
+                .ForMember(d => d.RequiredDate, o => o.MapFrom(s => s.RequiredDate));
 
             CreateMap<CreateBloodRequestDto, BloodRequest>();
 

@@ -138,11 +138,16 @@
                                            placeholder="01XXXXXXXXX" />
                                 </div>
                             </div>
-
                             <div class="col-md-6">
-                                <label class="form-label-custom">Required Date</label>
-                                <input asp-for="RequiredDate" type="datetime-local"
-                                       class="form-control-custom" />
+                                <label class="form-label-custom">Required Date *</label>
+                                <input asp-for="RequiredDate"
+                                       type="datetime-local"
+                                       class="form-control-custom"
+                                       min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.3rem;">
+                                    <i class="fas fa-info-circle" style="color:#ffc107;"></i>
+                                    Request submitted: @DateTime.Now.ToString("dd MMM yyyy, hh:mm tt")
+                                </div>
                             </div>
 
                             <!-- Priority -->

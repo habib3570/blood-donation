@@ -14,92 +14,118 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
 
-                @{
-                    var faqs = new[]
-                    {
-                                new {
-                                Q = "How old do you need to be to donate blood?",
-                                A = "You must be at least 18 years old to donate blood in Bangladesh. The maximum age is 60 years."
-                                },
-                                new {
-                                Q = "How often can you donate blood?",
-                                A = "You can donate whole blood every 90 days (3 months). This allows your body enough time to replenish the donated blood."
-                                },
-                                new {
-                                Q = "What is the minimum weight to donate blood?",
-                                A = "You must weigh at least 50 kg (110 lbs) to donate blood. This ensures donor safety."
-                                },
-                                new {
-                                Q = "How long does the donation process take?",
-                                A = "The actual blood donation takes about 8-10 minutes. The entire process including registration, health screening, and refreshments takes about 45-60 minutes."
-                                },
-                                new {
-                                Q = "Is blood donation safe?",
-                                A = "Yes, blood donation is completely safe. New, sterile equipment is used for each donor, so there is no risk of infection."
-                                },
-                                new {
-                                Q = "What should I eat before donating blood?",
-                                A = "Eat a healthy meal 2-3 hours before donating. Avoid fatty foods. Drink plenty of water."
-                                },
-                                new {
-                                Q = "Can I donate blood if I have a cold?",
-                                A = "No. You should not donate blood if you have a cold, flu, or any active illness. Wait until you are fully recovered."
-                                },
-                                new {
-                                Q = "How is my blood used after donation?",
-                                A = "Your donated blood is tested, processed, and separated into components (red cells, platelets, plasma) that can help multiple patients."
-                                },
-                                new {
-                                Q = "Will donating blood make me weak?",
-                                A = "Most donors feel fine after donating. Your body replaces the fluid within 24 hours. Red blood cells are replaced within a few weeks."
-                                },
-                                new {
-                                Q = "Can diabetics donate blood?",
-                                A = "People with diabetes can donate blood if they are well-controlled on diet or oral medications. Those on insulin may not be eligible."
-                                }
-                                };
-                }
-
                 <div class="d-flex flex-column gap-3" id="faqContainer">
-                    @for (int i = 0; i < faqs.Length; i++)
-                    {
-                        var faq = faqs[i];
-                        <div class="form-card"
-                             style="padding:0;overflow:hidden;cursor:pointer;"
-                             onclick="toggleFaq(@i)">
-                            <div class="d-flex align-items-center justify-content-between"
-                                 style="padding:1rem 1.25rem;">
-                                <div style="font-weight:700;color:var(--navy-blue);
-                                                font-size:0.9rem;flex:1;">
-                                    @faq.Q
-                                </div>
-                                <i class="fas fa-chevron-down"
-                                   id="faqIcon@i"
-                                   style="color:var(--deep-red);flex-shrink:0;
-                                              margin-left:1rem;transition:transform 0.3s;"></i>
-                            </div>
-                            <div id="faqAnswer@i"
-                                 style="display:none;padding:0 1.25rem 1rem;
-                                            border-top:1px solid var(--card-border);">
-                                <div style="font-size:0.85rem;color:var(--text-muted);
-                                                line-height:1.7;padding-top:0.75rem;">
-                                    @faq.A
-                                </div>
-                            </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How old do you need to be to donate blood?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
                         </div>
-                    }
+                        <div class="faq-answer">
+                            <p>You must be at least 18 years old to donate blood in Bangladesh. The maximum age is 60 years.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How often can you donate blood?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can donate whole blood every 90 days (3 months). This allows your body enough time to replenish the donated blood.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What is the minimum weight to donate blood?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You must weigh at least 50 kg (110 lbs) to donate blood. This ensures donor safety.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How long does the donation process take?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The actual blood donation takes about 8-10 minutes. The entire process including registration, health screening, and refreshments takes about 45-60 minutes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Is blood donation safe?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, blood donation is completely safe. New, sterile equipment is used for each donor, so there is no risk of infection.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What should I eat before donating blood?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Eat a healthy meal 2-3 hours before donating. Avoid fatty foods. Drink plenty of water.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Can I donate blood if I have a cold?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No. You should not donate blood if you have a cold, flu, or any active illness. Wait until you are fully recovered.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How is my blood used after donation?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Your donated blood is tested, processed, and separated into components (red cells, platelets, plasma) that can help multiple patients.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Will donating blood make me weak?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Most donors feel fine after donating. Your body replaces the fluid within 24 hours. Red blood cells are replaced within a few weeks.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item form-card">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Can diabetics donate blood?</span>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>People with diabetes can donate blood if they are well-controlled on diet or oral medications. Those on insulin may not be eligible.</p>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- CTA -->
                 <div class="info-card text-center mt-4"
                      style="background:linear-gradient(135deg,var(--deep-red-light),white);">
                     <div style="font-size:1.5rem;margin-bottom:0.5rem;">🩸</div>
-                    <div style="font-size:1rem;font-weight:800;color:var(--navy-blue);
-                                margin-bottom:0.5rem;">
+                    <div style="font-size:1rem;font-weight:800;color:var(--navy-blue);margin-bottom:0.5rem;">
                         Ready to Save a Life?
                     </div>
-                    <div style="font-size:0.85rem;color:var(--text-muted);
-                                margin-bottom:1rem;">
+                    <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">
                         Register as a donor today and make a difference in someone's life.
                     </div>
                     @if (!User.Identity?.IsAuthenticated ?? true)
@@ -115,29 +141,76 @@
                         </a>
                     }
                 </div>
+
             </div>
         </div>
     </div>
 </section>
 
+<style>
+    .faq-item {
+        padding: 0 !important;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    .faq-question {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.25rem;
+        cursor: pointer;
+        user-select: none;
+        gap: 1rem;
+    }
+
+        .faq-question span {
+            font-weight: 700;
+            color: var(--navy-blue);
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+    .faq-icon {
+        color: var(--deep-red);
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+    }
+
+    .faq-answer {
+        display: none;
+        padding: 0.75rem 1.25rem 1rem;
+        border-top: 1px solid var(--card-border);
+    }
+
+        .faq-answer p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+    .faq-item.open .faq-answer {
+        display: block;
+    }
+
+    .faq-item.open .faq-icon {
+        transform: rotate(180deg);
+    }
+</style>
+
 @section Scripts {
     <script>
-        function toggleFaq(index) {
-            const answer = document.getElementById(`faqAnswer${index}`);
-            const icon = document.getElementById(`faqIcon${index}`);
-            const isOpen = answer.style.display !== 'none';
+        function toggleFaq(questionEl) {
+            const item = questionEl.closest('.faq-item');
 
-            document.querySelectorAll('[id^="faqAnswer"]').forEach(el => {
-                el.style.display = 'none';
-            });
-            document.querySelectorAll('[id^="faqIcon"]').forEach(el => {
-                el.style.transform = 'rotate(0deg)';
+            // সব বন্ধ করো
+            document.querySelectorAll('.faq-item').forEach(el => {
+                if (el !== item) el.classList.remove('open');
             });
 
-            if (!isOpen) {
-                answer.style.display = 'block';
-                icon.style.transform = 'rotate(180deg)';
-            }
+            // এটা toggle করো
+            item.classList.toggle('open');
         }
     </script>
 }

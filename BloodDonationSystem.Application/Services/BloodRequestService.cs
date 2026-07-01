@@ -18,6 +18,8 @@ namespace BloodDonationSystem.Application.Services
         private readonly IGamificationService _gamificationService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
+        private readonly IDonationRepository _donationRepository; 
 
         public BloodRequestService(
             IBloodRequestRepository bloodRequestRepository,
@@ -25,7 +27,9 @@ namespace BloodDonationSystem.Application.Services
             INotificationService notificationService,
             IGamificationService gamificationService,
             IUnitOfWork unitOfWork,
-            IMapper mapper)
+            IMapper mapper,
+            IUserRepository userRepository,
+            IDonationRepository donationRepository) 
         {
             _bloodRequestRepository = bloodRequestRepository;
             _donorRepository = donorRepository;
@@ -33,6 +37,8 @@ namespace BloodDonationSystem.Application.Services
             _gamificationService = gamificationService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userRepository = userRepository;
+            _donationRepository = donationRepository; 
         }
 
         public async Task<Result<BloodRequestDto>> CreateRequestAsync(string userId, CreateBloodRequestDto dto)
@@ -55,19 +61,7 @@ namespace BloodDonationSystem.Application.Services
             await _bloodRequestRepository.AddAsync(request);
             await _unitOfWork.SaveChangesAsync();
 
-            var matchingDonors = await _donorRepository.SearchDonorsAsync(
-                dto.BloodGroup, dto.District, dto.Upazila);
-
-            foreach (var donor in matchingDonors.Take(20))
-            {
-                await _notificationService.SendNotificationAsync(
-                    donor.UserId,
-                    $"New Blood Request 🩸",
-                    $"{dto.BloodGroup} blood needed at {dto.HospitalName}, {dto.District}",
-                    NotificationType.NewBloodRequest,
-                    $"/BloodRequest/Details/{request.Id}",
-                    request.Id.ToString());
-            }
+            await _notificationService.NotifyMatchingDonorsForRequestAsync(request.Id);
 
             return Result<BloodRequestDto>.Success(_mapper.Map<BloodRequestDto>(request), "Blood request created successfully.");
         }
@@ -117,10 +111,13 @@ namespace BloodDonationSystem.Application.Services
             _bloodRequestRepository.Update(request);
             await _unitOfWork.SaveChangesAsync();
 
+            var donor = await _userRepository.FirstOrDefaultAsync(u => u.Id == donorId);
+            await _notificationService.NotifyDonorsRequestFulfilledAsync(requestId, donor?.FullName ?? "A donor");
+
             await _notificationService.SendNotificationAsync(
                 request.RequesterId,
-                "Request Accepted! ✅",
-                $"A donor has accepted your blood request for {request.PatientName}.",
+                "✅ Donor Found!",
+                $"{donor?.FullName ?? "A donor"} has accepted your blood request for {request.PatientName}.",
                 NotificationType.RequestAccepted,
                 $"/BloodRequest/Details/{requestId}");
 
@@ -148,42 +145,113 @@ namespace BloodDonationSystem.Application.Services
 
         public async Task<Result> CompleteRequestAsync(int requestId)
         {
-            var request = await _bloodRequestRepository.GetWithDetailsAsync(requestId);
-            if (request == null)
-                return Result.Failure("Request not found.");
-
-            request.Status = RequestStatus.Completed;
-            request.CompletedAt = DateTime.UtcNow;
-            _bloodRequestRepository.Update(request);
-
-            if (request.DonorId != null)
+            await _unitOfWork.BeginTransactionAsync();
+            try
             {
-                var donorProfile = await _donorRepository.GetByUserIdAsync(request.DonorId);
-                if (donorProfile != null)
+                var request = await _bloodRequestRepository.GetWithDetailsAsync(requestId);
+                if (request == null)
+                    return Result.Failure("Request not found.");
+
+                if (request.Status != RequestStatus.Accepted)
+                    return Result.Failure("This request cannot be marked as completed.");
+
+                request.Status = RequestStatus.Completed;
+                request.CompletedAt = DateTime.UtcNow;
+                _bloodRequestRepository.Update(request);
+
+                int donorProfileId = 0;
+                string? donorUserId = request.DonorId;
+
+                if (donorUserId != null)
                 {
-                    donorProfile.TotalDonations++;
-                    donorProfile.LastDonationDate = DateTime.UtcNow;
-                    donorProfile.NextEligibleDate = DateTime.UtcNow.AddDays(DonationConstants.MinDaysBetweenDonations);
-                    donorProfile.LivesSaved += DonationConstants.LivessavedPerDonation;
-                    _donorRepository.Update(donorProfile);
+                    var donorProfile = await _donorRepository.GetByUserIdAsync(donorUserId);
+                    if (donorProfile != null)
+                    {
+                        donorProfileId = donorProfile.Id;
 
-                    await _gamificationService.AddPointsAsync(request.DonorId, PointConstants.DonationPoints, "Blood Donation Completed", requestId.ToString());
-                    await _gamificationService.CheckAndAwardBadgesAsync(donorProfile.Id);
-                    await _gamificationService.CheckAndAwardAchievementsAsync(donorProfile.Id);
-                    await _gamificationService.UpdateDonorLevelAsync(donorProfile.Id);
+                        // Donation row তৈরি করো
+                        var donation = new Donation
+                        {
+                            DonorProfileId = donorProfile.Id,
+                            BloodRequestId = request.Id,
+                            RecipientName = request.PatientName,
+                            HospitalName = request.HospitalName,
+                            District = request.District,
+                            DonationDate = DateTime.UtcNow,
+                            IsEmergency = request.IsEmergency,
+                            CertificateGenerated = false,
+                            CreatedAt = DateTime.UtcNow
+                        };
+                        await _donationRepository.AddAsync(donation);
+
+                        // DonorProfile আপডেট
+                        donorProfile.TotalDonations++;
+                        donorProfile.LastDonationDate = DateTime.UtcNow;
+                        donorProfile.NextEligibleDate = DateTime.UtcNow.AddDays(
+                            DonationConstants.MinDaysBetweenDonations);
+                        donorProfile.LivesSaved += DonationConstants.LivessavedPerDonation;
+                        donorProfile.IsAvailable = false; 
+                        donorProfile.UpdatedAt = DateTime.UtcNow;
+                        _donorRepository.Update(donorProfile);
+                    }
                 }
+
+               
+                await _unitOfWork.SaveChangesAsync();
+
+                // Transaction commit করো
+                await _unitOfWork.CommitTransactionAsync();
+
+
+                // SaveChanges এর পরে Gamification চালাও
+                if (donorUserId != null && donorProfileId > 0)
+                {
+                    try
+                    {
+                        await _gamificationService.AddPointsAsync(
+                            donorUserId,
+                            PointConstants.DonationPoints,
+                            "Blood Donation Completed",
+                            requestId.ToString());
+
+                        await _gamificationService.CheckAndAwardBadgesAsync(donorProfileId);
+                        await _gamificationService.CheckAndAwardAchievementsAsync(donorProfileId);
+                        await _gamificationService.UpdateDonorLevelAsync(donorProfileId);
+
+                        // Gamification এর পরে IsAvailable নিশ্চিত করো
+                        var donorCheck = await _donorRepository.GetByUserIdAsync(donorUserId);
+                        if (donorCheck != null && donorCheck.IsAvailable)
+                        {
+                            donorCheck.IsAvailable = false;
+                            donorCheck.UpdatedAt = DateTime.UtcNow;
+                            _donorRepository.Update(donorCheck);
+                            await _unitOfWork.SaveChangesAsync();
+                        }
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            var donorFallback = await _donorRepository.GetByUserIdAsync(donorUserId);
+                            if (donorFallback != null)
+                            {
+                                donorFallback.IsAvailable = false;
+                                donorFallback.UpdatedAt = DateTime.UtcNow;
+                                _donorRepository.Update(donorFallback);
+                                await _unitOfWork.SaveChangesAsync();
+                            }
+                        }
+                        catch { }
+                    }
+                }
+
+                return Result.Success("Request marked as completed.");
             }
-
-            await _unitOfWork.SaveChangesAsync();
-
-            await _notificationService.SendNotificationAsync(
-                request.RequesterId,
-                "Donation Completed! 🎉",
-                "The blood donation has been completed. Please rate your donor.",
-                NotificationType.RequestCompleted,
-                $"/Rating/Rate/{request.DonorId}");
-
-            return Result.Success("Request marked as completed.");
+            catch (Exception)
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                return Result.Failure("Failed to complete the request. Please try again.");
+            }
         }
 
         public async Task<Result> CancelRequestAsync(string userId, int requestId)
@@ -228,6 +296,42 @@ namespace BloodDonationSystem.Application.Services
         {
             var count = await _bloodRequestRepository.GetTodayRequestCountByUserAsync(userId);
             return Result<int>.Success(count);
+        }
+
+        public async Task<Result<List<BloodRequestDto>>> GetAcceptedRequestsByDonorAsync(string donorId)
+        {
+            var requests = await _bloodRequestRepository.GetAcceptedRequestsByDonorAsync(donorId);
+            return Result<List<BloodRequestDto>>.Success(_mapper.Map<List<BloodRequestDto>>(requests));
+        }
+
+        public async Task<Result> CancelAcceptedRequestByDonorAsync(string donorId, int requestId)
+        {
+            var request = await _bloodRequestRepository.GetWithDetailsAsync(requestId);
+            if (request == null)
+                return Result.Failure("Request not found.");
+
+            if (request.DonorId != donorId)
+                return Result.Failure("Unauthorized. You did not accept this request.");
+
+            if (request.Status != RequestStatus.Accepted)
+                return Result.Failure("This request cannot be cancelled.");
+
+            var donor = await _userRepository.FirstOrDefaultAsync(u => u.Id == donorId);
+
+            request.Status = RequestStatus.Pending;
+            request.DonorId = null;
+            request.AcceptedAt = null;
+            _bloodRequestRepository.Update(request);
+            await _unitOfWork.SaveChangesAsync();
+
+            await _notificationService.SendNotificationAsync(
+                request.RequesterId,
+                "⚠️ Donor Cancelled",
+                $"{donor?.FullName ?? "The donor"} has cancelled their acceptance for {request.PatientName}'s blood request. We are looking for another donor.",
+                NotificationType.RequestRejected,
+                $"/BloodRequest/Details/{requestId}");
+
+            return Result.Success("You have cancelled this acceptance. The requester has been notified.");
         }
     }
 }

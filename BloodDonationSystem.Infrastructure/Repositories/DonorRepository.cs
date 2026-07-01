@@ -1,5 +1,4 @@
 ﻿using BloodDonationSystem.Application.Interfaces.Repositories;
-using BloodDonationSystem.Domain.Constants;
 using BloodDonationSystem.Domain.Entities;
 using BloodDonationSystem.Domain.Enums;
 using BloodDonationSystem.Infrastructure.Data;
@@ -12,133 +11,139 @@ namespace BloodDonationSystem.Infrastructure.Repositories
         public DonorRepository(ApplicationDbContext context) : base(context) { }
 
         public async Task<DonorProfile?> GetByUserIdAsync(string userId)
-            => await _dbSet
-                .Include(x => x.User)
-                .FirstOrDefaultAsync(x => x.UserId == userId);
+            => await _context.DonorProfiles
+                .Include(d => d.User)
+                .FirstOrDefaultAsync(d => d.UserId == userId);
 
         public async Task<DonorProfile?> GetWithDetailsAsync(int id)
-            => await _dbSet
-                .Include(x => x.User)
-                .Include(x => x.Donations)
-                .Include(x => x.Ratings).ThenInclude(r => r.Rater)
-                .Include(x => x.Badges).ThenInclude(b => b.Badge)
-                .Include(x => x.Achievements).ThenInclude(a => a.Achievement)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            => await _context.DonorProfiles
+                .Include(d => d.User)
+                .Include(d => d.Donations)
+                .Include(d => d.Badges)
+                .Include(d => d.Achievements)
+                .FirstOrDefaultAsync(d => d.Id == id);
 
         public async Task<List<DonorProfile>> GetAvailableDonorsAsync()
-            => await _dbSet
-                .Include(x => x.User)
-                .Where(x => x.IsAvailable && !x.IsVacationMode && !x.IsDeleted && !x.User.IsBlocked)
-                .OrderByDescending(x => x.SmartPriorityScore)
+            => await _context.DonorProfiles
+                .Include(d => d.User)
+                .Where(d => d.IsAvailable
+                         && d.User != null
+                         && !d.User.IsBlocked)
+                .OrderByDescending(d => d.SmartPriorityScore)
                 .ToListAsync();
 
-        public async Task<List<DonorProfile>> SearchDonorsAsync(BloodGroup bloodGroup, string district, string upazila, Gender? gender = null)
+        public async Task<List<DonorProfile>> SearchDonorsAsync(
+            BloodGroup bloodGroup, string district, string upazila, Gender? gender = null)
         {
-            var query = _dbSet
-                .Include(x => x.User)
-                .Where(x => x.IsAvailable
-                    && !x.IsVacationMode
-                    && !x.IsDeleted
-                    && !x.User.IsBlocked
-                    && x.User.BloodGroup == bloodGroup
-                    && x.User.District == district);
+            var query = _context.DonorProfiles
+                .Include(d => d.User)
+                .Where(d => d.User != null
+                         && d.User.BloodGroup == bloodGroup
+                         && d.IsAvailable
+                         && !d.User.IsBlocked);
+
+            if (!string.IsNullOrEmpty(district))
+                query = query.Where(d => d.PreferredDistrict == district);
 
             if (!string.IsNullOrEmpty(upazila))
-                query = query.Where(x => x.User.Upazila == upazila);
+                query = query.Where(d => d.PreferredUpazila == upazila);
 
             if (gender.HasValue)
-                query = query.Where(x => x.User.Gender == gender.Value);
+                query = query.Where(d => d.User!.Gender == gender.Value);
 
             return await query
-                .OrderByDescending(x => x.SmartPriorityScore)
+                .OrderByDescending(d => d.SmartPriorityScore)
                 .ToListAsync();
         }
 
-        public async Task<List<DonorProfile>> GetNearbyDonorsAsync(double latitude, double longitude, double radiusKm, BloodGroup? bloodGroup = null)
+        public async Task<List<DonorProfile>> GetNearbyDonorsAsync(
+            double latitude, double longitude, double radiusKm, BloodGroup? bloodGroup = null)
         {
-            var donors = await _dbSet
-                .Include(x => x.User)
-                .Where(x => x.IsAvailable
-                    && !x.IsVacationMode
-                    && !x.IsDeleted
-                    && !x.User.IsBlocked
-                    && x.User.Latitude.HasValue
-                    && x.User.Longitude.HasValue)
-                .ToListAsync();
-
-            var nearby = donors.Where(d =>
-            {
-                var distance = CalculateDistance(latitude, longitude, d.User.Latitude!.Value, d.User.Longitude!.Value);
-                return distance <= radiusKm;
-            });
+            var query = _context.DonorProfiles
+                .Include(d => d.User)
+                .Where(d => d.IsAvailable
+                         && d.User != null
+                         && !d.User.IsBlocked);
 
             if (bloodGroup.HasValue)
-                nearby = nearby.Where(d => d.User.BloodGroup == bloodGroup.Value);
+                query = query.Where(d => d.User!.BloodGroup == bloodGroup.Value);
 
-            return nearby.OrderByDescending(x => x.SmartPriorityScore).ToList();
+            // Latitude/Longitude নেই তাই সব available donor return করছি
+            var donors = await query
+                .OrderByDescending(d => d.SmartPriorityScore)
+                .ToListAsync();
+
+            return donors;
         }
 
-        public async Task<List<DonorProfile>> GetTopDonorsByPointsAsync(int count = 10)
-            => await _dbSet
-                .Include(x => x.User)
-                .Where(x => !x.IsDeleted && !x.User.IsBlocked && x.User.UserPreference != null && x.User.UserPreference.ShowOnLeaderboard)
-                .OrderByDescending(x => x.TotalPoints)
-                .Take(count)
-                .ToListAsync();
+        public async Task<List<DonorProfile>> GetTopDonorsByPointsAsync(int count)
+           => await _dbSet
+        .Include(x => x.User)
+        .Where(x => x.IsAvailable
+                 && !x.IsVacationMode
+                 && !x.User.IsBlocked)
+        .OrderByDescending(x => x.SmartPriorityScore)
+        .Take(count)
+        .ToListAsync();
 
         public async Task<List<DonorProfile>> GetMonthlyTopDonorsAsync(int month, int year, int count = 10)
-            => await _context.MonthlyTopDonors
-                .Include(x => x.DonorProfile).ThenInclude(d => d.User)
-                .Where(x => x.Month == month && x.Year == year)
-                .OrderBy(x => x.Rank)
+        {
+            var donorIds = await _context.Donations
+                .Where(d => d.DonationDate.Month == month && d.DonationDate.Year == year)
+                .GroupBy(d => d.DonorProfileId)
+                .OrderByDescending(g => g.Count())
                 .Take(count)
-                .Select(x => x.DonorProfile)
+                .Select(g => g.Key)
                 .ToListAsync();
 
+            return await _context.DonorProfiles
+                .Include(d => d.User)
+                .Where(d => donorIds.Contains(d.Id))
+                .ToListAsync();
+        }
+
         public async Task<List<DonorProfile>> GetVerifiedDonorsAsync()
-            => await _dbSet
-                .Include(x => x.User)
-                .Where(x => x.IsVerifiedDonor && !x.IsDeleted)
+            => await _context.DonorProfiles
+                .Include(d => d.User)
+                .Where(d => d.IsVerifiedDonor   // ✅ IsVerifiedDonor ব্যবহার করা হয়েছে
+                         && d.User != null
+                         && !d.User.IsBlocked)
+                .OrderByDescending(d => d.SmartPriorityScore)
                 .ToListAsync();
 
         public async Task UpdateSmartPriorityScoreAsync(int donorProfileId, double score)
         {
-            var donor = await _dbSet.FindAsync(donorProfileId);
+            var donor = await _context.DonorProfiles.FindAsync(donorProfileId);
             if (donor != null)
             {
                 donor.SmartPriorityScore = score;
-                _dbSet.Update(donor);
+                await _context.SaveChangesAsync();
             }
         }
 
         public async Task<bool> IsEligibleToDonateAsync(int donorProfileId)
         {
-            var donor = await _dbSet.FindAsync(donorProfileId);
-            if (donor?.LastDonationDate == null) return true;
-            return (DateTime.UtcNow - donor.LastDonationDate.Value).TotalDays >= DonationConstants.MinDaysBetweenDonations;
+            var donor = await _context.DonorProfiles.FindAsync(donorProfileId);
+            if (donor == null) return false;
+            if (donor.NextEligibleDate == null) return true;
+            return DateTime.UtcNow >= donor.NextEligibleDate;
         }
 
         public async Task<int> GetDaysUntilEligibleAsync(int donorProfileId)
         {
-            var donor = await _dbSet.FindAsync(donorProfileId);
-            if (donor?.LastDonationDate == null) return 0;
-            var daysSince = (DateTime.UtcNow - donor.LastDonationDate.Value).TotalDays;
-            var daysRemaining = DonationConstants.MinDaysBetweenDonations - (int)daysSince;
-            return Math.Max(0, daysRemaining);
+            var donor = await _context.DonorProfiles.FindAsync(donorProfileId);
+            if (donor == null || donor.NextEligibleDate == null) return 0;
+            var days = (donor.NextEligibleDate.Value - DateTime.UtcNow).Days;
+            return days < 0 ? 0 : days;
         }
 
-        private static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
-        {
-            const double R = 6371;
-            var dLat = ToRad(lat2 - lat1);
-            var dLon = ToRad(lon2 - lon1);
-            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-                    Math.Cos(ToRad(lat1)) * Math.Cos(ToRad(lat2)) *
-                    Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
-            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            return R * c;
-        }
-
-        private static double ToRad(double deg) => deg * Math.PI / 180;
+        public async Task<List<DonorProfile>> GetDonorsByBloodGroupAsync(BloodGroup bloodGroup)
+            => await _context.DonorProfiles
+                .Include(d => d.User)
+                .Where(d => d.User != null
+                         && d.User.BloodGroup == bloodGroup
+                         && d.IsAvailable
+                         && !d.User.IsBlocked)
+                .ToListAsync();
     }
 }

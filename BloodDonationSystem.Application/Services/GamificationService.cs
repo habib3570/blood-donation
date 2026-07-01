@@ -35,7 +35,18 @@ namespace BloodDonationSystem.Application.Services
 
         public async Task<Result> AddPointsAsync(string userId, int points, string reason, string? referenceId = null)
         {
+      
             await _pointRepository.AddPointsAsync(userId, points, reason, referenceId);
+
+          
+            var donorProfile = await _donorRepository.GetByUserIdAsync(userId);
+            if (donorProfile != null)
+            {
+                donorProfile.TotalPoints += points;
+                donorProfile.UpdatedAt = DateTime.UtcNow;
+                _donorRepository.Update(donorProfile);
+            }
+
             await _unitOfWork.SaveChangesAsync();
             return Result.Success($"{points} points added.");
         }
@@ -129,7 +140,7 @@ namespace BloodDonationSystem.Application.Services
             var points = await _pointRepository.GetByUserIdAsync(donor.UserId);
             var totalPoints = points?.TotalPoints ?? 0;
 
-            donor.Level = totalPoints switch
+            var newLevel = totalPoints switch
             {
                 >= PointConstants.Level4RequiredPoints => DonorLevel.LifeSaver,
                 >= PointConstants.Level3RequiredPoints => DonorLevel.Hero,
@@ -137,8 +148,14 @@ namespace BloodDonationSystem.Application.Services
                 _ => DonorLevel.NewDonor
             };
 
+       
+            if (donor.Level == newLevel)
+                return Result.Success();
+
+            donor.Level = newLevel;
             _donorRepository.Update(donor);
             await _unitOfWork.SaveChangesAsync();
+
             return Result.Success();
         }
 

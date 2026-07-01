@@ -16,5 +16,11 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result> ReportRequestAsync(string userId, int requestId, string reason);
         Task<Result> ExpireOldRequestsAsync();
         Task<Result<int>> GetTodayRequestCountAsync(string userId);
+
+     
+        Task<Result<List<BloodRequestDto>>> GetAcceptedRequestsByDonorAsync(string donorId);
+
+    
+        Task<Result> CancelAcceptedRequestByDonorAsync(string donorId, int requestId);
     }
 }

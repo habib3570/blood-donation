@@ -1,0 +1,149 @@
+﻿@using BloodDonationSystem.Application.DTOs.BloodRequest
+@model List<BloodRequestDto>
+@{
+    ViewData["Title"] = "Accepted Requests";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🤝 My Accepted Requests</div>
+        <div class="page-header-sub">Blood requests you have accepted to donate</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>Accepted Requests</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-3">
+                @foreach (var req in Model)
+                {
+                    <div class="col-md-6 col-xl-4">
+                        <div class="donor-card">
+                            <div class="donor-card-header">
+                                <div style="width:48px;height:48px;border-radius:12px;
+                                                    background:var(--deep-red);color:white;
+                                                    display:flex;align-items:center;justify-content:center;
+                                                    font-size:0.9rem;font-weight:800;flex-shrink:0;">
+                                    @req.BloodGroupDisplay
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="donor-name">@req.PatientName</div>
+                                    <div class="donor-loc">
+                                        <i class="fas fa-hospital"></i> @req.HospitalName
+                                    </div>
+                                    <div class="donor-loc">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        @req.Upazila, @req.District
+                                    </div>
+                                </div>
+                                @{
+                                    var statusClass = req.Status.ToString() switch
+                                    {
+                                        "Accepted" => "sp-accepted",
+                                        "Completed" => "sp-completed",
+                                        _ => "sp-pending"
+                                    };
+                                }
+                                <span class="status-pill @statusClass">@req.StatusDisplay</span>
+                            </div>
+
+                            <div class="donor-card-body">
+                                <div class="donor-pills mb-2">
+                                    <div class="donor-pill">
+                                        <i class="fas fa-tint"></i> @req.UnitsNeeded unit(s)
+                                    </div>
+                                    @if (req.RequiredDate.HasValue)
+                                    {
+                                        <div class="donor-pill">
+                                            <i class="fas fa-calendar"></i>
+                                            @req.RequiredDate.Value.ToString("dd MMM")
+                                        </div>
+                                    }
+                                </div>
+
+                                <div style="font-size:0.78rem;color:var(--text-muted);">
+                                    <i class="fas fa-user"></i> Requested by @req.RequesterName
+                                </div>
+                                @if (!string.IsNullOrEmpty(req.ContactNumber))
+                                {
+                                    <div style="font-size:0.78rem;color:var(--text-muted);">
+                                        <i class="fas fa-phone"></i> @req.ContactNumber
+                                    </div>
+                                }
+                                @if (req.AcceptedAt.HasValue)
+                                {
+                                    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.3rem;">
+                                        Accepted on @req.AcceptedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="donor-card-footer">
+                                <a asp-action="Details" asp-route-id="@req.Id"
+                                   class="btn-sm-outline flex-grow-1 justify-content-center">
+                                    <i class="fas fa-eye"></i> Details
+                                </a>
+
+                                @if (req.Status.ToString() == "Accepted")
+                                {
+                                    <form asp-action="CancelAccepted" asp-route-id="@req.Id" method="post"
+                                          onsubmit="return confirm('Are you sure you want to cancel this acceptance? The requester will be notified.');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-sm-outline" style="color:var(--deep-red);">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </button>
+                                    </form>
+
+                                    <form asp-action="Complete" asp-route-id="@req.Id" method="post"
+                                          onsubmit="return confirm('Confirm that the blood donation has been completed?');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn-sm-red">
+                                            <i class="fas fa-check-circle"></i> Mark Completed
+                                        </button>
+                                    </form>
+                                }
+                                @if (req.Status.ToString() == "Completed")
+                                {
+                                    <span class="status-pill sp-completed">
+                                        <i class="fas fa-check"></i> Donation Completed
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="info-card text-center py-5">
+                <div style="font-size:3rem;margin-bottom:1rem;">🤝</div>
+                <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                    No Accepted Requests Yet
+                </div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                    When you accept a blood request, it will appear here.
+                </div>
+                <a asp-action="Index" class="btn-red">
+                    <i class="fas fa-search"></i> Browse Blood Requests
+                </a>
+            </div>
+        }
+    </div>
+</section>

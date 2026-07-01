@@ -1,6 +1,7 @@
-﻿@{
+﻿@using BloodDonationSystem.Application.DTOs.Statistics
+@{
     ViewData["Title"] = "Home";
-    var stats = ViewBag.Stats;
+    var stats = ViewBag.Stats as DashboardStatsDto;
     var emergencies = ViewBag.Emergencies as List<BloodDonationSystem.Application.DTOs.Emergency.EmergencyRequestDto> ?? new();
     var topDonors = ViewBag.TopDonors as List<BloodDonationSystem.Application.DTOs.Donor.DonorDto> ?? new();
 }
@@ -37,15 +38,15 @@
                 </div>
                 <div class="d-flex gap-4 mt-4 flex-wrap">
                     <div>
-                        <div class="hero-stat-number">@(stats?.TotalDonors?.ToString("N0") ?? "12,450")+ </div>
+                        <div class="hero-stat-number">@(stats?.TotalDonors.ToString("N0") ?? "0")+ </div>
                         <div class="hero-stat-label">Active Donors</div>
                     </div>
                     <div>
-                        <div class="hero-stat-number">@(stats?.TotalDonations?.ToString("N0") ?? "8,320")+</div>
+                        <div class="hero-stat-number">@(stats?.TotalDonations.ToString("N0") ?? "0")+</div>
                         <div class="hero-stat-label">Total Donations</div>
                     </div>
                     <div>
-                        <div class="hero-stat-number">@(stats?.LivesSaved?.ToString("N0") ?? "24,960")+</div>
+                        <div class="hero-stat-number">@(stats?.LivesSaved.ToString("N0") ?? "0")+</div>
                         <div class="hero-stat-label">Lives Saved</div>
                     </div>
                 </div>
@@ -61,35 +62,35 @@
 <!-- STATS -->
 <section class="stats-section pb-3">
     <div class="container">
-        <div class="row g-3">
-            <div class="col-6 col-md-3">
+        <div class="row g-3 flex-nowrap overflow-auto">
+            <div class="col-6 col-sm-3" style="min-width:140px;">
                 <div class="stat-card">
                     <div class="stat-icon si-red"><i class="fas fa-users"></i></div>
-                    <div class="stat-number">@(stats?.TotalDonors?.ToString("N0") ?? "12,450")</div>
+                    <div class="stat-number">@(stats?.TotalDonors.ToString("N0") ?? "0")</div>
                     <div class="stat-label">Total Donors</div>
-                    <div class="stat-change"><i class="fas fa-arrow-up"></i> +234 this month</div>
+                    <div class="stat-change"><i class="fas fa-arrow-up"></i> +@(stats?.NewDonorsThisMonth ?? 0) this month</div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-sm-3" style="min-width:140px;">
                 <div class="stat-card">
                     <div class="stat-icon si-blue"><i class="fas fa-tint"></i></div>
-                    <div class="stat-number">@(stats?.TotalDonations?.ToString("N0") ?? "8,320")</div>
+                    <div class="stat-number">@(stats?.TotalDonations.ToString("N0") ?? "0")</div>
                     <div class="stat-label">Total Donations</div>
-                    <div class="stat-change"><i class="fas fa-arrow-up"></i> +89 this week</div>
+                    <div class="stat-change"><i class="fas fa-arrow-up"></i> +@(stats?.NewDonationsThisWeek ?? 0) this week</div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-sm-3" style="min-width:140px;">
                 <div class="stat-card">
                     <div class="stat-icon si-green"><i class="fas fa-heart"></i></div>
-                    <div class="stat-number">@(stats?.LivesSaved?.ToString("N0") ?? "24,960")</div>
+                    <div class="stat-number">@(stats?.LivesSaved.ToString("N0") ?? "0")</div>
                     <div class="stat-label">Lives Saved</div>
                     <div class="stat-change"><i class="fas fa-arrow-up"></i> Est. 3x donations</div>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
+            <div class="col-6 col-sm-3" style="min-width:140px;">
                 <div class="stat-card">
                     <div class="stat-icon si-orange"><i class="fas fa-exclamation-circle"></i></div>
-                    <div class="stat-number">@(stats?.EmergencyRequests ?? 47)</div>
+                    <div class="stat-number">@(stats?.EmergencyRequests ?? 0)</div>
                     <div class="stat-label">Emergency Requests</div>
                     <div class="stat-change" style="color:var(--deep-red);">
                         <i class="fas fa-circle"></i> @(emergencies.Count) Active now
@@ -366,22 +367,24 @@
                 </div>
 
                 <!-- MOST NEEDED -->
+                <!-- MOST NEEDED -->
                 <div class="info-card">
                     <div class="info-card-title"><i class="fas fa-fire"></i> Most Needed Right Now</div>
                     <div class="d-flex flex-wrap gap-2">
-                        @{
-                            var needed = new[] {
-                                                new { Group = "O-", Count = 42, Hot = true },
-                                                new { Group = "AB-", Count = 28, Hot = true },
-                                                new { Group = "B-", Count = 19, Hot = false },
-                                                new { Group = "A-", Count = 15, Hot = false }
-                                                };
-                        }
-                        @foreach (var n in needed)
+                        @if (stats != null && stats.BloodGroupDistribution.Any())
                         {
-                            <div style="background:@(n.Hot ? "var(--deep-red-light)" : "var(--light-gray)");border:1.5px solid @(n.Hot ? "var(--deep-red)" : "var(--card-border)");border-radius:10px;padding:0.6rem 1rem;text-align:center;flex:1;min-width:60px;">
-                                <div style="font-size:1.05rem;font-weight:800;color:@(n.Hot ? "var(--deep-red)" : "var(--navy-blue)");">@n.Group</div>
-                                <div style="font-size:0.68rem;color:var(--text-muted);">@n.Count requests</div>
+                            @foreach (var n in stats.BloodGroupDistribution)
+                            {
+                                <div style="background:@(n.Hot ? "var(--deep-red-light)" : "var(--light-gray)");border:1.5px solid @(n.Hot ? "var(--deep-red)" : "var(--card-border)");border-radius:10px;padding:0.6rem 1rem;text-align:center;flex:1;min-width:60px;">
+                                    <div style="font-size:1.05rem;font-weight:800;color:@(n.Hot ? "var(--deep-red)" : "var(--navy-blue)");">@n.Group</div>
+                                    <div style="font-size:0.68rem;color:var(--text-muted);">@n.Count requests</div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-2" style="color:var(--text-muted);font-size:0.85rem;">
+                                No pending requests right now
                             </div>
                         }
                     </div>
