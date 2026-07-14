@@ -187,10 +187,10 @@
 }
 
 @section Scripts {
-    <script src="~/js/signalr-chat.js"></script>
-    <script>
-        const activeUserId = '@ViewBag.ActiveUserId';
 
+    <script>
+        window.activeUserId = '@ViewBag.ActiveUserId';
+        const activeUserId = window.activeUserId;
         function openChat(userId) {
             window.location.href = `/Chat/Index?userId=${userId}`;
         }

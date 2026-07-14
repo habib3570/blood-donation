@@ -41,13 +41,11 @@ namespace BloodDonationSystem.Web.Hubs
         {
             var senderId = Context.User?.FindFirstValue(ClaimTypes.NameIdentifier);
             if (senderId == null) return;
-
             var result = await _chatService.SendMessageAsync(senderId, new Application.DTOs.Chat.SendMessageDto
             {
                 ReceiverId = receiverId,
                 Message = message
             });
-
             if (result.IsSuccess && result.Data != null)
             {
                 await Clients.Group($"user_{receiverId}").SendAsync("ReceiveMessage", result.Data);

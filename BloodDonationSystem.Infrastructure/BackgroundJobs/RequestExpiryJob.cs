@@ -21,32 +21,26 @@ namespace BloodDonationSystem.Infrastructure.BackgroundJobs
         public async Task ExecuteAsync()
         {
             _logger.LogInformation("Request Expiry Job started");
-
             var now = DateTime.UtcNow;
 
             var expiredRequests = await _context.BloodRequests
                 .Where(x =>
                     (x.Status == RequestStatus.Pending || x.Status == RequestStatus.Accepted)
                     && (
-                       
                         (x.RequiredDate.HasValue && x.RequiredDate.Value < now)
                         ||
-                    
                         (x.ExpiryDate.HasValue && x.ExpiryDate.Value < now)
                     ))
                 .ToListAsync();
 
-            foreach (var request in expiredRequests)
+            if (expiredRequests.Any())
             {
-                request.Status = RequestStatus.Expired;
-                request.UpdatedAt = now;
+                _context.BloodRequests.RemoveRange(expiredRequests);
+                await _context.SaveChangesAsync();
             }
 
-            if (expiredRequests.Any())
-                await _context.SaveChangesAsync();
-
             _logger.LogInformation(
-                "Request Expiry Job completed. {Count} requests expired.",
+                "Request Expiry Job completed. {Count} requests deleted.",
                 expiredRequests.Count);
         }
     }

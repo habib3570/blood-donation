@@ -265,44 +265,75 @@
         </div>
     </div>
 </section>
-
 @section Scripts {
-       async function toggleFavorite(donorProfileId, btn) {
-        const isFav = btn.dataset.fav === "true";
-        const url = isFav ? '/Donor/RemoveFavorite' : '/Donor/AddFavorite';
+    <script>
+        
+        document.getElementById('districtSelect')?.addEventListener('change', async function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const districtId = selectedOption.getAttribute('data-id');
+            const upazilaSelect = document.getElementById('upazilaSelect');
 
-       
-        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
-
-        try {
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'RequestVerificationToken': token 
-                },
-                body: `donorProfileId=${donorProfileId}&__RequestVerificationToken=${token}`
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-                
-                btn.dataset.fav = isFav ? "false" : "true";
-                const icon = btn.querySelector('i');
-                if (isFav) {
-                    icon.className = 'far fa-heart'; 
-                    btn.style.color = '';
-                } else {
-                    icon.className = 'fas fa-heart'; 
-                    btn.style.color = 'red';
-                }
-            } else {
-                alert(data.message || 'Something went wrong!');
+            
+            if (!districtId) {
+                upazilaSelect.innerHTML = '<option value="">All Upazilas</option>';
+                return;
             }
-        } catch (err) {
-            console.error('Favorite error:', err);
-            alert('Request failed. Please try again.');
+
+            upazilaSelect.innerHTML = '<option value="">Loading...</option>';
+
+            try {
+                const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                if (!res.ok) {
+                    upazilaSelect.innerHTML = '<option value="">All Upazilas</option>';
+                    return;
+                }
+                const upazilas = await res.json();
+
+                let optionsHtml = '<option value="">All Upazilas</option>';
+                upazilas.forEach(u => {
+                    optionsHtml += `<option value="${u.name}">${u.name}</option>`;
+                });
+                upazilaSelect.innerHTML = optionsHtml;
+            } catch (err) {
+                console.error('Failed to load upazilas:', err);
+                upazilaSelect.innerHTML = '<option value="">All Upazilas</option>';
+            }
+        });
+
+        async function toggleFavorite(donorProfileId, btn) {
+            const isFav = btn.dataset.fav === "true";
+            const url = isFav ? '/Donor/RemoveFavorite' : '/Donor/AddFavorite';
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'RequestVerificationToken': token
+                    },
+                    body: `donorProfileId=${donorProfileId}&__RequestVerificationToken=${token}`
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    btn.dataset.fav = isFav ? "false" : "true";
+                    const icon = btn.querySelector('i');
+                    if (isFav) {
+                        icon.className = 'far fa-heart';
+                        btn.style.color = '';
+                    } else {
+                        icon.className = 'fas fa-heart';
+                        btn.style.color = 'red';
+                    }
+                } else {
+                    alert(data.message || 'Something went wrong!');
+                }
+            } catch (err) {
+                console.error('Favorite error:', err);
+                alert('Request failed. Please try again.');
+            }
         }
-    }
+    </script>
 }

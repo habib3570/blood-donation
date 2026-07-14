@@ -1,0 +1,77 @@
+﻿@using BloodDonationSystem.Application.DTOs.Certificate
+@model List<CertificateDto>
+@{
+    ViewData["Title"] = "My Certificates";
+}
+
+<div class="page-header">
+    <div class="container">
+        <div class="page-header-title">🏆 My Donation Certificates</div>
+        <div class="page-header-sub">Download and share your certificates of appreciation</div>
+        <div class="breadcrumb-custom">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            <span class="breadcrumb-sep">/</span>
+            <span>My Certificates</span>
+        </div>
+    </div>
+</div>
+
+<section class="section-pad">
+    <div class="container">
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var cert in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="info-card" style="border-top:4px solid var(--deep-red);">
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <div style="width:44px;height:44px;border-radius:50%;
+                                                    background:linear-gradient(135deg,var(--deep-red),#b91c1c);
+                                                    color:#fff;display:flex;align-items:center;justify-content:center;
+                                                    font-size:1.2rem;flex-shrink:0;">
+                                    🏆
+                                </div>
+                                <div>
+                                    <div style="font-weight:700;color:var(--navy-blue);font-size:0.95rem;">
+                                        Certificate of Donation
+                                    </div>
+                                    <div style="font-size:0.72rem;color:var(--text-muted);">
+                                        @cert.CertificateNumber
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem;">
+                                <i class="fas fa-hospital"></i> @cert.HospitalName
+                            </div>
+                            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">
+                                <i class="fas fa-calendar"></i> @cert.DonationDate.ToString("dd MMMM yyyy")
+                            </div>
+
+                            <a asp-action="Download" asp-route-donationId="@cert.DonationId"
+                               class="btn-red w-100 justify-content-center">
+                                <i class="fas fa-download"></i> Download PDF
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="info-card text-center py-5">
+                <div style="font-size:3rem;margin-bottom:1rem;">🩸</div>
+                <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">
+                    No Certificates Yet
+                </div>
+                <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
+                    Once you complete a donation, your certificate will appear here.
+                </div>
+                <a asp-controller="Donor" asp-action="BecomeDonor" class="btn-red">
+                    <i class="fas fa-tint"></i> Become a Donor
+                </a>
+            </div>
+        }
+    </div>
+</section>

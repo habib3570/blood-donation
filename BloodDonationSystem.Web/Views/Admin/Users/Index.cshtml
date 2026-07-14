@@ -10,12 +10,15 @@
             <div class="admin-page-title">👥 Manage Users</div>
             <div class="admin-page-sub">View, block, and verify all registered users</div>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 align-items-center">
             <input type="text" class="form-control-custom"
                    placeholder="🔍 Search users..."
                    id="userSearch"
                    onkeyup="filterTable()"
                    style="width:220px;" />
+            <a asp-action="Create" class="btn-primary-custom">
+                <i class="fas fa-plus"></i> Create User
+            </a>
         </div>
     </div>
 </div>
@@ -184,6 +187,12 @@
                                                 <i class="fas fa-check-circle"></i>
                                             </button>
                                         }
+                                        <button onclick="openRoleModal('@user.Id')"
+                                                class="btn-sm-outline"
+                                                title="Change Role"
+                                                style="color:var(--navy-blue);border-color:#BFDBFE;">
+                                            <i class="fas fa-user-cog"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -194,6 +203,212 @@
         </div>
     </div>
 </div>
+<!-- ROLE CHANGE MODAL -->
+<div id="roleModal" class="role-modal-overlay">
+    <div class="role-modal-box">
+        <div class="role-modal-header">
+            <div class="role-modal-icon"><i class="fas fa-user-cog"></i></div>
+            <div>
+                <h5>Change User Role</h5>
+                <p>Select a new role for this user</p>
+            </div>
+        </div>
+
+        <input type="hidden" id="roleModalUserId" />
+
+        <div class="role-modal-options">
+            <label class="role-option">
+                <input type="radio" name="roleModalRadio" value="User" checked />
+                <div class="role-option-card">
+                    <i class="fas fa-user"></i>
+                    <span>User</span>
+                </div>
+            </label>
+            <label class="role-option">
+                <input type="radio" name="roleModalRadio" value="Donor" />
+                <div class="role-option-card">
+                    <i class="fas fa-hand-holding-droplet"></i>
+                    <span>Donor</span>
+                </div>
+            </label>
+            <label class="role-option">
+                <input type="radio" name="roleModalRadio" value="Admin" />
+                <div class="role-option-card">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </div>
+            </label>
+        </div>
+
+        <div class="role-modal-actions">
+            <button onclick="closeRoleModal()" class="role-btn-cancel">Cancel</button>
+            <button onclick="submitRoleChange()" class="role-btn-confirm">
+                <i class="fas fa-check"></i> Update Role
+            </button>
+        </div>
+    </div>
+</div>
+<style>
+    .role-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.55);
+        z-index: 1050;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.2s ease;
+    }
+
+    .role-modal-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 1.75rem;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        animation: slideUp 0.25s ease;
+    }
+
+    .role-modal-header {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .role-modal-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--deep-red), #b91c1c);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    .role-modal-header h5 {
+        font-weight: 700;
+        margin: 0;
+        color: var(--navy-blue);
+        font-size: 1.05rem;
+    }
+
+    .role-modal-header p {
+        margin: 0;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+    }
+
+    .role-modal-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .role-option input {
+        display: none;
+    }
+
+    .role-option-card {
+        border: 2px solid #E5E7EB;
+        border-radius: 12px;
+        padding: 0.9rem 0.4rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.18s ease;
+        color: var(--text-muted);
+    }
+
+        .role-option-card i {
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .role-option-card span {
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .role-option-card:hover {
+            border-color: #FCA5A5;
+        }
+
+    .role-option input:checked + .role-option-card {
+        border-color: var(--deep-red);
+        background: rgba(220, 38, 38, 0.06);
+        color: var(--deep-red);
+    }
+
+    .role-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.6rem;
+    }
+
+    .role-btn-cancel {
+        padding: 0.55rem 1.1rem;
+        border-radius: 8px;
+        border: 1.5px solid #E5E7EB;
+        background: #fff;
+        color: var(--text-muted);
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+
+        .role-btn-cancel:hover {
+            background: #F3F4F6;
+        }
+
+    .role-btn-confirm {
+        padding: 0.55rem 1.3rem;
+        border-radius: 8px;
+        border: none;
+        background: linear-gradient(135deg, var(--deep-red), #b91c1c);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.15s ease;
+    }
+
+        .role-btn-confirm:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @@keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 
 @section Scripts {
     <script>
@@ -204,39 +419,89 @@
             });
         }
 
-               async function blockUser(userId) {
+        async function blockUser(userId) {
             if (!confirm('Block this user?')) return;
-            const res = await fetch(`/AdminUser/Block/${userId}`, {
-                method: 'POST',
-                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
-            });
-            const data = await res.json();
-            if (data.success) { showToast('User blocked.', 'success'); location.reload(); }
-            else showToast(data.message, 'error');
+            try {
+                const res = await fetch(`/AdminUser/Block/${userId}`, {
+                    method: 'POST',
+                    headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+                });
+                if (!res.ok) { showToast(`Error: ${res.status} ${res.statusText}`, 'error'); return; }
+                const data = await res.json();
+                if (data.success) { showToast('User blocked.', 'success'); location.reload(); }
+                else showToast(data.message, 'error');
+            } catch (err) {
+                showToast('Something went wrong: ' + err.message, 'error');
+            }
         }
 
         async function unblockUser(userId) {
             if (!confirm('Unblock this user?')) return;
-            const res = await fetch(`/AdminUser/Unblock/${userId}`, {
-                method: 'POST',
-                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
-            });
-            const data = await res.json();
-            if (data.success) { showToast('User unblocked.', 'success'); location.reload(); }
-            else showToast(data.message, 'error');
+            try {
+                const res = await fetch(`/AdminUser/Unblock/${userId}`, {
+                    method: 'POST',
+                    headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+                });
+                if (!res.ok) { showToast(`Error: ${res.status} ${res.statusText}`, 'error'); return; }
+                const data = await res.json();
+                if (data.success) { showToast('User unblocked.', 'success'); location.reload(); }
+                else showToast(data.message, 'error');
+            } catch (err) {
+                showToast('Something went wrong: ' + err.message, 'error');
+            }
         }
 
         async function verifyDonor(donorProfileId) {
             if (!confirm('Verify this donor?')) return;
-            const res = await fetch(`/AdminUser/VerifyDonor/${donorProfileId}`, {
-                method: 'POST',
-                headers: { 'RequestVerificationToken': getAntiForgeryToken() }
-            });
-            const data = await res.json();
-            if (data.success) { showToast('Donor verified!', 'success'); location.reload(); }
-            else showToast(data.message, 'error');
+            try {
+                const res = await fetch(`/AdminUser/VerifyDonor/${donorProfileId}`, {
+                    method: 'POST',
+                    headers: { 'RequestVerificationToken': getAntiForgeryToken() }
+                });
+                if (!res.ok) { showToast(`Error: ${res.status} ${res.statusText}`, 'error'); return; }
+                const data = await res.json();
+                if (data.success) { showToast('Donor verified!', 'success'); location.reload(); }
+                else showToast(data.message, 'error');
+            } catch (err) {
+                showToast('Something went wrong: ' + err.message, 'error');
+            }
         }
 
-        
+        function openRoleModal(userId) {
+            document.getElementById('roleModalUserId').value = userId;
+            document.getElementById('roleModal').style.display = 'flex';
+        }
+
+        function closeRoleModal() {
+            document.getElementById('roleModal').style.display = 'none';
+        }
+
+        async function submitRoleChange() {
+            const userId = document.getElementById('roleModalUserId').value;
+            const selectedRadio = document.querySelector('input[name="roleModalRadio"]:checked');
+            if (!selectedRadio) {
+                showToast('Please select a role.', 'error');
+                return;
+            }
+            const newRole = selectedRadio.value;
+            try {
+                const res = await fetch(`/AdminUser/ChangeRole/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': getAntiForgeryToken(),
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `newRole=${encodeURIComponent(newRole)}`
+                });
+                closeRoleModal();
+                if (!res.ok) { showToast(`Error: ${res.status} ${res.statusText}`, 'error'); return; }
+                const data = await res.json();
+                if (data.success) { showToast('Role updated!', 'success'); location.reload(); }
+                else showToast(data.message, 'error');
+            } catch (err) {
+                closeRoleModal();
+                showToast('Something went wrong: ' + err.message, 'error');
+            }
+        }
     </script>
 }

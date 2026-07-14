@@ -14,6 +14,9 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result<List<object>>> GetSystemReportsAsync();
         Task<Result> ReviewRequestReportAsync(int reportId, bool isFake);
         Task<Result<List<object>>> GetMostActiveDistrictsAsync();
-      
+        Task<Result> CreateUserAsync(CreateUserDto dto);
+        Task<Result> ChangeUserRoleAsync(string userId, string newRole);
+        Task<Result<string>> GetUserRoleAsync(string userId);
+
     }
 }

@@ -50,6 +50,7 @@ namespace BloodDonationSystem.Infrastructure.Data
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<Upazila> Upazilas { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

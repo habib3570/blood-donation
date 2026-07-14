@@ -33,7 +33,7 @@ namespace BloodDonationSystem.Infrastructure.Repositories
                 .ToListAsync();
 
         public async Task<List<DonorProfile>> SearchDonorsAsync(
-            BloodGroup bloodGroup, string district, string upazila, Gender? gender = null)
+        BloodGroup bloodGroup, string district, string upazila, Gender? gender = null)
         {
             var query = _context.DonorProfiles
                 .Include(d => d.User)
@@ -43,10 +43,10 @@ namespace BloodDonationSystem.Infrastructure.Repositories
                          && !d.User.IsBlocked);
 
             if (!string.IsNullOrEmpty(district))
-                query = query.Where(d => d.PreferredDistrict == district);
+                query = query.Where(d => d.User!.District == district);   
 
             if (!string.IsNullOrEmpty(upazila))
-                query = query.Where(d => d.PreferredUpazila == upazila);
+                query = query.Where(d => d.User!.Upazila == upazila);     
 
             if (gender.HasValue)
                 query = query.Where(d => d.User!.Gender == gender.Value);
@@ -77,12 +77,11 @@ namespace BloodDonationSystem.Infrastructure.Repositories
         }
 
         public async Task<List<DonorProfile>> GetTopDonorsByPointsAsync(int count)
-           => await _dbSet
+    => await _dbSet
         .Include(x => x.User)
-        .Where(x => x.IsAvailable
-                 && !x.IsVacationMode
+        .Where(x => x.User != null
                  && !x.User.IsBlocked)
-        .OrderByDescending(x => x.SmartPriorityScore)
+        .OrderByDescending(x => x.TotalPoints)
         .Take(count)
         .ToListAsync();
 

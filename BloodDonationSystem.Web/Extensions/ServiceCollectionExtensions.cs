@@ -143,6 +143,8 @@ namespace BloodDonationSystem.Web.Extensions
             services.AddScoped<ISuccessStoryService, SuccessStoryService>();
        
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICertificateRepository, CertificateRepository>();
+            services.AddScoped<ICertificateService, CertificateService>();
 
             // Background Jobs
             services.AddScoped<DonationReminderJob>();

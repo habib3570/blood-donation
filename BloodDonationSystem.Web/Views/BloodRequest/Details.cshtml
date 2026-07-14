@@ -75,7 +75,7 @@
                         <div class="col-sm-6">
                             <div class="info-card">
                                 <div style="font-size:0.72rem;font-weight:600;
-                                            color:var(--text-muted);margin-bottom:0.35rem;">
+                                  color:var(--text-muted);margin-bottom:0.35rem;">
                                     BLOOD GROUP
                                 </div>
                                 <div style="font-size:1.5rem;font-weight:800;color:var(--deep-red);">
@@ -83,6 +83,14 @@
                                 </div>
                                 <div style="font-size:0.8rem;color:var(--text-muted);">
                                     @Model.UnitsNeeded unit(s) needed
+                                </div>
+                                <div style="margin-top:0.6rem;">
+                                    <span onclick="openDonorModal()"
+                                          style="cursor:pointer;font-size:0.85rem;font-weight:700;
+                                           color:var(--deep-red);text-decoration:underline;">
+                                        <i class="fas fa-user-friends"></i>
+                                        @ViewBag.AvailableDonorCount জন Donor Available
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -332,6 +340,83 @@
         </div>
     </div>
 </section>
+<!-- AVAILABLE DONORS MODAL -->
+<div id="donorModal"
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);
+            z-index:9999;align-items:center;justify-content:center;">
+    <div class="form-card" style="max-width:500px;width:90%;margin:1rem;max-height:80vh;
+                                   display:flex;flex-direction:column;padding:0;overflow:hidden;">
+        <div style="padding:1.25rem 1.25rem 1rem;border-bottom:1px solid var(--card-border);
+                    display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <div style="font-weight:800;font-size:1.05rem;color:var(--navy-blue);">
+                    <i class="fas fa-tint" style="color:var(--deep-red);"></i>
+                    @Model.BloodGroupDisplay Available Donors
+                </div>
+                <div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">
+                    @ViewBag.AvailableDonorCount donor(s) found
+                </div>
+            </div>
+            <button onclick="closeDonorModal()"
+                    style="border:none;background:none;font-size:1.4rem;
+                           color:var(--text-muted);cursor:pointer;line-height:1;">
+                &times;
+            </button>
+        </div>
+
+        <div style="overflow-y:auto;flex:1;padding:0.75rem 1.25rem;">
+            @{
+                var donors = ViewBag.AvailableDonors as
+                List<BloodDonationSystem.Application.DTOs.Donor.DonorDto> ?? new();
+            }
+
+            @if (donors.Count == 0)
+            {
+                <div class="text-center py-4" style="color:var(--text-muted);font-size:0.85rem;">
+                    এই মুহূর্তে কোনো available donor পাওয়া যায়নি।
+                </div>
+            }
+
+            @foreach (var donor in donors)
+            {
+                <div style="display:flex;align-items:center;gap:0.75rem;
+                                padding:0.85rem 0;border-bottom:1px solid var(--card-border);">
+                    <div class="donor-avatar" style="width:44px;height:44px;flex-shrink:0;">
+                        @(string.IsNullOrEmpty(donor.FullName) ? "?" : donor.FullName[0].ToString())
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-weight:700;color:var(--navy-blue);font-size:0.9rem;
+                                        display:flex;align-items:center;gap:0.4rem;">
+                            @donor.FullName
+                            @if (donor.IsVerifiedDonor)
+                            {
+                                <i class="fas fa-check-circle" style="color:var(--success-green);font-size:0.8rem;"
+                                   title="Verified Donor"></i>
+                            }
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);">
+                            @donor.Upazila, @donor.District
+                            @if (donor.TotalDonations > 0)
+                            {
+                                <span> • @donor.TotalDonations donation(s)</span>
+                            }
+                        </div>
+                        @if (donor.AverageRating > 0)
+                        {
+                            <div style="font-size:0.72rem;color:#F59E0B;margin-top:2px;">
+                                <i class="fas fa-star"></i> @donor.AverageRating.ToString("0.0")
+                                (@donor.TotalRatings)
+                            </div>
+                        }
+                    </div>
+                    <a href="/Chat/Index?userId=@donor.UserId" class="btn-sm-red" style="flex-shrink:0;">
+                        <i class="fas fa-comment-dots"></i> Message
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 <!-- REPORT MODAL -->
 <div id="reportModal"
@@ -355,6 +440,14 @@
 
 @section Scripts {
     <script>
+        function openDonorModal() {
+            document.getElementById('donorModal').style.display = 'flex';
+        }
+
+        function closeDonorModal() {
+            document.getElementById('donorModal').style.display = 'none';
+        }
+
         let currentReportId = null;
 
         function reportRequest(id) {

@@ -256,5 +256,19 @@ namespace BloodDonationSystem.Application.Services
                 return Result<DonorDto>.Failure("Donor not found.");
             return Result<DonorDto>.Success(_mapper.Map<DonorDto>(donor));
         }
+        public async Task<Result<List<DonorDto>>> GetAvailableDonorsByBloodGroupAsync(BloodGroup bloodGroup)
+        {
+            var donors = await _donorRepository.GetDonorsByBloodGroupAsync(bloodGroup);
+
+            
+            var availableDonors = donors
+                .Where(d => d.IsAvailable && !d.IsVacationMode)
+                .OrderByDescending(d => d.IsVerifiedDonor)
+                .ThenByDescending(d => d.SmartPriorityScore)
+                .ToList();
+
+            var dtos = _mapper.Map<List<DonorDto>>(availableDonors);
+            return Result<List<DonorDto>>.Success(dtos);
+        }
     }
 }

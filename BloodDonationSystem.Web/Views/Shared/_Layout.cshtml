@@ -97,9 +97,13 @@
                         </div>
 
                         <!-- Chat -->
-                        <a asp-controller="Chat" asp-action="Index" class="nav-icon-btn">
-                            <i class="fas fa-comment-dots"></i>
-                        </a>
+                        <!-- Chat -->
+                        <div class="position-relative d-inline-block">
+                            <a asp-controller="Chat" asp-action="Index" class="nav-icon-btn">
+                                <i class="fas fa-comment-dots"></i>
+                            </a>
+                            <span class="notif-dot d-none" id="chatBadge" style="position:absolute;top:-4px;right:-4px;">0</span>
+                        </div>
 
                         <!-- SOS -->
                         <a asp-controller="Emergency" asp-action="SOS" class="btn-sos-nav">
@@ -261,6 +265,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
     <script src="~/js/site.js"></script>
     <script src="~/js/signalr-notification.js"></script>
+    <script src="~/js/signalr-chat.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

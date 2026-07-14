@@ -1,31 +1,60 @@
-﻿window.chatConnection = new signalR.HubConnectionBuilder()
-    .withUrl("/hubs/chat")
-    .withAutomaticReconnect()
-    .build();
+﻿
 
-window.chatConnection.on("ReceiveMessage", function (message) {
-    appendMessage(message, false);
-    scrollToBottom();
-    window.chatConnection.invoke("MarkAsRead", message.senderId);
-});
+(function () {
+   
+    const isAuthenticated = document.body.getAttribute('data-authenticated') === 'true';
+    if (!isAuthenticated) return;
 
-window.chatConnection.on("MessageSent", function (message) {
-    scrollToBottom();
-});
+    window.chatConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/chat")
+        .withAutomaticReconnect()
+        .build();
 
-window.chatConnection.on("UserTyping", function (userId) {
-    showTypingIndicator(userId);
-});
+    window.chatConnection.on("ReceiveMessage", function (message) {
+        
+        if (window.activeUserId && message.senderId === window.activeUserId) {
+            appendMessage(message, false);
+            scrollToBottom();
+            window.chatConnection.invoke("MarkAsRead", message.senderId);
+        } else {
+           
+            incrementChatBadge();
+        }
+    });
 
-window.chatConnection.on("UserStoppedTyping", function (userId) {
-    hideTypingIndicator();
-});
+    window.chatConnection.on("MessageSent", function (message) {
+       
+        if (window.activeUserId && message.receiverId === window.activeUserId) {
+            appendMessage(message, true);
+            scrollToBottom();
+        }
+    });
 
-window.chatConnection.start().catch(console.error);
+    window.chatConnection.on("UserTyping", function (userId) {
+        if (window.activeUserId && userId === window.activeUserId) {
+            showTypingIndicator(userId);
+        }
+    });
+
+    window.chatConnection.on("UserStoppedTyping", function (userId) {
+        if (window.activeUserId && userId === window.activeUserId) {
+            hideTypingIndicator();
+        }
+    });
+
+    window.chatConnection.start().catch(function (err) {
+        console.error("Chat SignalR connection failed:", err);
+    });
+})();
+
+// ===== চ্যাট UI হেল্পার ফাংশনগুলো (শুধু Chat page এ elements থাকলে কাজ করবে) =====
 
 function appendMessage(message, isMe) {
     const area = document.getElementById('messagesArea');
     if (!area) return;
+
+    // typing indicator থাকলে সেটার আগে message বসাও
+    const typingIndicator = document.getElementById('typingIndicator');
 
     const wrapper = document.createElement('div');
     wrapper.className = `d-flex ${isMe ? 'justify-content-end' : 'justify-content-start'}`;
@@ -45,7 +74,12 @@ function appendMessage(message, isMe) {
             </div>
         </div>
     `;
-    area.appendChild(wrapper);
+
+    if (typingIndicator) {
+        area.insertBefore(wrapper, typingIndicator);
+    } else {
+        area.appendChild(wrapper);
+    }
 }
 
 function scrollToBottom() {
@@ -80,14 +114,23 @@ function formatTime(dateStr) {
     return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-// Typing detection
-let typingTimer;
-document.getElementById('messageInput')?.addEventListener('input', function () {
-    const activeUserId = window.activeUserId;
-    if (!activeUserId) return;
-    window.chatConnection.invoke('StartTyping', activeUserId);
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(() => {
-        window.chatConnection.invoke('StopTyping', activeUserId);
-    }, 2000);
+function incrementChatBadge() {
+    const badge = document.getElementById('chatBadge');
+    if (!badge) return;
+    const current = parseInt(badge.textContent || '0', 10);
+    badge.textContent = (current + 1).toString();
+    badge.classList.remove('d-none');
+}
+
+// Typing detection - Chat page এ input থাকলেই কাজ করবে
+document.addEventListener('input', function (e) {
+    if (e.target && e.target.id === 'messageInput') {
+        const activeUserId = window.activeUserId;
+        if (!activeUserId || !window.chatConnection) return;
+        window.chatConnection.invoke('StartTyping', activeUserId);
+        clearTimeout(window._typingTimer);
+        window._typingTimer = setTimeout(() => {
+            window.chatConnection.invoke('StopTyping', activeUserId);
+        }, 2000);
+    }
 });

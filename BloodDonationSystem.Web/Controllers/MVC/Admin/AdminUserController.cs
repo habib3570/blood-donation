@@ -1,4 +1,5 @@
-﻿using BloodDonationSystem.Application.Interfaces.Services;
+﻿using BloodDonationSystem.Application.DTOs.User;
+using BloodDonationSystem.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +9,6 @@ namespace BloodDonationSystem.Web.Controllers.MVC.Admin
     public class AdminUserController : Controller
     {
         private readonly IAdminService _adminService;
-
         public AdminUserController(IAdminService adminService)
         {
             _adminService = adminService;
@@ -44,11 +44,45 @@ namespace BloodDonationSystem.Web.Controllers.MVC.Admin
             return Json(new { success = result.IsSuccess, message = result.Errors.FirstOrDefault() ?? result.Message });
         }
 
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VerifyDonor(int donorProfileId)
+        public async Task<IActionResult> VerifyDonor(int id)
         {
-            var result = await _adminService.VerifyDonorAsync(donorProfileId);
+            var result = await _adminService.VerifyDonorAsync(id);
+            return Json(new { success = result.IsSuccess, message = result.Errors.FirstOrDefault() ?? result.Message });
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View("~/Views/Admin/Users/Create.cshtml", new CreateUserDto());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateUserDto dto)
+        {
+            if (!ModelState.IsValid)
+                return View("~/Views/Admin/Users/Create.cshtml", dto);
+
+            var result = await _adminService.CreateUserAsync(dto);
+            if (!result.IsSuccess)
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("", error);
+                return View("~/Views/Admin/Users/Create.cshtml", dto);
+            }
+
+            TempData["Success"] = result.Message;
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeRole(string id, [FromForm] string newRole)
+        {
+            var result = await _adminService.ChangeUserRoleAsync(id, newRole);
             return Json(new { success = result.IsSuccess, message = result.Errors.FirstOrDefault() ?? result.Message });
         }
     }

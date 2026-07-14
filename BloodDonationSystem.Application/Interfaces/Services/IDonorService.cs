@@ -20,7 +20,8 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result<DonorAvailabilityDto>> CheckAvailabilityAsync(int donorProfileId);
         Task<Result> UpdateSmartPriorityScoresAsync();
         Task<Result> VerifyDonorAsync(int donorProfileId);
-       
+        Task<Result<List<DonorDto>>> GetAvailableDonorsByBloodGroupAsync(BloodGroup bloodGroup);
+
 
     }
 }

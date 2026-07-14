@@ -93,6 +93,14 @@ namespace BloodDonationSystem.Web.Controllers.MVC
         {
             var result = await _bloodRequestService.GetRequestByIdAsync(id);
             if (!result.IsSuccess) return NotFound();
+
+            if (result.Data != null)
+            {
+                var donorsResult = await _donorService.GetAvailableDonorsByBloodGroupAsync(result.Data.BloodGroup);
+                ViewBag.AvailableDonors = donorsResult.Data ?? new List<Application.DTOs.Donor.DonorDto>();
+                ViewBag.AvailableDonorCount = ViewBag.AvailableDonors.Count;
+            }
+
             return View(result.Data);
         }
 

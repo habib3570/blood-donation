@@ -37,7 +37,8 @@ namespace BloodDonationSystem.Web.Controllers.MVC
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var donors = await _donorService.GetTopDonorsAsync(20);
+            
+            var donors = await _donorService.SearchDonorsAsync(new DonorFilterDto());
             return View(donors.Data);
         }
         [HttpGet]

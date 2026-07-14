@@ -17,12 +17,13 @@ namespace BloodDonationSystem.Application.Services
         private readonly INotificationService _notificationService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
+        private readonly RoleManager<IdentityRole> _roleManager;
         public AdminService(
             IUserRepository userRepository,
             IDonorRepository donorRepository,
             UserManager<ApplicationUser> userManager,
             INotificationService notificationService,
+             RoleManager<IdentityRole> roleManager,
             IUnitOfWork unitOfWork,
             IMapper mapper)
         {
@@ -30,6 +31,7 @@ namespace BloodDonationSystem.Application.Services
             _donorRepository = donorRepository;
             _userManager = userManager;
             _notificationService = notificationService;
+            _roleManager = roleManager;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -214,6 +216,114 @@ namespace BloodDonationSystem.Application.Services
                 Domain.Enums.NotificationType.SystemAlert);
 
             return Result.Success("Donor verified successfully.");
+        }
+
+        public async Task<Result> CreateUserAsync(CreateUserDto dto)
+        {
+            var existingUser = await _userManager.FindByEmailAsync(dto.Email);
+            if (existingUser != null)
+                return Result.Failure("A user with this email already exists.");
+
+            var user = new ApplicationUser
+            {
+                UserName = dto.Email,
+                Email = dto.Email,
+                FullName = dto.FullName,
+                PhoneNumber = dto.PhoneNumber,
+                BloodGroup = dto.BloodGroup,
+                Gender = dto.Gender,
+                DateOfBirth = dto.DateOfBirth,
+                District = dto.District,
+                Upazila = dto.Upazila,
+                IsActive = true,
+                IsVerified = true, 
+                EmailConfirmed = true,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            var createResult = await _userManager.CreateAsync(user, dto.Password);
+            if (!createResult.Succeeded)
+                return Result.Failure(createResult.Errors.Select(e => e.Description).ToList());
+
+            
+            if (!await _roleManager.RoleExistsAsync(dto.Role))
+                await _roleManager.CreateAsync(new IdentityRole(dto.Role));
+
+            var roleResult = await _userManager.AddToRoleAsync(user, dto.Role);
+            if (!roleResult.Succeeded)
+                return Result.Failure(roleResult.Errors.Select(e => e.Description).ToList());
+
+            if (dto.Role == "Donor")
+            {
+                var donorProfile = new DonorProfile
+                {
+                    UserId = user.Id,
+                    IsAvailable = true,
+                    Level = Domain.Enums.DonorLevel.NewDonor,
+                    CreatedAt = DateTime.UtcNow
+                };
+                await _donorRepository.AddAsync(donorProfile);
+                await _unitOfWork.SaveChangesAsync();
+            }
+
+            return Result.Success("User created successfully.");
+        }
+
+        public async Task<Result> ChangeUserRoleAsync(string userId, string newRole)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return Result.Failure("User not found.");
+
+            if (!await _roleManager.RoleExistsAsync(newRole))
+                return Result.Failure("Invalid role specified.");
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (!removeResult.Succeeded)
+                return Result.Failure(removeResult.Errors.Select(e => e.Description).ToList());
+
+            var addResult = await _userManager.AddToRoleAsync(user, newRole);
+            if (!addResult.Succeeded)
+                return Result.Failure(addResult.Errors.Select(e => e.Description).ToList());
+
+            
+            if (newRole == "Donor")
+            {
+                var existingDonor = await _donorRepository.GetByUserIdAsync(userId);
+                if (existingDonor == null)
+                {
+                    var donorProfile = new DonorProfile
+                    {
+                        UserId = userId,
+                        IsAvailable = true,
+                        Level = Domain.Enums.DonorLevel.NewDonor,
+                        CreatedAt = DateTime.UtcNow
+                    };
+                    await _donorRepository.AddAsync(donorProfile);
+                }
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+
+            await _notificationService.SendNotificationAsync(
+                userId,
+                "Role Updated",
+                $"Your account role has been changed to {newRole} by admin.",
+                Domain.Enums.NotificationType.SystemAlert);
+
+            return Result.Success($"User role changed to {newRole}.");
+        }
+
+        public async Task<Result<string>> GetUserRoleAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return Result<string>.Failure("User not found.");
+
+            var roles = await _userManager.GetRolesAsync(user);
+            return Result<string>.Success(roles.FirstOrDefault() ?? "User");
         }
     }
 }
