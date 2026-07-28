@@ -1,0 +1,137 @@
+﻿@using BloodDonationSystem.Domain.Enums
+@model BloodDonationSystem.Application.DTOs.BloodRequest.UpdateBloodRequestDto
+@{
+    ViewData["Title"] = "Edit Blood Request";
+    var districts = ViewBag.Districts as List<BloodDonationSystem.Application.DTOs.Location.DistrictDto>;
+    var upazilas = ViewBag.Upazilas as List<BloodDonationSystem.Application.DTOs.Location.UpazilaDto>;
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="fa-solid fa-pen-to-square"></i> Edit Blood Request</h4>
+                </div>
+                <div class="card-body">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <form asp-action="Edit" asp-controller="BloodRequest" method="post">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="mb-3">
+                            <label asp-for="PatientName" class="form-label">Patient Name</label>
+                            <input asp-for="PatientName" class="form-control" />
+                            <span asp-validation-for="PatientName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="BloodGroup" class="form-label">Blood Group</label>
+                            <select asp-for="BloodGroup" class="form-select"
+                                    asp-items="Html.GetEnumSelectList<BloodGroup>()">
+                            </select>
+                            <span asp-validation-for="BloodGroup" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="District" class="form-label">District</label>
+                                <select asp-for="District" id="districtSelect" class="form-select">
+                                    <option value="">-- Select District --</option>
+                                    @if (districts != null)
+                                    {
+                                        foreach (var d in districts)
+                                        {
+                                            <option value="@d.Name" selected="@(d.Name == Model.District)">@d.Name</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="District" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Upazila" class="form-label">Upazila</label>
+                                <select asp-for="Upazila" id="upazilaSelect" class="form-select">
+                                    <option value="">-- Select Upazila --</option>
+                                    @if (upazilas != null)
+                                    {
+                                        foreach (var u in upazilas)
+                                        {
+                                            <option value="@u.Name" selected="@(u.Name == Model.Upazila)">@u.Name</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="Upazila" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="HospitalName" class="form-label">Hospital Name</label>
+                            <input asp-for="HospitalName" class="form-control" />
+                            <span asp-validation-for="HospitalName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="HospitalAddress" class="form-label">Hospital Address</label>
+                            <input asp-for="HospitalAddress" class="form-control" />
+                            <span asp-validation-for="HospitalAddress" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ContactNumber" class="form-label">Contact Number</label>
+                            <input asp-for="ContactNumber" class="form-control" />
+                            <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="RequiredDate" class="form-label">Required Date</label>
+                                <input asp-for="RequiredDate" type="date" class="form-control"
+                                       value="@(Model.RequiredDate?.ToString("yyyy-MM-dd"))" />
+                                <span asp-validation-for="RequiredDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="UnitsNeeded" class="form-label">Units Needed</label>
+                                <input asp-for="UnitsNeeded" type="number" min="1" class="form-control" />
+                                <span asp-validation-for="UnitsNeeded" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Priority" class="form-label">Priority</label>
+                            <select asp-for="Priority" class="form-select"
+                                    asp-items="Html.GetEnumSelectList<RequestPriority>()">
+                            </select>
+                            <span asp-validation-for="Priority" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input asp-for="IsEmergency" class="form-check-input" type="checkbox" />
+                            <label asp-for="IsEmergency" class="form-check-label">Mark as Emergency</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="AdditionalInfo" class="form-label">Additional Info</label>
+                            <textarea asp-for="AdditionalInfo" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="MyRequests" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa-solid fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

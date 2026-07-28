@@ -333,5 +333,36 @@ namespace BloodDonationSystem.Application.Services
 
             return Result.Success("You have cancelled this acceptance. The requester has been notified.");
         }
+
+        public async Task<Result> UpdateRequestAsync(string userId, UpdateBloodRequestDto dto)
+        {
+            var request = await _bloodRequestRepository.GetByIdAsync(dto.Id);
+            if (request == null)
+                return Result.Failure("Request not found.");
+
+            if (request.RequesterId != userId)
+                return Result.Failure("Unauthorized.");
+
+            if (request.Status != RequestStatus.Pending)
+                return Result.Failure("Only pending requests can be edited.");
+
+            request.PatientName = dto.PatientName;
+            request.BloodGroup = dto.BloodGroup;
+            request.UnitsNeeded = dto.UnitsNeeded;
+            request.HospitalName = dto.HospitalName;
+            request.District = dto.District;
+            request.Upazila = dto.Upazila;
+            request.HospitalAddress = dto.HospitalAddress;
+            request.ContactNumber = dto.ContactNumber;
+            request.AdditionalInfo = dto.AdditionalInfo;
+            request.Priority = dto.Priority;
+            request.IsEmergency = dto.IsEmergency;
+            request.RequiredDate = dto.RequiredDate;
+
+            _bloodRequestRepository.Update(request);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Result.Success("Blood request updated successfully.");
+        }
     }
 }

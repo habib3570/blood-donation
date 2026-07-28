@@ -176,5 +176,73 @@ namespace BloodDonationSystem.Web.Controllers.MVC
             TempData[result.IsSuccess ? "Success" : "Error"] = result.IsSuccess ? result.Message : result.Errors.FirstOrDefault();
             return RedirectToAction("AcceptedRequests");
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var result = await _bloodRequestService.GetRequestByIdAsync(id);
+            if (!result.IsSuccess || result.Data == null) return NotFound();
+
+            if (result.Data.RequesterId != userId) return Forbid();
+
+            var dto = new UpdateBloodRequestDto
+            {
+                Id = result.Data.Id,
+                PatientName = result.Data.PatientName,
+                BloodGroup = result.Data.BloodGroup,
+                UnitsNeeded = result.Data.UnitsNeeded,
+                HospitalName = result.Data.HospitalName,
+                District = result.Data.District,
+                Upazila = result.Data.Upazila,
+                HospitalAddress = result.Data.HospitalAddress,
+                ContactNumber = result.Data.ContactNumber,
+                AdditionalInfo = result.Data.AdditionalInfo,
+                Priority = result.Data.Priority,
+                IsEmergency = result.Data.IsEmergency,
+                RequiredDate = result.Data.RequiredDate
+            };
+
+            var districts = await _locationDataService.GetAllDistrictsAsync();
+            ViewBag.Districts = districts.Data;
+
+            var currentDistrict = districts.Data?.FirstOrDefault(d => d.Name == result.Data.District);
+            if (currentDistrict != null)
+            {
+                var upazilas = await _locationDataService.GetUpazilasByDistrictIdAsync(currentDistrict.Id);
+                ViewBag.Upazilas = upazilas.Data;
+            }
+
+            return View(dto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, UpdateBloodRequestDto dto)
+        {
+            if (id != dto.Id) return BadRequest();
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            if (!ModelState.IsValid)
+            {
+                var districts = await _locationDataService.GetAllDistrictsAsync();
+                ViewBag.Districts = districts.Data;
+                return View(dto);
+            }
+
+            var result = await _bloodRequestService.UpdateRequestAsync(userId, dto);
+            if (!result.IsSuccess)
+            {
+                ModelState.AddModelError("", result.Errors.FirstOrDefault() ?? "Failed to update request.");
+                var districts = await _locationDataService.GetAllDistrictsAsync();
+                ViewBag.Districts = districts.Data;
+                return View(dto);
+            }
+
+            TempData["Success"] = "Blood request updated successfully!";
+            return RedirectToAction("MyRequests");
+        }
     }
 }

@@ -1,11 +1,5 @@
-﻿// ── DARK MODE ──
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDark);
-    const icon = document.getElementById('darkModeIcon');
-    if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-}
+﻿
+
 
 // ── MOBILE MENU ──
 function toggleMobileMenu() {

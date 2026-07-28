@@ -1,6 +1,5 @@
 ﻿using BloodDonationSystem.Application.Common.Models;
 using BloodDonationSystem.Application.DTOs.BloodRequest;
-
 namespace BloodDonationSystem.Application.Interfaces.Services
 {
     public interface IBloodRequestService
@@ -17,10 +16,10 @@ namespace BloodDonationSystem.Application.Interfaces.Services
         Task<Result> ExpireOldRequestsAsync();
         Task<Result<int>> GetTodayRequestCountAsync(string userId);
 
-     
         Task<Result<List<BloodRequestDto>>> GetAcceptedRequestsByDonorAsync(string donorId);
 
-    
         Task<Result> CancelAcceptedRequestByDonorAsync(string donorId, int requestId);
+
+        Task<Result> UpdateRequestAsync(string userId, UpdateBloodRequestDto dto);
     }
 }

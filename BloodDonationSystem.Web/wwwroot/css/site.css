@@ -1562,43 +1562,6 @@ body {
     color: rgba(255,255,255,0.35);
 }
 
-/* ── DARK MODE ── */
-.dark-mode {
-    --white: #111827;
-    --light-gray: #1F2937;
-    --card-border: #374151;
-    --navy-blue: #F9FAFB;
-    --text-muted: #9CA3AF;
-    background: #111827;
-    color: #F9FAFB;
-}
-
-    .dark-mode .navbar-custom {
-        background: #1F2937;
-        border-color: var(--deep-red);
-    }
-
-    .dark-mode .stat-card {
-        background: #1F2937;
-    }
-
-    .dark-mode .donor-card {
-        background: #1F2937;
-    }
-
-    .dark-mode .form-card {
-        background: #1F2937;
-    }
-
-    .dark-mode .form-control-custom, .dark-mode .form-select-custom {
-        background: #374151;
-        color: #F9FAFB;
-        border-color: #4B5563;
-    }
-
-    .dark-mode .user-dropdown, .dark-mode .notif-dropdown {
-        background: #1F2937;
-    }
 
 /* ── UTILITIES ── */
 .section-pad {

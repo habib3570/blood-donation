@@ -244,6 +244,10 @@
                             @if (Model.Status.ToString() == "Pending" &&
                                                     Model.RequesterId == userId)
                             {
+                                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-sm-outline">
+                                    <i class="fas fa-edit"></i> Edit Request
+                                </a>
+
                                 <form asp-action="Cancel" asp-route-id="@Model.Id"
                                       method="post"
                                       onsubmit="return confirm('Cancel this request?')">
@@ -266,6 +270,7 @@
                         <a asp-action="Index" class="btn-sm-outline">
                             <i class="fas fa-arrow-left"></i> Back to List
                         </a>
+                        
                     </div>
                 </div>
             </div>

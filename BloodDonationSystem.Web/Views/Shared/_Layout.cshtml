@@ -1,9 +1,4 @@
 ﻿@{
-    string darkModeClass = "";
-    if (ViewBag.DarkMode == true)
-    {
-        darkModeClass = "dark-mode";
-    }
 
     string isAuthenticated = "false";
     if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -23,7 +18,7 @@
     <link href="~/css/site.css" rel="stylesheet" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body class="@darkModeClass" data-authenticated="@isAuthenticated">
+<body data-authenticated="@isAuthenticated">
     <!-- EMERGENCY BANNER -->
     <div class="emergency-banner" id="emergencyBanner">
         <div class="container">
@@ -162,11 +157,6 @@
                         <a asp-controller="Account" asp-action="Login" class="btn-outline-nav">Login</a>
                         <a asp-controller="Account" asp-action="Register" class="btn-primary-nav">Register</a>
                     }
-
-                    <!-- Dark Mode -->
-                    <button class="nav-icon-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">
-                        <i class="fas fa-moon" id="darkModeIcon"></i>
-                    </button>
 
                     <!-- Mobile Menu -->
                     <button class="nav-icon-btn d-lg-none" onclick="toggleMobileMenu()">
