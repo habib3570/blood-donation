@@ -1,4 +1,4 @@
-﻿@using BloodDonationSystem.Application.DTOs.Donor
+@using BloodDonationSystem.Application.DTOs.Donor
 @using BloodDonationSystem.Application.DTOs.Location
 @{
     ViewData["Title"] = "Find Donor";
@@ -15,8 +15,8 @@
 
 <div class="page-header">
     <div class="container">
-        <div class="page-header-title">🔍 Find Blood Donor</div>
-        <div class="page-header-sub">Search verified donors by blood group, location, and distance</div>
+        <div class="page-header-title">Find Blood Donors</div>
+        <div class="page-header-sub">Search verified voluntary donors by blood group, location, and distance</div>
         <div class="breadcrumb-custom">
             <a asp-controller="Home" asp-action="Index">Home</a>
             <span class="breadcrumb-sep">/</span>
@@ -33,7 +33,7 @@
             <div class="col-lg-3">
                 <div class="search-card" style="position:sticky;top:80px;">
                     <div class="search-card-title">
-                        <i class="fas fa-sliders-h"></i> Search Filters
+                        <i class="fas fa-sliders text-red"></i> Filter Donors
                     </div>
                     <form asp-action="Search" method="get" id="filterForm">
                         @Html.AntiForgeryToken()
@@ -41,15 +41,15 @@
                         <div class="mb-3">
                             <label class="form-label-custom">Blood Group</label>
                             <select name="BloodGroup" id="bloodGroupSelect" class="form-select-custom">
-                                <option value="">All Groups</option>
-                                <option value="0">A+</option>
-                                <option value="1">A-</option>
-                                <option value="2">B+</option>
-                                <option value="3">B-</option>
-                                <option value="4">AB+</option>
-                                <option value="5">AB-</option>
-                                <option value="6">O+</option>
-                                <option value="7">O-</option>
+                                <option value="">All Blood Groups</option>
+                                <option value="0" selected="@(bgValue == "APositive" || bgValue == "0")">A+</option>
+                                <option value="1" selected="@(bgValue == "ANegative" || bgValue == "1")">A-</option>
+                                <option value="2" selected="@(bgValue == "BPositive" || bgValue == "2")">B+</option>
+                                <option value="3" selected="@(bgValue == "BNegative" || bgValue == "3")">B-</option>
+                                <option value="4" selected="@(bgValue == "ABPositive" || bgValue == "4")">AB+</option>
+                                <option value="5" selected="@(bgValue == "ABNegative" || bgValue == "5")">AB-</option>
+                                <option value="6" selected="@(bgValue == "OPositive" || bgValue == "6")">O+</option>
+                                <option value="7" selected="@(bgValue == "ONegative" || bgValue == "7")">O-</option>
                             </select>
                         </div>
 
@@ -59,7 +59,7 @@
                                 <option value="">All Districts</option>
                                 @foreach (var d in districts)
                                 {
-                                    <option value="@d.Name" data-id="@d.Id">@d.Name</option>
+                                    <option value="@d.Name" data-id="@d.Id" selected="@(d.Name == districtValue)">@d.Name</option>
                                 }
                             </select>
                         </div>
@@ -70,7 +70,7 @@
                                 <option value="">All Upazilas</option>
                                 @foreach (var u in upazilas)
                                 {
-                                    <option value="@u.Name">@u.Name</option>
+                                    <option value="@u.Name" selected="@(u.Name == upazilaValue)">@u.Name</option>
                                 }
                             </select>
                         </div>
@@ -238,15 +238,17 @@
                 else if (filter.BloodGroup.HasValue || !string.IsNullOrEmpty(filter.District))
                 {
                     <div class="info-card text-center py-5">
-                        <div style="font-size:3rem;margin-bottom:1rem;">😔</div>
-                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">No Donors Found</div>
-                        <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">
-                            No available donors found for your search criteria. Try expanding your search.
+                        <div class="brand-icon mx-auto mb-3" style="width:52px;height:52px;font-size:1.3rem;background:var(--light-gray);color:var(--slate-500);border:1px solid var(--card-border);">
+                            <i class="fas fa-users-slash"></i>
+                        </div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.4rem;">No Donors Found</div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;max-width:380px;margin-left:auto;margin-right:auto;">
+                            No voluntary donors found matching your exact filter criteria. Try expanding your search area or post an emergency request.
                         </div>
                         <div class="d-flex gap-2 justify-content-center">
                             <a asp-action="Search" class="btn-outline-red">Clear Filters</a>
                             <a asp-controller="Emergency" asp-action="Create" class="btn-red">
-                                <i class="fas fa-exclamation-triangle"></i> Create Emergency Request
+                                <i class="fas fa-triangle-exclamation"></i> Create Emergency Request
                             </a>
                         </div>
                     </div>
@@ -254,10 +256,12 @@
                 else
                 {
                     <div class="info-card text-center py-5">
-                        <div style="font-size:3rem;margin-bottom:1rem;">🔍</div>
-                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">Search for Donors</div>
-                        <div style="font-size:0.85rem;color:var(--text-muted);">
-                            Use the filters on the left to find available blood donors in your area.
+                        <div class="brand-icon mx-auto mb-3" style="width:52px;height:52px;font-size:1.3rem;background:var(--light-gray);color:var(--slate-500);border:1px solid var(--card-border);">
+                            <i class="fas fa-magnifying-glass"></i>
+                        </div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--navy-blue);margin-bottom:0.4rem;">Search for Donors</div>
+                        <div style="font-size:0.85rem;color:var(--text-muted);max-width:380px;margin-left:auto;margin-right:auto;">
+                            Use the filters on the left to find available voluntary blood donors in your area.
                         </div>
                     </div>
                 }

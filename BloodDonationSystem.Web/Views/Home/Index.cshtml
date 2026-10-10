@@ -1,4 +1,4 @@
-﻿@using BloodDonationSystem.Application.DTOs.Statistics
+@using BloodDonationSystem.Application.DTOs.Statistics
 @{
     ViewData["Title"] = "Home";
     var stats = ViewBag.Stats as DashboardStatsDto;
@@ -7,55 +7,99 @@
 }
 
 <!-- HERO -->
-<section class="hero-section">
+<!-- HERO SECTION (Clean, Minimalist, Centered High-Impact Search) -->
+<section class="hero-section text-center" style="background: #FFFFFF !important; color: #0F172A !important; padding: 4rem 0 3.5rem; border-bottom: 1px solid #E2E8F0; position: relative;">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7" style="position:relative;z-index:1;">
-                <h1 class="hero-title">
-                    Donate Blood,<br>
-                    <span class="accent">Save Lives</span> ❤️
-                </h1>
-                <p class="hero-subtitle">
-                    Bangladesh's most advanced blood donation platform. Connect with verified donors,
-                    manage emergency requests, and save lives in real-time.
-                </p>
-                <div class="d-flex gap-3 mt-4 flex-wrap">
-                    <a asp-controller="Donor" asp-action="Search" class="btn-red">
-                        <i class="fas fa-search"></i> Find Donor
-                    </a>
-                    @if (!User.Identity?.IsAuthenticated ?? true)
-                    {
-                        <a asp-controller="Account" asp-action="Register" class="btn-outline-white">
-                            <i class="fas fa-tint"></i> Become Donor
-                        </a>
-                    }
-                    else
-                    {
-                        <a asp-controller="Emergency" asp-action="Create" class="btn-outline-white">
-                            <i class="fas fa-exclamation-triangle"></i> Emergency Request
-                        </a>
-                    }
+        
+        <!-- Trust Pill Tag -->
+        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: #F8FAFC; border: 1px solid #E2E8F0; font-size: 0.78rem; font-weight: 600; color: #475569;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #16A34A; display: inline-block;"></span>
+            Verified Voluntary Blood Donation Network · Bangladesh
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="hero-title mb-3" style="font-size: 2.9rem; font-weight: 800; color: #0F172A !important; letter-spacing: -0.03em; line-height: 1.15;">
+            Donate Blood, <span style="color: #DC2626 !important;">Save Lives.</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-subtitle mx-auto mb-4" style="font-size: 1.05rem; color: #475569 !important; max-width: 680px; line-height: 1.6;">
+            Connect directly with verified voluntary blood donors near your hospital in real-time. Free, non-commercial, and built for emergency response across 64 districts.
+        </p>
+
+        <!-- PROMINENT QUICK SEARCH BOX (3 Dropdowns + Find Donors) -->
+        <div class="hero-search-card text-start mx-auto shadow-sm" style="background: #FFFFFF !important; border: 1px solid #CBD5E1; border-radius: 16px; padding: 1.35rem 1.5rem; max-width: 960px; box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.08) !important;">
+            <form asp-controller="Donor" asp-action="Search" method="get" id="homeSearchForm">
+                <div class="row g-2 align-items-end">
+                    
+                    <!-- 1. Blood Group Dropdown -->
+                    <div class="col-12 col-md-3">
+                        <label class="form-label mb-1 text-start d-block" style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #475569;">
+                            <i class="fas fa-droplet text-danger me-1"></i> Blood Group
+                        </label>
+                        <select name="BloodGroup" id="homeBloodGroupSelect" class="form-select" style="height: 46px; font-size: 0.875rem; font-weight: 600; color: #0F172A; border-color: #CBD5E1; background-color: #F8FAFC;">
+                            <option value="">Any Blood Group</option>
+                            <option value="0">A+ (A Positive)</option>
+                            <option value="1">A- (A Negative)</option>
+                            <option value="2">B+ (B Positive)</option>
+                            <option value="3">B- (B Negative)</option>
+                            <option value="4">AB+ (AB Positive)</option>
+                            <option value="5">AB- (AB Negative)</option>
+                            <option value="6" selected>O+ (O Positive)</option>
+                            <option value="7">O- (O Negative)</option>
+                        </select>
+                    </div>
+
+                    <!-- 2. District Dropdown -->
+                    <div class="col-12 col-md-3">
+                        <label class="form-label mb-1 text-start d-block" style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #475569;">
+                            <i class="fas fa-location-dot text-danger me-1"></i> District
+                        </label>
+                        <select name="District" id="homeDistrictSelect" class="form-select" style="height: 46px; font-size: 0.875rem; color: #0F172A; border-color: #CBD5E1; background-color: #F8FAFC;">
+                            <option value="">All Districts</option>
+                        </select>
+                    </div>
+
+                    <!-- 3. Upazila / Thana Cascading Dropdown -->
+                    <div class="col-12 col-md-3">
+                        <label class="form-label mb-1 text-start d-block" style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #475569;">
+                            <i class="fas fa-city text-danger me-1"></i> Upazila / Thana
+                        </label>
+                        <select name="Upazila" id="homeUpazilaSelect" class="form-select" style="height: 46px; font-size: 0.875rem; color: #0F172A; border-color: #CBD5E1; background-color: #F8FAFC;">
+                            <option value="">All Upazilas / Thanas</option>
+                        </select>
+                    </div>
+
+                    <!-- 4. Find Donors Button -->
+                    <div class="col-12 col-md-3">
+                        <button type="submit" class="btn w-100 fw-bold d-flex align-items-center justify-content-center gap-2" style="height: 46px; background: #DC2626; color: #FFFFFF; border: none; border-radius: 8px; font-size: 0.92rem; box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);">
+                            <i class="fas fa-search"></i> Find Donors
+                        </button>
+                    </div>
+
                 </div>
-                <div class="d-flex gap-4 mt-4 flex-wrap">
-                    <div>
-                        <div class="hero-stat-number">@(stats?.TotalDonors.ToString("N0") ?? "0")+ </div>
-                        <div class="hero-stat-label">Active Donors</div>
-                    </div>
-                    <div>
-                        <div class="hero-stat-number">@(stats?.TotalDonations.ToString("N0") ?? "0")+</div>
-                        <div class="hero-stat-label">Total Donations</div>
-                    </div>
-                    <div>
-                        <div class="hero-stat-number">@(stats?.LivesSaved.ToString("N0") ?? "0")+</div>
-                        <div class="hero-stat-label">Lives Saved</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 text-center d-none d-lg-block" style="position:relative;z-index:1;">
-                <div class="hero-drop">🩸</div>
-                <div style="color:rgba(255,255,255,0.45);font-size:0.85rem;margin-top:0.5rem;">Every drop counts</div>
+            </form>
+        </div>
+
+        <!-- Action CTAs & Helpline Callout -->
+        <div class="d-flex align-items-center justify-content-center gap-3 mt-4 flex-wrap">
+            <a asp-controller="Emergency" asp-action="Create" class="btn fw-semibold px-3 py-2 d-inline-flex align-items-center gap-2" style="font-size: 0.85rem; border-radius: 8px; background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA;">
+                <i class="fas fa-triangle-exclamation"></i> Emergency Blood Request
+            </a>
+            @if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                <a asp-controller="Account" asp-action="Register" class="btn fw-semibold px-3 py-2 d-inline-flex align-items-center gap-2" style="font-size: 0.85rem; border-radius: 8px; background: #FFFFFF; color: #334155; border: 1px solid #CBD5E1;">
+                    <i class="fas fa-hand-holding-heart text-danger"></i> Become a Donor
+                </a>
+            }
+            <a asp-controller="Hospital" asp-action="Index" class="btn fw-semibold px-3 py-2 d-inline-flex align-items-center gap-2" style="font-size: 0.85rem; border-radius: 8px; background: #FFFFFF; color: #334155; border: 1px solid #CBD5E1;">
+                <i class="fas fa-hospital text-muted"></i> Hospitals
+            </a>
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded" style="background: #F8FAFC; border: 1px solid #E2E8F0; font-size: 0.82rem; color: #475569;">
+                <i class="fas fa-phone-volume text-danger"></i> 24/7 Hotline: <strong class="ms-1" style="font-size: 0.95rem; color: #0F172A;">16600</strong>
             </div>
         </div>
+
     </div>
 </section>
 
@@ -154,15 +198,15 @@
                                                         "Helper" => "lv-silver",
                                                         _ => "lv-new"
                                                     };
-                                                    var levelEmoji = donor.Level.ToString() switch
+                                                    var levelIcon = donor.Level.ToString() switch
                                                     {
-                                                        "LifeSaver" => "🏆",
-                                                        "Hero" => "⚡",
-                                                        "Helper" => "🥈",
-                                                        _ => "🆕"
+                                                        "LifeSaver" => "fa-award",
+                                                        "Hero" => "fa-bolt",
+                                                        "Helper" => "fa-shield-halved",
+                                                        _ => "fa-circle-check"
                                                     };
                                                 }
-                                                <span class="level-badge @levelClass">@levelEmoji @donor.LevelDisplay</span>
+                                                <span class="level-badge @levelClass"><i class="fas @levelIcon me-1"></i> @donor.LevelDisplay</span>
                                             </div>
                                         </div>
                                         <span class="donor-blood-tag">@donor.BloodGroupDisplay</span>
@@ -213,7 +257,7 @@
                 else
                 {
                     <div class="info-card text-center py-4">
-                        <div style="font-size:3rem;margin-bottom:1rem;">🩸</div>
+                        <div class="mb-3 text-muted"><i class="fas fa-droplet fa-2x text-danger opacity-50"></i></div>
                         <div style="font-weight:700;color:var(--navy-blue);margin-bottom:0.5rem;">No Donors Found</div>
                         <div style="font-size:0.85rem;color:var(--text-muted);">Be the first to register as a donor!</div>
                         <a asp-controller="Donor" asp-action="BecomeDonor" class="btn-red mt-3">
@@ -291,14 +335,24 @@
             <!-- RIGHT SIDEBAR -->
             <div class="col-lg-4">
 
-                <!-- SOS -->
+                <!-- SOS EMERGENCY BOX -->
                 <div class="sos-wrap mb-4">
-                    <a asp-controller="Emergency" asp-action="SOS" class="sos-circle text-decoration-none">
-                        <i class="fas fa-exclamation-triangle" style="font-size:1.6rem;"></i>
-                        <span style="font-size:0.85rem;font-weight:800;">SOS</span>
+                    <div class="d-flex align-items-center gap-2 mb-2 text-start">
+                        <div class="brand-icon" style="width:36px;height:36px;flex-shrink:0;">
+                            <i class="fas fa-truck-medical"></i>
+                        </div>
+                        <div>
+                            <div class="sos-title text-start">Emergency SOS</div>
+                            <div class="sos-desc text-start m-0">Need urgent blood within 1-2 hours?</div>
+                        </div>
+                    </div>
+                    <a asp-controller="Emergency" asp-action="SOS" class="sos-circle text-decoration-none mt-2">
+                        <i class="fas fa-triangle-exclamation"></i>
+                        <span>Broadcast Emergency Alert</span>
                     </a>
-                    <div class="sos-title">Emergency SOS</div>
-                    <div class="sos-desc">Press to alert all nearby donors immediately</div>
+                    <div class="bg-light-gray p-2 rounded border mt-2 text-center" style="font-size: 0.78rem;">
+                        National 24/7 Helpline: <strong class="text-navy">16600</strong>
+                    </div>
                 </div>
 
                 <!-- LEADERBOARD -->
@@ -394,3 +448,59 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const districtSelect = document.getElementById('homeDistrictSelect');
+            const upazilaSelect = document.getElementById('homeUpazilaSelect');
+
+            if (districtSelect && upazilaSelect) {
+                // 1. Fetch All Districts from backend
+                try {
+                    const res = await fetch('/Location/GetDistricts');
+                    if (res.ok) {
+                        const districts = await res.json();
+                        let optionsHtml = '<option value="">All Districts</option>';
+                        districts.forEach(d => {
+                            optionsHtml += `<option value="${d.name}" data-id="${d.id}">${d.name}</option>`;
+                        });
+                        districtSelect.innerHTML = optionsHtml;
+                    }
+                } catch (err) {
+                    console.error('Failed to load districts:', err);
+                }
+
+                // 2. Cascading Upazilas / Thanas on District Change
+                districtSelect.addEventListener('change', async function () {
+                    const selectedOpt = this.options[this.selectedIndex];
+                    const districtId = selectedOpt ? selectedOpt.getAttribute('data-id') : null;
+
+                    if (!districtId) {
+                        upazilaSelect.innerHTML = '<option value="">All Upazilas / Thanas</option>';
+                        return;
+                    }
+
+                    upazilaSelect.innerHTML = '<option value="">Loading Thanas...</option>';
+
+                    try {
+                        const res = await fetch(`/Location/GetUpazilas?districtId=${districtId}`);
+                        if (res.ok) {
+                            const upazilas = await res.json();
+                            let upHtml = '<option value="">All Upazilas / Thanas</option>';
+                            upazilas.forEach(u => {
+                                upHtml += `<option value="${u.name}">${u.name}</option>`;
+                            });
+                            upazilaSelect.innerHTML = upHtml;
+                        } else {
+                            upazilaSelect.innerHTML = '<option value="">All Upazilas / Thanas</option>';
+                        }
+                    } catch (err) {
+                        console.error('Failed to load upazilas:', err);
+                        upazilaSelect.innerHTML = '<option value="">All Upazilas / Thanas</option>';
+                    }
+                });
+            }
+        });
+    </script>
+}

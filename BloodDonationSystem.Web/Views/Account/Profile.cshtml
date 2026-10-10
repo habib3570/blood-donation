@@ -1,4 +1,4 @@
-﻿@using BloodDonationSystem.Application.DTOs.User
+@using BloodDonationSystem.Application.DTOs.User
 @model UserProfileDto
 @{
     ViewData["Title"] = "My Profile";
@@ -6,7 +6,7 @@
 
 <div class="page-header">
     <div class="container">
-        <div class="page-header-title">👤 My Profile</div>
+        <div class="page-header-title">My Profile</div>
         <div class="page-header-sub">View and manage your account information</div>
     </div>
 </div>
@@ -19,15 +19,15 @@
             <div class="col-lg-4">
                 <div class="form-card text-center">
                     <div class="donor-avatar"
-                         style="width:80px;height:80px;font-size:2rem;margin:0 auto 1rem;">
+                         style="width:72px;height:72px;font-size:1.75rem;margin:0 auto 1rem;">
                         @Model.FullName[0]
                     </div>
-                    <div style="font-size:1.2rem;font-weight:800;color:var(--navy-blue);">
+                    <div style="font-size:1.15rem;font-weight:800;color:var(--navy-blue);">
                         @Model.FullName
                         @if (Model.IsVerified)
                         {
-                            <i class="fas fa-check-circle"
-                               style="color:var(--success-green);font-size:1rem;"></i>
+                            <i class="fas fa-circle-check text-success"
+                               style="font-size:0.95rem;"></i>
                         }
                     </div>
                     <div style="font-size:0.82rem;color:var(--text-muted);margin-top:0.25rem;">
@@ -35,9 +35,9 @@
                     </div>
 
                     <span class="donor-blood-tag"
-                          style="position:static;font-size:1.2rem;
-                                 padding:0.4rem 1.1rem;margin-top:1rem;display:inline-block;">
-                        🩸 @Model.BloodGroupDisplay
+                          style="position:static;font-size:1.1rem;
+                                 padding:0.35rem 1rem;margin-top:0.85rem;display:inline-block;">
+                        @Model.BloodGroupDisplay
                     </span>
 
                     <div class="mt-3">
@@ -81,7 +81,7 @@
                                 <div style="text-align:center;background:white;
                                 border-radius:10px;padding:0.75rem;">
                                     <div style="font-size:1.3rem;font-weight:800;color:var(--navy-blue);">
-                                        @Model.DonorInfo.AverageRating.ToString("0.0") ⭐
+                                        @Model.DonorInfo.AverageRating.ToString("0.0") <i class="fas fa-star text-warning" style="font-size:0.9rem;"></i>
                                     </div>
                                     <div style="font-size:0.7rem;color:var(--text-muted);">Rating</div>
                                 </div>
@@ -101,20 +101,18 @@
                         <div class="mt-3">
                             @if (!accountEligible)
                             {
-                                <div style="background:#fff3cd;border:1.5px solid #ffc107;
-                                    border-radius:10px;padding:0.8rem;text-align:center;">
-                                    <div style="font-size:0.8rem;font-weight:700;color:#856404;">
-                                        <i class="fas fa-clock"></i> পরবর্তী donation
+                                <div class="p-3 rounded border text-center" style="background:var(--warning-light);border-color:#FDE68A !important;">
+                                    <div style="font-size:0.78rem;font-weight:700;color:#92400E;">
+                                        <i class="fas fa-calendar-check me-1"></i> Next Eligible Donation
                                     </div>
-                                    <div style="font-size:1.4rem;font-weight:800;color:#dc3545;">
-                                        @accountDaysLeft দিন পরে
+                                    <div style="font-size:1.35rem;font-weight:800;color:var(--deep-red);margin:0.2rem 0;">
+                                        In @accountDaysLeft Days
                                     </div>
-                                    <div style="font-size:0.72rem;color:#6c757d;">
+                                    <div style="font-size:0.75rem;color:var(--slate-500);">
                                         @Model.DonorInfo.NextEligibleDate?.ToString("dd MMMM yyyy")
                                     </div>
-                                    <div style="background:#e9ecef;border-radius:10px;
-                                        height:6px;margin-top:0.75rem;overflow:hidden;">
-                                        <div style="background:#dc3545;border-radius:10px;height:100%;
+                                    <div style="background:#E2E8F0;border-radius:999px;height:5px;margin-top:0.75rem;overflow:hidden;">
+                                        <div style="background:var(--deep-red);height:100%;
                                             width:@(Math.Max(0, Math.Min(100, (90 - accountDaysLeft) * 100 / 90)))%;
                                             transition:width 0.5s;">
                                         </div>
@@ -123,10 +121,9 @@
                             }
                             else
                             {
-                                <div style="background:#d1e7dd;border:1.5px solid #198754;
-                                    border-radius:10px;padding:0.8rem;text-align:center;">
-                                    <div style="font-size:0.85rem;font-weight:700;color:#0f5132;">
-                                        <i class="fas fa-check-circle"></i> আপনি এখন রক্ত দিতে পারবেন!
+                                <div class="p-3 rounded border text-center" style="background:var(--success-light);border-color:#A7F3D0 !important;">
+                                    <div style="font-size:0.85rem;font-weight:700;color:#065F46;">
+                                        <i class="fas fa-circle-check text-success me-1"></i> Eligible to Donate Now
                                     </div>
                                 </div>
                             }
