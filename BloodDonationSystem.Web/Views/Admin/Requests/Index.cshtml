@@ -1,4 +1,4 @@
-﻿@using BloodDonationSystem.Application.DTOs.BloodRequest
+@using BloodDonationSystem.Application.DTOs.BloodRequest
 @model List<BloodRequestDto>
 @{
     ViewData["Title"] = "Manage Requests";
@@ -6,7 +6,7 @@
 }
 
 <div class="admin-page-header">
-    <div class="admin-page-title">🩸 Manage Blood Requests</div>
+    <div class="admin-page-title"><i class="fas fa-droplet text-danger me-2"></i>Manage Blood Requests</div>
     <div class="admin-page-sub">Monitor all active blood requests</div>
 </div>
 
@@ -22,30 +22,30 @@
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>Patient</th>
-                        <th>Blood</th>
-                        <th>Hospital</th>
-                        <th>Requester</th>
-                        <th>Status</th>
-                        <th>Date</th>
-                        <th>Action</th>
+                        <th style="min-width: 180px;">Patient</th>
+                        <th style="min-width: 110px;">Blood</th>
+                        <th style="min-width: 200px;">Hospital</th>
+                        <th style="min-width: 160px;">Requester</th>
+                        <th style="min-width: 130px;">Status</th>
+                        <th style="min-width: 120px;">Date</th>
+                        <th style="min-width: 100px; text-align: center;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null)
+                    @if (Model != null && Model.Any())
                     {
                         @foreach (var req in Model)
                         {
                             <tr>
-                                <td>@req.PatientName</td>
+                                <td style="font-weight: 600; color: #0F172A;">@req.PatientName</td>
                                 <td>
                                     <span class="donor-blood-tag"
                                           style="position:static;font-size:0.78rem;">
                                         @req.BloodGroupDisplay
                                     </span>
                                 </td>
-                                <td style="font-size:0.82rem;">@req.HospitalName</td>
-                                <td style="font-size:0.82rem;">@req.RequesterName</td>
+                                <td style="font-size:0.84rem; color: #475569;">@req.HospitalName</td>
+                                <td style="font-size:0.84rem; color: #475569;">@req.RequesterName</td>
                                 <td>
                                     @{
                                         var sc = req.Status.ToString() switch
@@ -59,17 +59,25 @@
                                     }
                                     <span class="status-pill @sc">@req.StatusDisplay</span>
                                 </td>
-                                <td style="font-size:0.78rem;color:var(--text-muted);">
+                                <td style="font-size:0.82rem;color:var(--text-muted);white-space:nowrap;">
                                     @req.CreatedAt.ToString("dd MMM yy")
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <a asp-action="Details" asp-route-id="@req.Id"
-                                       class="btn-sm-outline">
+                                       class="btn-sm-outline" title="View Details">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </td>
                             </tr>
                         }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center py-4" style="color:var(--text-muted);">
+                                No requests found.
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

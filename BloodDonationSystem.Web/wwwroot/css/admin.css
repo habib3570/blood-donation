@@ -1,4 +1,4 @@
-﻿/* ── ADMIN LAYOUT ── */
+/* ── ADMIN LAYOUT ── */
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
@@ -274,4 +274,152 @@
     .admin-main {
         margin-left: 0 !important;
     }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   TABLES & DATA GRIDS (Clean, Medical & Human-Crafted)
+═══════════════════════════════════════════════════════════════════ */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-custom {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    font-size: 0.85rem;
+    color: var(--navy-blue);
+    background: #FFFFFF;
+    margin-bottom: 0;
+}
+
+.table-custom thead {
+    background-color: #F8FAFC;
+    border-bottom: 1.5px solid #E2E8F0;
+}
+
+.table-custom th {
+    background-color: #F8FAFC !important;
+    color: #475569 !important;
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 0.9rem 1.25rem !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+    border-top: none !important;
+    border-bottom: 1.5px solid #E2E8F0 !important;
+    border-left: none !important;
+    border-right: none !important;
+}
+
+.table-custom td {
+    padding: 1rem 1.25rem !important;
+    border-bottom: 1px solid #F1F5F9 !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    color: #0F172A !important;
+    vertical-align: middle !important;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.table-custom tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table-custom tbody tr:hover td {
+    background-color: #F8FAFC !important;
+}
+
+.table-custom tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* ── STATUS PILLS & BADGES ── */
+.status-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.35rem !important;
+    padding: 0.3rem 0.75rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.73rem !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+}
+
+.sp-completed, .sp-accepted, .sp-verified {
+    background: #ECFDF5 !important;
+    color: #065F46 !important;
+    border: 1px solid #A7F3D0 !important;
+}
+
+.sp-pending, .sp-active {
+    background: #FFFBEB !important;
+    color: #92400E !important;
+    border: 1px solid #FDE68A !important;
+}
+
+.sp-rejected, .sp-blocked, .sp-danger {
+    background: #FEF2F2 !important;
+    color: #991B1B !important;
+    border: 1px solid #FECACA !important;
+}
+
+.sp-expired, .sp-inactive {
+    background: #F1F5F9 !important;
+    color: #64748B !important;
+    border: 1px solid #E2E8F0 !important;
+}
+
+/* ── ACTION BUTTONS IN TABLES ── */
+.table-custom .btn-sm-outline {
+    width: 32px;
+    height: 32px;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    font-size: 0.8rem !important;
+    color: #475569 !important;
+    border: 1px solid #CBD5E1 !important;
+    background: #FFFFFF !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
+}
+
+.table-custom .btn-sm-outline:hover {
+    background: #F1F5F9 !important;
+    color: #0F172A !important;
+    border-color: #94A3B8 !important;
+}
+
+.table-custom .btn-sm-red {
+    width: 32px;
+    height: 32px;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    font-size: 0.8rem !important;
+    color: #FFFFFF !important;
+    background: #DC2626 !important;
+    border: 1px solid #DC2626 !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
+}
+
+.table-custom .btn-sm-red:hover {
+    background: #B91C1C !important;
+    border-color: #B91C1C !important;
 }

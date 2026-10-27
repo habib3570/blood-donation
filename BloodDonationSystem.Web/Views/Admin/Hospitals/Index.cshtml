@@ -1,4 +1,4 @@
-﻿@using BloodDonationSystem.Application.DTOs.Hospital
+@using BloodDonationSystem.Application.DTOs.Hospital
 @using BloodDonationSystem.Application.DTOs.Location
 @model List<HospitalDto>
 @{
@@ -12,7 +12,7 @@
 <div class="admin-page-header">
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div>
-            <div class="admin-page-title">🏥 Manage Hospitals</div>
+            <div class="admin-page-title"><i class="fas fa-hospital text-danger me-2"></i>Manage Hospitals</div>
             <div class="admin-page-sub">Search, add and edit hospital information</div>
         </div>
         <a asp-action="Create" class="btn-red">
@@ -24,7 +24,7 @@
 <!-- SEARCH FILTER -->
 <div class="admin-card mb-3">
     <div class="admin-card-header">
-        <span><i class="fas fa-search"></i> Search Hospitals</span>
+        <span><i class="fas fa-search me-1"></i> Search Hospitals</span>
     </div>
     <div class="admin-card-body">
         <form method="get" id="hospitalFilterForm">
@@ -99,12 +99,12 @@
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Location</th>
-                        <th>Phone</th>
-                        <th>Blood Bank</th>
-                        <th>Hours</th>
-                        <th>Action</th>
+                        <th style="min-width: 240px;">Hospital Name</th>
+                        <th style="min-width: 180px;">Location</th>
+                        <th style="min-width: 140px;">Phone</th>
+                        <th style="min-width: 120px;">Blood Bank</th>
+                        <th style="min-width: 140px;">Hours</th>
+                        <th style="min-width: 120px; text-align: center;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,31 +113,40 @@
                         @foreach (var h in Model)
                         {
                             <tr>
-                                <td style="font-weight:600;">@h.Name</td>
-                                <td style="font-size:0.82rem;">@h.Upazila, @h.District</td>
-                                <td style="font-size:0.82rem;">@(h.PhoneNumber ?? "-")</td>
+                                <td style="font-weight: 600; color: #0F172A;">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="fas fa-hospital text-danger opacity-75"></i>
+                                        <span>@h.Name</span>
+                                    </div>
+                                </td>
+                                <td style="font-size: 0.84rem; color: #475569;">
+                                    <i class="fas fa-location-dot text-muted me-1" style="font-size:0.75rem;"></i>@h.Upazila, @h.District
+                                </td>
+                                <td style="font-size: 0.84rem; color: #334155; white-space: nowrap;">
+                                    <i class="fas fa-phone text-muted me-1" style="font-size:0.72rem;"></i>@(h.PhoneNumber ?? "-")
+                                </td>
                                 <td>
                                     @if (h.HasBloodBank)
                                     {
-                                        <span class="status-pill sp-completed">Yes</span>
+                                        <span class="status-pill sp-completed"><i class="fas fa-check-circle"></i> Yes</span>
                                     }
                                     else
                                     {
-                                        <span class="status-pill sp-expired">No</span>
+                                        <span class="status-pill sp-expired"><i class="fas fa-times-circle"></i> No</span>
                                     }
                                 </td>
-                                <td style="font-size:0.78rem;">
-                                    @(h.IsOpen24Hours ? "24/7" : $"{h.OpenTime}-{h.CloseTime}")
+                                <td style="font-size: 0.82rem; color: #475569; white-space: nowrap;">
+                                    <i class="fas fa-clock text-muted me-1" style="font-size:0.75rem;"></i>@(h.IsOpen24Hours ? "24/7 Open" : $"{h.OpenTime} - {h.CloseTime}")
                                 </td>
-                                <td>
-                                    <div class="d-flex gap-1">
-                                        <a asp-action="Details" asp-route-id="@h.Id" class="btn-sm-outline">
+                                <td class="text-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-1">
+                                        <a asp-action="Details" asp-route-id="@h.Id" class="btn-sm-outline" title="View Details">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a asp-action="Edit" asp-route-id="@h.Id" class="btn-sm-outline">
+                                        <a asp-action="Edit" asp-route-id="@h.Id" class="btn-sm-outline" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button onclick="deleteHospital(@h.Id)" class="btn-sm-outline" style="color:#EF4444;border-color:#FECACA;">
+                                        <button onclick="deleteHospital(@h.Id)" class="btn-sm-outline text-danger" title="Delete" style="border-color:#FECACA;">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>

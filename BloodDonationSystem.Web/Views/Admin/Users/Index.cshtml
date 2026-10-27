@@ -1,4 +1,4 @@
-﻿@using BloodDonationSystem.Application.DTOs.User
+@using BloodDonationSystem.Application.DTOs.User
 @model List<UserProfileDto>
 @{
     ViewData["Title"] = "Manage Users"; Layout = "~/Views/Shared/_Layout.Admin.cshtml";
@@ -7,12 +7,12 @@
 <div class="admin-page-header">
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
         <div>
-            <div class="admin-page-title">👥 Manage Users</div>
+            <div class="admin-page-title"><i class="fas fa-users text-danger me-2"></i>Manage Users</div>
             <div class="admin-page-sub">View, block, and verify all registered users</div>
         </div>
         <div class="d-flex gap-2 align-items-center">
             <input type="text" class="form-control-custom"
-                   placeholder="🔍 Search users..."
+                   placeholder="Search users..."
                    id="userSearch"
                    onkeyup="filterTable()"
                    style="width:220px;" />
@@ -67,13 +67,13 @@
             <table class="table-custom" id="userTable">
                 <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Blood Group</th>
-                        <th>Location</th>
-                        <th>Donor Status</th>
-                        <th>Account</th>
-                        <th>Joined</th>
-                        <th>Actions</th>
+                        <th style="min-width: 220px;">User</th>
+                        <th style="min-width: 120px;">Blood Group</th>
+                        <th style="min-width: 180px;">Location</th>
+                        <th style="min-width: 160px;">Donor Status</th>
+                        <th style="min-width: 120px;">Account</th>
+                        <th style="min-width: 120px;">Joined</th>
+                        <th style="min-width: 160px; text-align: center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,7 +89,7 @@
                                             @user.FullName[0]
                                         </div>
                                         <div>
-                                            <div style="font-weight:600;font-size:0.85rem;">
+                                            <div style="font-weight:600;font-size:0.85rem;color:#0F172A;">
                                                 @user.FullName
                                             </div>
                                             <div style="font-size:0.75rem;color:var(--text-muted);">
@@ -104,8 +104,8 @@
                                         @user.BloodGroupDisplay
                                     </span>
                                 </td>
-                                <td style="font-size:0.82rem;">
-                                    @user.Upazila, @user.District
+                                <td style="font-size:0.84rem;color:#475569;">
+                                    <i class="fas fa-location-dot text-muted me-1" style="font-size:0.75rem;"></i>@user.Upazila, @user.District
                                 </td>
                                 <td>
                                     @if (user.DonorInfo != null)
@@ -141,22 +141,22 @@
                                 <td>
                                     @if (user.IsBlocked)
                                     {
-                                        <span class="status-pill sp-rejected">Blocked</span>
+                                        <span class="status-pill sp-rejected"><i class="fas fa-ban"></i> Blocked</span>
                                     }
                                     else if (user.IsVerified)
                                     {
-                                        <span class="status-pill sp-completed">Verified</span>
+                                        <span class="status-pill sp-completed"><i class="fas fa-check-circle"></i> Verified</span>
                                     }
                                     else
                                     {
-                                        <span class="status-pill sp-pending">Active</span>
+                                        <span class="status-pill sp-pending"><i class="fas fa-circle"></i> Active</span>
                                     }
                                 </td>
-                                <td style="font-size:0.78rem;color:var(--text-muted);">
+                                <td style="font-size:0.82rem;color:var(--text-muted);white-space:nowrap;">
                                     @user.CreatedAt.ToString("dd MMM yy")
                                 </td>
-                                <td>
-                                    <div class="d-flex gap-1">
+                                <td class="text-center">
+                                    <div class="d-flex align-items-center justify-content-center gap-1">
                                         <a asp-action="Details" asp-route-id="@user.Id"
                                            class="btn-sm-outline" title="View Details">
                                             <i class="fas fa-eye"></i>
@@ -164,9 +164,9 @@
                                         @if (!user.IsBlocked)
                                         {
                                             <button onclick="blockUser('@user.Id')"
-                                                    class="btn-sm-outline"
+                                                    class="btn-sm-outline text-danger"
                                                     title="Block User"
-                                                    style="color:#EF4444;border-color:#FECACA;">
+                                                    style="border-color:#FECACA;">
                                                 <i class="fas fa-ban"></i>
                                             </button>
                                         }
@@ -181,17 +181,17 @@
                                         @if (user.DonorInfo != null && !user.IsVerified)
                                         {
                                             <button onclick="verifyDonor(@user.DonorInfo.DonorProfileId)"
-                                                    class="btn-sm-outline"
+                                                    class="btn-sm-outline text-success"
                                                     title="Verify Donor"
-                                                    style="color:var(--success-green);border-color:#6EE7B7;">
+                                                    style="border-color:#A7F3D0;">
                                                 <i class="fas fa-check-circle"></i>
                                             </button>
                                         }
                                         <button onclick="openRoleModal('@user.Id')"
                                                 class="btn-sm-outline"
                                                 title="Change Role"
-                                                style="color:var(--navy-blue);border-color:#BFDBFE;">
-                                            <i class="fas fa-user-cog"></i>
+                                                style="color:var(--navy-blue);border-color:#CBD5E1;">
+                                            <i class="fas fa-user-gear"></i>
                                         </button>
                                     </div>
                                 </td>
